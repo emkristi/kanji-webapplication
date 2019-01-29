@@ -1,0 +1,34 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
+import { createStore, applyMiddleware, compose } from 'redux'
+import rootReducer from './store/reducers/rootReducer'
+import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
+import { reduxFirestore, getFirestore } from 'redux-firestore'
+import { reactReduxFirebase ,getFirebase } from 'react-redux-firebase'
+import fbConfig from './config/fbConfig'
+
+const store = createStore(rootReducer, 
+    // we use compose to combine store enhancers
+    // store enhancers -> enhances our stores with packages. we need to pass in config so that knows which project to connect to
+    compose(
+        // apply middleware is the first store enhancer
+        applyMiddleware(thunk.withExtraArgument({getFirebase, getFirestore})),
+        reduxFirestore(fbConfig),
+        reactReduxFirebase(fbConfig, {attachAuthIsReady: true})
+    )
+);
+
+store.firebaseAuthIsReady.then(() => {
+    ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
+    serviceWorker.unregister();
+})
+
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/CRA-PWA
+
