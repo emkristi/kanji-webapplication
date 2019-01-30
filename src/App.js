@@ -5,6 +5,7 @@ import SignIn from './components/auth/SignIn'
 import SignUp from './components/auth/SignUp'
 import Dashboard from './components/dashboard/Dashboard'
 import CreateFlashcards from "./components/flashcards/CreateFlashcards"
+import CreateDeck from './components/decks/CreateDeck'
 
 class App extends Component {
   render() {
@@ -17,6 +18,7 @@ class App extends Component {
             <Route path='/signin' component={SignIn} />
             <Route path='/signup' component={SignUp} />
             <Route path='/CreateFlashcards' component={CreateFlashcards}/>
+            <Route path='/createdeck' component={CreateDeck}/>
           </Switch>
         </div>
       </BrowserRouter>

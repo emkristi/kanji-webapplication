@@ -2,18 +2,18 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import ListOfDecks from '../decks/ListOfDecks'
-
+import '../../CSS/Dashboard.css'
 
 class Dashboard extends Component {
   render() {
-    
-    // console.log(this.props);
+    const { decks } = this.props;
+
     const { auth } = this.props;
     if (!auth.uid) return <Redirect to='/signin' />
     return (
       <div className="dashboard container">
         <div className="row">
-          <ListOfDecks />
+          <ListOfDecks decks={decks}/>
         </div>
         
       </div>
@@ -24,6 +24,7 @@ class Dashboard extends Component {
 const mapStateToProps = (state) => {
   // console.log(state);
   return {
+    decks: state.deck.decks,
     auth: state.firebase.auth
   }
 }
