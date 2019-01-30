@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
+import ListOfDecks from '../decks/ListOfDecks'
+
 
 class Dashboard extends Component {
   render() {
@@ -11,13 +13,9 @@ class Dashboard extends Component {
     return (
       <div className="dashboard container">
         <div className="row">
-          <div className="col s12 m6">
-            <h1>heyo</h1>
-          </div>
-          <div className="col s12 m5 offset-m1">
-            <h1>hey</h1>
-          </div>
+          <ListOfDecks />
         </div>
+        
       </div>
     )
   }
