@@ -3,11 +3,12 @@ import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import ListOfDecks from '../decks/ListOfDecks'
 import '../../CSS/Dashboard.css'
+import { firestoreConnect } from 'react-redux-firebase'
+import { compose } from '../../../../../../Library/Caches/typescript/3.2/node_modules/redux';
 
 class Dashboard extends Component {
   render() {
     const { decks } = this.props;
-
     const { auth } = this.props;
     if (!auth.uid) return <Redirect to='/signin' />
     return (
@@ -22,11 +23,16 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state);
+  console.log(state);
   return {
-    decks: state.deck.decks,
+    decks: state.firestore.ordered.decks,
     auth: state.firebase.auth
   }
 }
 
-export default connect(mapStateToProps)(Dashboard)
+export default compose(
+  connect(mapStateToProps),
+  firestoreConnect([
+    { collection: 'decks' }
+  ])
+)(Dashboard)
