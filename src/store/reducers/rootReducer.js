@@ -2,11 +2,11 @@ import authReducer from './authReducer'
 import { combineReducers } from 'redux'
 import { firestoreReducer } from 'redux-firestore'
 import { firebaseReducer } from 'react-redux-firebase'
-import deckReducer from './deckReducer';
+import flashcardReducer from './flashcardReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  deck: deckReducer,
+  flashcard: flashcardReducer,
   firestore: firestoreReducer,
   firebase: firebaseReducer
 });

@@ -4,8 +4,7 @@ import Navbar from './components/layout/Navbar'
 import SignIn from './components/auth/SignIn'
 import SignUp from './components/auth/SignUp'
 import Dashboard from './components/dashboard/Dashboard'
-import CreateFlashcards from "./components/flashcards/CreateFlashcards"
-import CreateDeck from './components/decks/CreateDeck'
+import CreateFlashcard from './components/flashcards/CreateFlashcard'
 
 class App extends Component {
   render() {
@@ -17,8 +16,7 @@ class App extends Component {
             <Route exact path='/' component={Dashboard} />
             <Route path='/signin' component={SignIn} />
             <Route path='/signup' component={SignUp} />
-            <Route path='/CreateFlashcards' component={CreateFlashcards}/>
-            <Route path='/createdeck' component={CreateDeck}/>
+            <Route path='/createflashcard' component={CreateFlashcard} />
           </Switch>
         </div>
       </BrowserRouter>

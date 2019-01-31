@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom'
 const SignedInLinks = (props) => {
     return (
         <ul className="right">
-            <li><NavLink to='/createdeck'>New Deck</NavLink></li>
+            <li><NavLink to='/createflashcard'>New flashcard</NavLink></li>
             <li><a onClick={props.signOut}>Log Out</a></li>
         </ul>
     )

@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { createDeck } from '../../store/actions/deckActions'
+import { createFlashcard } from '../../store/actions/flashcardActions'
 
-class CreateDeck extends Component {
+class CreateFlashcard extends Component {
     state = {
-        title: ''
+        eng: '',
+        kanji: ''
     }
     
     handleChange = (e) => {
@@ -14,23 +15,24 @@ class CreateDeck extends Component {
     }
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.createDeck(this.state)
+        this.props.createFlashcard(this.state)
     }
     render(){
         return (
             <div className="container">
               <form onSubmit={this.handleSubmit} className="white">
-                  <h5 className="grey-text text-darken-3">Create new deck</h5>
+                  <h5 className="grey-text text-darken-3">Create new flashcard</h5>
                     <div className="input-field">
-                        <label htmlFor="title">Title</label>
-                        <input type="text" id="title" onChange={this.handleChange}/>
+                        <label htmlFor="kanji">Kanji:</label>
+                        <input type="text" id="kanji" onChange={this.handleChange}/>
                     </div>
 
                     <div class="input-field">
-                        <label htmlFor="type">Type of deck</label>
-                      <input type="text" id="type" onChange={this.handleChange}/>
+                        <label htmlFor="eng">English:</label>
+                      <input type="text" id="eng" onChange={this.handleChange}/>
                     </div>
                 
+
                     <div className="input-field">
                         <button className="btn pink lighten-1 z-depth-0">Create</button>
                     </div>
@@ -42,9 +44,9 @@ class CreateDeck extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        createDeck: (deck) => dispatch(createDeck(deck))
+        createFlashcard: (flashcard) => dispatch(createFlashcard(flashcard))
     }
 }
 
 
-export default connect(null, mapDispatchToProps)(CreateDeck)
+export default connect(null, mapDispatchToProps)(CreateFlashcard)
