@@ -17,8 +17,8 @@ export const createFlashcard = (flashcard) => {
          .add() to add collection. we pass inn an object. the object represents the document that will be added to the collection */
         firestore.collection('flashcards').add({  // async call (action takes some time to do) -> dispatch is halted
             ...flashcard    // use spread operator to spread the properties that are already inside the flashcard.
-            // if we want to add more properties we need to add those inn here
-           // this will go to our firestore to the flashcard collection and add this new document. it will also make a new flashcard id. 
+            // radicals: ['test', 'test']
+            // this will go to our firestore to the flashcard collection and add this new document. it will also make a new flashcard id. 
         }).then(() => { // .then fires when the action above is complete
             dispatch({type: 'CREATE_flashcard', flashcard});    // here we carry on with the dispatch. passing in action.
         }).catch((err) => {

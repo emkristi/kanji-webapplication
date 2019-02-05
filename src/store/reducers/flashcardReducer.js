@@ -6,12 +6,13 @@ const initState = {
 }
 
 /**
+ * Here we handle the actions from flashcardActions.js
  * 
  * @param {*} state 
  * @param {*} action taken in from CreateFlashcard
  */
 const flashcardReducer = (state = initState, action) => {
-    switch (action.type){  // checking the action type 
+    switch (action.type){  // checking the action type. 
         case 'CREATE_flashcard': 
             console.log('created flashcard', action.flashcard)
             return state;
