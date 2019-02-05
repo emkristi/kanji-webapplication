@@ -1,6 +1,15 @@
+// Initial state for when the application is first started and it doesn't have a state.
 const initState = {
     authError: null
 }
+
+/**
+ * authReducer function. 
+ * This is where we manipulate the state (data) in our application
+ * 
+ * @param {*} state 
+ * @param {*} action 
+ */
 const authReducer = (state = initState, action) => {
     // need to check action type
     switch(action.type){

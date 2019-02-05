@@ -8,14 +8,21 @@ class CreateFlashcard extends Component {
         kanji: ''
     }
     
+    /**
+     * Function that fires when a user changes an input field
+     */
     handleChange = (e) => {
         this.setState({
             [e.target.id]: e.target.value
         })
     }
+
+    /**
+     * Function for submitting info written in input fields
+     */
     handleSubmit = (e) => {
-        e.preventDefault();
-        this.props.createFlashcard(this.state)
+        e.preventDefault(); // prevents page from reloading
+        this.props.createFlashcard(this.state) // we have access to createFlashcard because of the mapDispatchToProps. Inside the function we pass the flashcard we want to create, which the state, so we pass this.state. This flashcard is going to be passed into the function in mapDispatchToProps
     }
     render(){
         return (
@@ -42,11 +49,23 @@ class CreateFlashcard extends Component {
     }
 }
 
+/**
+ * returns an object. whatever property we want to add to the props, we add to this object.
+ * we add a method to the props called createFlashcard
+ * 
+ * 
+ * @param {*} dispatch 
+ */
 const mapDispatchToProps = (dispatch) => {
     return {
-        createFlashcard: (flashcard) => dispatch(createFlashcard(flashcard))
+        //when we say props.createFlashcard in the component -> this arrow function will be called.
+        // the function takes in the individual flashcard that we pass inn, then it dispatches an action creator (createFlashcard()) and pass in that individual flashcard into the action creator
+        // the action creator is the one imported from store/actions/flashcardActions.js
+        // the action creator returns the function in flashcardActions.js which will do an async call then carry on with the dispatch
+        createFlashcard: (flashcard) => dispatch(createFlashcard(flashcard)) // will take in this.state from handleSubmit as the flashcard. this wil run the function in flashcardActions and return that function then dispatch.
     }
 }
 
-
+// using connect() to connect this component to the redux store
+// we pass null since we don't have a mapStateToProps in this component
 export default connect(null, mapDispatchToProps)(CreateFlashcard)
