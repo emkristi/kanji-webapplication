@@ -1,12 +1,17 @@
+// Initial state for when we don't have a state yet
 const initState = {
     flashcards: [
         
     ]
 }
 
+/**
+ * 
+ * @param {*} state 
+ * @param {*} action taken in from CreateFlashcard
+ */
 const flashcardReducer = (state = initState, action) => {
-    // action type check
-    switch (action.type){
+    switch (action.type){  // checking the action type 
         case 'CREATE_flashcard': 
             console.log('created flashcard', action.flashcard)
             return state;
