@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import ListOfFlashcards from '../flashcards/ListOfFlashcards'
 import { firestoreConnect } from 'react-redux-firebase'
-import { compose } from '../../../../../../Library/Caches/typescript/3.2/node_modules/redux';
+import { compose } from 'redux';
 
 class Dashboard extends Component {
   render() {
