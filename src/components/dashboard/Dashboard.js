@@ -7,24 +7,44 @@ import FlashcardInfo from '../flashcards/FlashcardInfo';
 
 class Dashboard extends Component {
 
-  handleClick(e) {
+// intern this.state -> this.setState for å sette den
+// this.state.currentCard for å bruke
+
+  constructor(props){
+    super(props);
+    this.state = { currentCard: (Math.floor(Math.random() * 6)) };
+    console.log(this.state.currentCard);
+  }
+
+  handleClick = (e) =>  {
     e.preventDefault();
-    console.log('The link was clicked.');
+    //currentCard = (Math.floor(Math.random() * 6));
+
+    this.setState((state, props) => {
+      return { currentCard: (Math.floor(Math.random() * 6))}
+    });
+
+    console.log(this.state.currentCard);
+    console.log('test');
   }
 
   render() {
     // destructuring to get the flashcards. this grabs the flashcards object off the props. we can now pass the flashcards down as a prop into the ListOfFlashcards component
     const { flashcards } = this.props;
     const { auth } = this.props;
+    const currentCard = (Math.floor(Math.random() * 6));
+
+    //console.log(this.state.currentCard);
+
+    console.log(currentCard);
     if (!auth.uid) return <Redirect to='/signin' />
     return (
       <div className="dashboard container">
-        
         { flashcards && 
-            <FlashcardInfo flashcard={flashcards[0]} key={flashcards[0].id} />
-            
+            <FlashcardInfo flashcard={flashcards[this.state.currentCard]}  />
         } 
         <button onClick={this.handleClick}>Next</button>
+        
       </div>
       
     )
