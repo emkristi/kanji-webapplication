@@ -28,6 +28,7 @@ class Dashboard extends Component {
     console.log('test');
   }
 
+
   insertContentFlashcard (){
     //Code to insert content to the flashcard
     var card = document.querySelector('.card');
@@ -45,6 +46,7 @@ class Dashboard extends Component {
     const currentCard = (Math.floor(Math.random() * 6));
 
     //console.log(this.state.currentCard);
+/*
 
     console.log(currentCard, "currentcard");
     if (!auth.uid) return <Redirect to='/signin' />
@@ -62,7 +64,21 @@ class Dashboard extends Component {
         </div>
         <p>Click card to flip</p>
         <button onClick={this.handleClick}>Next</button>
+
+*/
+
+
+
+    console.log(currentCard);
+    if (!auth.uid) return <Redirect to='/signin' />
+    return (
+      <div className="dashboard container">
+        { flashcards && 
+            <FlashcardInfo flashcard={flashcards[this.state.currentCard]}  />
+        } 
+        <button onClick={this.handleClick}>Next</button>
       </div>
+      
     )
   }
 }
