@@ -6,7 +6,6 @@ import React from 'react'
  */
 const FlashcardInfo = ({flashcard, sub}) => {
     return(
-        
         <div className="card z-depth-0 project-summary">
             <div className="card-panel grey lighten-4">
                 <div className="card-content grey-text text-darken-3">
