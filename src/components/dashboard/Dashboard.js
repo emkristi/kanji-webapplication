@@ -1,21 +1,67 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import ListOfFlashcards from '../flashcards/ListOfFlashcards'
-import { firestoreConnect } from 'react-redux-firebase'
+import { firestoreConnect } from 'react-redux-firebase' // used to connect to firestore
 import { compose } from 'redux';
+import FlashcardInfo from '../flashcards/FlashcardInfo';
 
 class Dashboard extends Component {
+
+// intern this.state -> this.setState for å sette den
+// this.state.currentCard for å bruke
+
+  constructor(props){
+    super(props);
+    this.state = { currentCard: (Math.floor(Math.random() * 6)) };
+    console.log(this.state.currentCard);
+  }
+
+  handleClick = (e) =>  {
+    e.preventDefault();
+    //currentCard = (Math.floor(Math.random() * 6));
+
+    this.setState((state, props) => {
+      return { currentCard: (Math.floor(Math.random() * 6))}
+    });
+
+    console.log(this.state.currentCard);
+    console.log('test');
+  }
+
+  insertContentFlashcard (){
+    //Code to insert content to the flashcard
+    var card = document.querySelector('.card');
+    console.log("insertContentFlashcard(1)");
+    card.addEventListener( 'click', function() {
+      card.classList.toggle('is-flipped');
+      console.log("insertContentFlashcard()");
+    });
+  }
+
   render() {
     // destructuring to get the flashcards. this grabs the flashcards object off the props. we can now pass the flashcards down as a prop into the ListOfFlashcards component
     const { flashcards } = this.props;
     const { auth } = this.props;
+    const currentCard = (Math.floor(Math.random() * 6));
+
+    //console.log(this.state.currentCard);
+
+    console.log(currentCard, "currentcard");
     if (!auth.uid) return <Redirect to='/signin' />
     return (
-      <div className="dashboard container">
-        <div className="row">
-          <ListOfFlashcards flashcards={flashcards}/> {/* passing the flashcards as a prop into the ListOfFlashcards component */}
+      <div class="card blue-grey darken-1">
+        <div class="card" onClick={this.insertContentFlashcard}>
+          <div class="card__face card__face--front">
+            <div class="container">
+              {flashcards && 
+                  <FlashcardInfo flashcard={flashcards[this.state.currentCard]} />
+              } 
+            </div>
+          </div>
+          <div class="card__face card__face--back">Engelsk + radikal</div>
         </div>
+        <p>Click card to flip</p>
+        <button onClick={this.handleClick}>Next</button>
       </div>
     )
   }
@@ -31,7 +77,8 @@ class Dashboard extends Component {
 const mapStateToProps = (state) => {
   console.log(state);
   return {
-    flashcards: state.firestore.ordered.flashcards, // flashcard property, we are accessing the flashcards from the state in the flashcardReducer. We are grabbing this and attatching it to the flashcard property inside the props of this component (flashcard: )
+    
+    flashcards: state.firestore.ordered.flashcards, // gives an array of the flashcards.. flashcard property, we are accessing the flashcards from the state in the flashcardReducer. We are grabbing this and attatching it to the flashcard property inside the props of this component (flashcard: )
     auth: state.firebase.auth
   }
 }
@@ -45,7 +92,13 @@ export default compose(
    */
   
   connect(mapStateToProps), 
-  firestoreConnect([
-    { collection: 'flashcards' }
+  firestoreConnect([ // we use firestoreConnect to tell which collection we want to connect to. takes in an array that contains a series of objects
+    { collection: 'flashcards' } // contains one object that says which collection we want to conenct to..
   ])
+  /**
+   * When this component is active, tha collection that we are listening to is the flashcards collection
+   * and when when this component first loads or the firestore data is changed in the database, this will induce the firestore reducer to sync the store state
+   * with that flashcards collection in the firestore. when changes are made -> this component will hear that because its connected to that collection, and it will trigger the firestore reducer to update the state
+   * the state of the firestore property in the rootReducer when this component is active on the page, is going to be synced with the flashcards collection in firestore
+   */
 )(Dashboard)
