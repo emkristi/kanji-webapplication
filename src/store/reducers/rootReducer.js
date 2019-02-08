@@ -13,8 +13,8 @@ const rootReducer = combineReducers({
   auth: authReducer,  // the auth reducer updates information on the auth property inside the state object
   flashcard: flashcardReducer,  // falshcard reducer will update info on the flashcard property inside the flashcard object
   // firestoreReducer: // premade reducer for syncing our firestore data with our state in the background. has access to our firestore because of reduxFirestore(fbConfig) in our store in index.js
-  firestore: firestoreReducer, // this property will contain out firestore data. this firestoreReducer is automatically going to sync our firestore data
-  firebase: firebaseReducer // 
+  firestore: firestoreReducer, // this property will contain out firestore data. this firestoreReducer is automatically going to sync our firestore
+  firebase: firebaseReducer 
 });
 
 export default rootReducer

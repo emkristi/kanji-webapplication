@@ -27,4 +27,29 @@ export const createFlashcard = (flashcard) => {
     }
 };
 
+export const getSub = () => {
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
+        const firestore = getFirestore();
+        //firestore.collection('flashcards').document('vZqq2W9sWkqtZAmMvug9').getDocuments();
+        /*
+        firestore.collection('flashcards').get({
+            ...flashcard
+        }).then(() => {
+            dispatch
+        })
+        */
+        // foods, gelato, ingredients
+        firestore.collection('flashcards').doc('vZqq2W9sWkqtZAmMvug9').collection('ingredients').get()
+        .then(snapshot => {
+            const values = snapshot.docs.map(flattenDoc);
+            console.table(values);
+        });
+
+        function flattenDoc(doc) {
+            return {id: doc.id, ...doc.data()};
+        }
+    
+
+    }
+};
 // when we first call an action creator inside a dispatch method from our component we are returning a function, and we are halting that dispatch

@@ -4,49 +4,109 @@ import { Redirect } from 'react-router-dom'
 import { firestoreConnect } from 'react-redux-firebase' // used to connect to firestore
 import { compose } from 'redux';
 import FlashcardInfo from '../flashcards/FlashcardInfo';
+import { getSub } from '../../store/actions/flashcardActions';
 
 class Dashboard extends Component {
 
 // intern this.state -> this.setState for å sette den
 // this.state.currentCard for å bruke
 
+// var test = (Math.floor(Math.random() * 6));
+
   constructor(props){
     super(props);
-    this.state = { currentCard: (Math.floor(Math.random() * 6)) };
-    console.log(this.state.currentCard);
+    const rand = this.getRandomNumber();
+    this.state = {  currentCard: rand,
+                    completedCardsArray: [rand],
+                    numComplete: 0
+    };
+
+    //console.log(this.state.currentCard);
+    //console.log(this.state.completedCardsArray);
+    console.log(this.checkIfComplete());
+    //console.log(this.getFlashCardByIndex);
+    //console.log('kom opp plis: ', this.getFlashCardByIndex())
   }
+
+  getRandomNumber(){
+    return (Math.floor(Math.random() * 6))
+  }
+
+  getFlashCardByIndex = () => {
+    var fml = this.flashcards[this.state.currentCard];
+    return fml;
+  }
+
+
+  checkIfComplete() {
+    const numcompleted = this.state.completedCardsArray.length;
+    const { flashcards } = this.props;
+
+    // liste over alle tallene som er gått gjennom
+    var array = this.state.completedCardsArray;
+
+
+
+    console.log("test", array);
+    console.log("testttttt", array[0]);
+    console.log("test2", numcompleted);
+    console.log("fokmalif", flashcards);
+
+    for(var i = 0; i < numcompleted; ++i){
+      
+    }
+
+    return 1203;
+  }
+
+  /*
+  getSubCollection(){
+    this.props.getSub();
+    return this.getSub();
+  }
+*/
+  /*
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.getSubCollection(); 
+    console.log("hello anyone there?");
+  }*/
 
   handleClick = (e) =>  {
     e.preventDefault();
-    //currentCard = (Math.floor(Math.random() * 6));
-
-    this.setState((state, props) => {
-      return { currentCard: (Math.floor(Math.random() * 6))}
-    });
 
     console.log(this.state.currentCard);
-    console.log('test');
+    
+
+    this.setState((state, props) => {
+      const rand = this.getRandomNumber();
+      return { currentCard: rand,
+               completedCardsArray: [...this.state.completedCardsArray, rand],
+      }
+    });
+
+   // console.log('test: ', this.getSubCollection());
+    //console.log(this.state.currentCard);
+    //console.log(this.state.completedCardsArray);
+    console.log(this.checkIfComplete());
   }
 
   render() {
     // destructuring to get the flashcards. this grabs the flashcards object off the props. we can now pass the flashcards down as a prop into the ListOfFlashcards component
     const { flashcards } = this.props;
     const { auth } = this.props;
-    const currentCard = (Math.floor(Math.random() * 6));
 
     //console.log(this.state.currentCard);
 
-    console.log(currentCard);
+    //console.log(currentCard);
     if (!auth.uid) return <Redirect to='/signin' />
     return (
       <div className="dashboard container">
         { flashcards && 
             <FlashcardInfo flashcard={flashcards[this.state.currentCard]}  />
         } 
-        <button onClick={this.handleClick}>Next</button>
-        
-      </div>
-      
+        <button onClick={this.handleClick}>Next</button>  
+      </div>  
     )
   }
 }
@@ -59,14 +119,13 @@ class Dashboard extends Component {
  * @param {*} state 
  */
 const mapStateToProps = (state) => {
-  console.log(state);
+  //console.log(state);
   return {
     
     flashcards: state.firestore.ordered.flashcards, // gives an array of the flashcards.. flashcard property, we are accessing the flashcards from the state in the flashcardReducer. We are grabbing this and attatching it to the flashcard property inside the props of this component (flashcard: )
     auth: state.firebase.auth
   }
 }
-
 
 export default compose(
   /**
