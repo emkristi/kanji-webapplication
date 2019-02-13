@@ -6,17 +6,11 @@ import React from 'react'
  */
 const FlashcardInfo = ({deck}) => {
     return(
-/*
+
         <div className="content">
-            <div className="row">
-            <span className="card-title ">Kanji: {flashcard.kanji}</span>
-            <span className="card-title ">English: {flashcard.eng}</span>
-            <span className="card-title ">Radicals: {flashcard.radicals}</span> 
-*/
-        <div>
             <span className="card-title ">{deck.title}</span>
-        </div>
-       
+            {/* Link til alle flashcards som har deckid lik id'en til det deck'et man trykker på... */}
+        </div>      
     )
 }
 

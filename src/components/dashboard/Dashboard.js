@@ -14,7 +14,16 @@ class Dashboard extends Component {
     super(props);
     this.state = { currentCard: (Math.floor(Math.random() * 6)) };
     console.log(this.state.currentCard);
+    this.test();
+
+    //const test = getState().firestore.data.decks;
+    //console.log(test);
+
   }
+
+  test = function({flashcards}){
+    console.log('test: ${eng}');
+  };
 
   handleClick = (e) =>  {
     e.preventDefault();
@@ -69,7 +78,7 @@ class Dashboard extends Component {
 
 
 
-    console.log(currentCard);
+    //console.log("hei", flashcards.props.id);
     if (!auth.uid) return <Redirect to='/signin' />
     return (
       <div className="dashboard container">

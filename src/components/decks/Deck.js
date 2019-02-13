@@ -10,6 +10,8 @@ class Deck extends Component{
     render(){
         const {decks} = this.props;
         console.log("test:");
+        console.log("hei", decks);
+
 
         return( 
             <div className="row"> 
