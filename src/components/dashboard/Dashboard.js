@@ -13,15 +13,24 @@ class Dashboard extends Component {
   constructor(props){
     super(props);
     this.state = { currentCard: (Math.floor(Math.random() * 6)) };
-    console.log(this.state.currentCard);
+    //console.log(this.state.currentCard);
+    //console.log(this.props.currentCard);
+
+    
   }
 
   
   test = () => {
     //console.log('test', this.props);
     if(this.props.flashcards){
-      console.log('id:', this.props.flashcards[this.state.currentCard].id);
-      console.log('rad:', this.props.flashcards[this.state.currentCard].radicals);
+      var idh = this.props.flashcards[this.state.currentCard].id;
+      //console.log(idh);
+      //console.log('BtrHe7U7ZlaUmFza8unn')
+      if(idh === 'BtrHe7U7ZlaUmFza8unn'){
+        console.log('eeeyyyyoo')
+      }
+      //console.log('id:', this.props.flashcards[this.state.currentCard].id);
+      //console.log('rad:', this.props.flashcards[this.state.currentCard].radicals);
     }
   };
   
@@ -29,7 +38,7 @@ class Dashboard extends Component {
   handleClick = (e) =>  {
     e.preventDefault();
     //currentCard = (Math.floor(Math.random() * 6));
-
+  
     this.setState((state, props) => {
       return { currentCard: (Math.floor(Math.random() * 6))}
     });
