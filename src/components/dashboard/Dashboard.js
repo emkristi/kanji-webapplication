@@ -16,7 +16,7 @@ class Dashboard extends Component {
     console.log(this.state.currentCard);
   }
 
-  
+
   test = () => {
     //console.log('test', this.props);
     if(this.props.flashcards){
@@ -24,10 +24,23 @@ class Dashboard extends Component {
       console.log('rad:', this.props.flashcards[this.state.currentCard].radicals);
     }
   };
-  
+
+  handleGood = (e) => {
+    e.preventDefault();
+    console.log("good");
+    //la noe skje her
+  }  
+
+  handleBad = (e) =>{
+    e.preventDefault();
+    console.log("bad");
+    //noe
+  }
 
   handleClick = (e) =>  {
-    e.preventDefault();
+   e.preventDefault();
+   //Hvis trykket bad:
+    //this.handleBad();
     //currentCard = (Math.floor(Math.random() * 6));
 
     this.setState((state, props) => {
@@ -83,11 +96,12 @@ class Dashboard extends Component {
     return (
       <div className="dashboard container">
         { flashcards && 
-            <FlashcardInfo flashcard={flashcards[this.state.currentCard]}  />
-            
-        } 
-        
-        <button onClick={this.handleClick}>Next</button>
+            <FlashcardInfo flashcard={flashcards[this.state.currentCard]}  /> 
+        }
+        <div onClick={this.handleClick}>
+        <button onClick={this.handleBad} id="Bad">Bad</button>
+        <button onClick={this.handleGood} id="Good">Good</button>
+        </div>
       </div>
       
     )
@@ -104,7 +118,6 @@ class Dashboard extends Component {
 const mapStateToProps = (state) => {
   console.log(state);
   return {
-    
     flashcards: state.firestore.ordered.flashcards, // gives an array of the flashcards.. flashcard property, we are accessing the flashcards from the state in the flashcardReducer. We are grabbing this and attatching it to the flashcard property inside the props of this component (flashcard: )
     auth: state.firebase.auth
   }
