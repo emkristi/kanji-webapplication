@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom'
 import { firestoreConnect } from 'react-redux-firebase' // used to connect to firestore
 import { compose } from 'redux';
 import FlashcardInfo from '../flashcards/FlashcardInfo';
+import { timingSafeEqual } from 'crypto';
 
 class Dashboard extends Component {
 
@@ -12,7 +13,10 @@ class Dashboard extends Component {
 
   constructor(props){
     super(props);
-    this.state = { currentCard: (Math.floor(Math.random() * 6)) };
+    this.state = {currentCard: (Math.floor(Math.random() * 6)),
+                  hCards:[],
+                  eCards:[]
+    };
     console.log(this.state.currentCard);
   }
 
@@ -25,17 +29,38 @@ class Dashboard extends Component {
     }
   };
 
-  handleGood = (e) => {
-    e.preventDefault();
-    console.log("good");
-    //la noe skje her
-  }  
-
-  handleBad = (e) =>{
+  handleHard = (e) =>{
     e.preventDefault();
     console.log("bad");
-    //noe
-  }
+    console.log("KortId:" + this.state.currentCard);
+    console.log(this.state.currentCard);
+   /* var hardCards = [this.state.currentCard];
+    console.log(hardCards);
+    var newHardCards = hardCards;
+    newHardCards.push(this.state.currentCard);
+    */
+   // this.setState(hardCards);
+
+   /// console.log(newHardCards);
+    this.setState((state) => {
+      return { hCards: [...state.hCards, this.state.currentCard]}
+    });
+
+    console.log(this.state.hCards);
+
+   }
+
+  handleEasy = (e) => {
+    e.preventDefault();
+    console.log("good");
+    console.log("KortId:" + this.state.currentCard);
+
+    this.setState((state) => {
+      return { eCards: [...state.eCards, this.state.currentCard]}
+    });
+
+    console.log(this.state.eCards);
+  }  
 
   handleClick = (e) =>  {
    e.preventDefault();
@@ -46,9 +71,6 @@ class Dashboard extends Component {
     this.setState((state, props) => {
       return { currentCard: (Math.floor(Math.random() * 6))}
     });
-
-    console.log(this.state.currentCard);
-    console.log('test');
   }
 
 
@@ -99,8 +121,8 @@ class Dashboard extends Component {
             <FlashcardInfo flashcard={flashcards[this.state.currentCard]}  /> 
         }
         <div onClick={this.handleClick}>
-        <button onClick={this.handleBad} id="Bad">Bad</button>
-        <button onClick={this.handleGood} id="Good">Good</button>
+        <button onClick={this.handleHard} id="Hard">Hard</button>
+        <button onClick={this.handleEasy} id="Easy">Easy</button>
         </div>
       </div>
       
