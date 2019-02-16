@@ -4,7 +4,6 @@ import { Redirect } from 'react-router-dom'
 import { firestoreConnect } from 'react-redux-firebase' // used to connect to firestore
 import { compose } from 'redux';
 import FlashcardInfo from '../flashcards/FlashcardInfo';
-import { timingSafeEqual } from 'crypto';
 
 class Dashboard extends Component {
 
@@ -17,7 +16,7 @@ class Dashboard extends Component {
                   hCards:[],
                   eCards:[]
     };
-    console.log(this.state.currentCard);
+    //console.log(this.state.currentCard);
   }
 
 
@@ -32,47 +31,52 @@ class Dashboard extends Component {
   handleHard = (e) =>{
     e.preventDefault();
     console.log("bad");
-    console.log("KortId:" + this.state.currentCard);
-    console.log(this.state.currentCard);
-   /* var hardCards = [this.state.currentCard];
-    console.log(hardCards);
-    var newHardCards = hardCards;
-    newHardCards.push(this.state.currentCard);
-    */
-   // this.setState(hardCards);
-
-   /// console.log(newHardCards);
+    console.log("KortId:" + this.state.currentCard /*this.props.flashcards[this.state.currentCard].id*/);
+  
     this.setState((state) => {
-      return { hCards: [...state.hCards, this.state.currentCard]}
+      return { hCards: [...state.hCards, this.state.currentCard]} /*this.props.flashcards[this.state.currentCard].id]*/
     });
-
-    console.log(this.state.hCards);
+  
+    console.log("hCard:",this.state.hCards);
 
    }
 
   handleEasy = (e) => {
     e.preventDefault();
     console.log("good");
-    console.log("KortId:" + this.state.currentCard);
+    console.log("KortId:" + this.state.currentCard /*this.props.flashcards[this.state.currentCard].id*/);
 
     this.setState((state) => {
-      return { eCards: [...state.eCards, this.state.currentCard]}
+    return { eCards: [...state.eCards, this.state.currentCard]/*this.props.flashcards[this.state.currentCard].id]*/}
     });
 
-    console.log(this.state.eCards);
-  }  
+    console.log("eCard:",this.state.eCards);
+  }
 
   handleClick = (e) =>  {
    e.preventDefault();
-   //Hvis trykket bad:
-    //this.handleBad();
-    //currentCard = (Math.floor(Math.random() * 6));
-
-    this.setState((state, props) => {
+    
+    this.setState((state) => {
       return { currentCard: (Math.floor(Math.random() * 6))}
     });
-  }
 
+    //få denne funksjonen til å funke!
+    for (let i = 0; i <this.state.eCards.length; i++) {
+      console.log("cc:",this.state.currentCard)
+      console.log("ec:",this.state.eCards[i])
+      if(this.state.currentCard === this.state.eCards[i]){
+        
+        console.log("yesssssssssss")
+        //Hva skal skje når cc og ec er like?
+      }else {
+         console.log("Helllllll no")
+         //Hva skal skje når cc og ec er ulike?
+
+
+
+      }
+    }
+  }
 
   insertContentFlashcard (){
     //Code to insert content to the flashcard
@@ -88,7 +92,7 @@ class Dashboard extends Component {
     // destructuring to get the flashcards. this grabs the flashcards object off the props. we can now pass the flashcards down as a prop into the ListOfFlashcards component
     const { flashcards } = this.props;
     const { auth } = this.props;
-    const currentCard = (Math.floor(Math.random() * 6));
+   // const currentCard = (Math.floor(Math.random() * 6));
 
     this.test();
     //console.log('test:', this.props.flashcards[this.state.currentCard].eng);
@@ -121,11 +125,10 @@ class Dashboard extends Component {
             <FlashcardInfo flashcard={flashcards[this.state.currentCard]}  /> 
         }
         <div onClick={this.handleClick}>
-        <button onClick={this.handleHard} id="Hard">Hard</button>
-        <button onClick={this.handleEasy} id="Easy">Easy</button>
+          <button onClick={this.handleHard} id="Hard">Hard</button>
+          <button onClick={this.handleEasy} id="Easy">Easy</button>
         </div>
       </div>
-      
     )
   }
 }
