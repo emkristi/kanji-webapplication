@@ -14,7 +14,8 @@ class Dashboard extends Component {
     super(props);
     this.state = {currentCard: (Math.floor(Math.random() * 6)),
                   hCards:[],
-                  eCards:[]
+                  eCards:[],
+                  removeCard:[0,1,2,3,4,5]
     };
     //console.log(this.state.currentCard);
   }
@@ -29,35 +30,38 @@ class Dashboard extends Component {
   };
 
   handleHard = (e) =>{
-    e.preventDefault();
-    console.log("bad");
-    console.log("KortId:" + this.state.currentCard /*this.props.flashcards[this.state.currentCard].id*/);
+    //e.preventDefault();
+    console.log("This was hard, let me have this card again");
+    //console.log("KortId:" + this.state.currentCard /*this.props.flashcards[this.state.currentCard].id*/);
   
     this.setState((state) => {
       return { hCards: [...state.hCards, this.state.currentCard]} /*this.props.flashcards[this.state.currentCard].id]*/
     });
   
     console.log("hCard:",this.state.hCards);
-
-   }
+  }
 
   handleEasy = (e) => {
-    e.preventDefault();
-    console.log("good");
-    console.log("KortId:" + this.state.currentCard /*this.props.flashcards[this.state.currentCard].id*/);
+    //e.preventDefault();
+    console.log("This is easy! Give me something harder");
+   // console.log("KortId:" + this.state.currentCard /*this.props.flashcards[this.state.currentCard].id*/);
 
     this.setState((state) => {
-    return { eCards: [...state.eCards, this.state.currentCard]/*this.props.flashcards[this.state.currentCard].id]*/}
+      return { eCards: [...state.eCards, this.state.currentCard]
+              /*this.props.flashcards[this.state.currentCard].id]*/}
     });
 
     console.log("eCard:",this.state.eCards);
+    console.log("Removecard:", this.state.removeCard)
   }
 
   handleClick = (e) =>  {
    e.preventDefault();
+   
     
     this.setState((state) => {
-      return { currentCard: (Math.floor(Math.random() * 6))}
+      return { 
+        currentCard: (Math.floor(Math.random() * 6))}
     });
 
     //få denne funksjonen til å funke!
@@ -65,9 +69,33 @@ class Dashboard extends Component {
       console.log("cc:",this.state.currentCard)
       console.log("ec:",this.state.eCards[i])
       if(this.state.currentCard === this.state.eCards[i]){
+        console.log("yesssssssssss");
+
+        var array = [...this.state.removeCard] //make a separate copy of the array
+        var index = array.indexOf(e.target.value)
+        if (index !== -1){
+          array.splice(index, 1);
+          this.setState({removeCard:array});
+        }
+        console.log("REMOVECARD?!",this.setState({removeCard:array}))
         
-        console.log("yesssssssssss")
         //Hva skal skje når cc og ec er like?
+        //fjern én fra removecard
+        //når removecard === 0; alert(spillet er ferdig!)
+        
+
+       /* let list = this.state.removeCard.filter(currentCard =>{
+          return this.state.currentCard !== this.state.removeCard[i]
+        });
+        this.setState({
+          removeCard: list
+        })
+        console.log("NY REMOVECARD:",this.state.removeCard) */
+
+
+
+
+      
       }else {
          console.log("Helllllll no")
          //Hva skal skje når cc og ec er ulike?
