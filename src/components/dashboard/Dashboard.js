@@ -14,8 +14,7 @@ class Dashboard extends Component {
     super(props);
     this.state = {currentCard: (Math.floor(Math.random() * 6)),
                   hCards:[],
-                  eCards:[],
-                  removeCard:[0,1,2,3,4,5]
+                  eCards:[]
     };
     //console.log(this.state.currentCard);
   }
@@ -32,7 +31,7 @@ class Dashboard extends Component {
   handleHard = (e) =>{
     //e.preventDefault();
     console.log("This was hard, let me have this card again");
-    //console.log("KortId:" + this.state.currentCard /*this.props.flashcards[this.state.currentCard].id*/);
+    console.log("KortId:" + this.state.currentCard /*this.props.flashcards[this.state.currentCard].id*/);
   
     this.setState((state) => {
       return { hCards: [...state.hCards, this.state.currentCard]} /*this.props.flashcards[this.state.currentCard].id]*/
@@ -52,13 +51,12 @@ class Dashboard extends Component {
     });
 
     console.log("eCard:",this.state.eCards);
-    console.log("Removecard:", this.state.removeCard)
+    console.log("cardList:", this.state.removeCard)
   }
 
   handleClick = (e) =>  {
    e.preventDefault();
    
-    
     this.setState((state) => {
       return { 
         currentCard: (Math.floor(Math.random() * 6))}
@@ -71,19 +69,31 @@ class Dashboard extends Component {
       if(this.state.currentCard === this.state.eCards[i]){
         console.log("yesssssssssss");
 
-        var array = [...this.state.removeCard] //make a separate copy of the array
+
+        var cardList = [0,1,2,3,4,5];
+        
+        cardList.splice(cardList.indexOf(this.state.eCards[i]),1); //prints true when working. Vet nå at verdien eksisterer i eCards
+        //slett deretter fra cardList
+
+        console.log("REMOVED ELEMENT: ", cardList); //sletter element fra cardList
+        
+        
+        //Når eCard er fylt opp og alle elementene her finnes i cardList: send bruker ut av decket. 
+
+        //FORSØK1
+        /*var array = [...this.state.removeCard] //make a separate copy of the array
         var index = array.indexOf(e.target.value)
         if (index !== -1){
           array.splice(index, 1);
           this.setState({removeCard:array});
         }
-        console.log("REMOVECARD?!",this.setState({removeCard:array}))
+        console.log("REMOVECARD?!",this.setState({removeCard:array}))*/
         
         //Hva skal skje når cc og ec er like?
         //fjern én fra removecard
         //når removecard === 0; alert(spillet er ferdig!)
         
-
+        //FORSØK2
        /* let list = this.state.removeCard.filter(currentCard =>{
           return this.state.currentCard !== this.state.removeCard[i]
         });
@@ -92,14 +102,10 @@ class Dashboard extends Component {
         })
         console.log("NY REMOVECARD:",this.state.removeCard) */
 
-
-
-
-      
       }else {
          console.log("Helllllll no")
          //Hva skal skje når cc og ec er ulike?
-
+         //trenger ikke skje noe, for da kommer kortet opp uansett så lenge den ikke er lagret i eCards. 
 
 
       }
