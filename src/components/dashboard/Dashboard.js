@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { firestoreConnect } from 'react-redux-firebase' // used to connect to firestore
+import { firestoreConnect } from 'react-redux-firebase' //used to connect to firestore
 import { compose } from 'redux';
 import FlashcardInfo from '../flashcards/FlashcardInfo';
+import { NavLink } from 'react-router-dom'
 
 class Dashboard extends Component {
 
@@ -14,7 +15,8 @@ class Dashboard extends Component {
     super(props);
     this.state = {currentCard: (Math.floor(Math.random() * 6)),
                   hCards:[],
-                  eCards:[]
+                  eCards:[],
+                  cardList:[0,1,2,3,4,5] //må få denne til å ikke være hardkodet! hente verdier fra DB
     };
     //console.log(this.state.currentCard);
   }
@@ -53,7 +55,7 @@ class Dashboard extends Component {
     console.log("eCard:",this.state.eCards);
     console.log("cardList:", this.state.removeCard)
   }
-
+  
   handleClick = (e) =>  {
    e.preventDefault();
    
@@ -62,45 +64,35 @@ class Dashboard extends Component {
         currentCard: (Math.floor(Math.random() * 6))}
     });
 
-    //få denne funksjonen til å funke!
+    
+    //cardList.push(this.state.currentCard)  KOMMER DETTE TIL Å FUNKE KANSKJE??
+    
+    //når det kommer et kort som har kommet før må denne funksjonen overses
     for (let i = 0; i <this.state.eCards.length; i++) {
-      console.log("cc:",this.state.currentCard)
-      console.log("ec:",this.state.eCards[i])
+      console.log("cc:",this.state.currentCard);
+      console.log("ec:",this.state.eCards[i]);
+     
       if(this.state.currentCard === this.state.eCards[i]){
         console.log("yesssssssssss");
+        for(let j=0; j<this.state.cardList.length; j++){
+            while (this.state.cardList.length!==[]){
+              this.state.cardList.splice(this.state.cardList.indexOf(this.state.eCards[i]),1); //prints true when working. Vet nå at verdien eksisterer i eCards
+              //slett deretter fra cardList
 
-
-        var cardList = [0,1,2,3,4,5];
-        
-        cardList.splice(cardList.indexOf(this.state.eCards[i]),1); //prints true when working. Vet nå at verdien eksisterer i eCards
-        //slett deretter fra cardList
-
-        console.log("REMOVED ELEMENT: ", cardList); //sletter element fra cardList
-        
+              console.log("REMOVED ELEMENT: ", this.state.cardList); //sletter element fra cardList
+          
+              return this.state.cardList;
+            }
+        }
+        if(this.state.cardList.length==[]){
+          console.log("Ingen flere kort igjen"); //bruker må sendes til startsiden av deck!!!!
+          alert("ingen flere kort igjen!! Du blir sendt ut av deck");
+          //<li><NavLink to='/decks'></NavLink></li>
+        }
+       
         
         //Når eCard er fylt opp og alle elementene her finnes i cardList: send bruker ut av decket. 
 
-        //FORSØK1
-        /*var array = [...this.state.removeCard] //make a separate copy of the array
-        var index = array.indexOf(e.target.value)
-        if (index !== -1){
-          array.splice(index, 1);
-          this.setState({removeCard:array});
-        }
-        console.log("REMOVECARD?!",this.setState({removeCard:array}))*/
-        
-        //Hva skal skje når cc og ec er like?
-        //fjern én fra removecard
-        //når removecard === 0; alert(spillet er ferdig!)
-        
-        //FORSØK2
-       /* let list = this.state.removeCard.filter(currentCard =>{
-          return this.state.currentCard !== this.state.removeCard[i]
-        });
-        this.setState({
-          removeCard: list
-        })
-        console.log("NY REMOVECARD:",this.state.removeCard) */
 
       }else {
          console.log("Helllllll no")

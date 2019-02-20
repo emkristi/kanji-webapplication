@@ -21,7 +21,6 @@ class App extends Component {
             <Route path='/signup' component={SignUp} />
             <Route path='/createflashcard' component={CreateFlashcard} />
             <Route path='/createdeck' component={CreateDeck} />
-
             <Route path='/flashcards' component={Flashcards} />
             <Route path='/decks' component = {Deck} />
           </Switch>
