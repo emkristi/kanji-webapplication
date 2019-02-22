@@ -4,7 +4,9 @@ import { Redirect } from 'react-router-dom'
 import { firestoreConnect } from 'react-redux-firebase' // used to connect to firestore
 import { compose } from 'redux';
 import DeckInfo from '../decks/DeckInfo';
-//fire kort etter hverandre som skal forestille en "bunke"
+import { getDeckid } from '../../store/actions/deckActions';
+import { Link } from 'react-router-dom'
+
 
 class Deck extends Component{
     
@@ -14,48 +16,70 @@ class Deck extends Component{
         //console.log(this.state.currentCard);
     }
     
-    
     checkFlashcards = () => {
         //console.log('test', this.props);
         if(this.props.flashcards){ 
             var idd = this.props.flashcards[this.state.currentCard].id;
             if(idd === 'BtrHe7U7ZlaUmFza8unn'){
-
+                console.log('like');
+            }else{
+                console.log('ikke like');
             }
 
-            //console.log('id:', this.props.flashcards[this.state.currentCard].id);
-            //console.log('rad:', this.props.flashcards[this.state.currentCard].radicals);
+            console.log('id:', this.props.flashcards[this.state.currentCard].id);
+            console.log('rad:', this.props.flashcards[this.state.currentCard].radicals);
         }else{
             console.log('huuuh');
         }
     };
-    
+
+    clickDeck = (e) => {
+        e.preventDefault();
+        //if (this.props.decks[0].id === 'F8tkIG514gs5ewG50iXs') return <Redirect to='/' />
+        //this.props.deckAuth(this.state); // setter deckId??
+
+        //this.setState({})
+    }
 
     render(){
-        const {decks, flashcards} = this.props;
+        console.log('her:', this.props);
+        const {decks, flashcards, auth} = this.props;
         
         //console.log("test:", flashcards);
         //console.log("hei", decks);
 
         this.checkFlashcards();
 
+       // const d = this.props.decks[this.state.currentCard];
 
+        if (!auth.uid) return <Redirect to='/signin' />
         return( 
             <div className="row"> 
-                <div className="column">
-                    <div className="deck">
-                    <h3>{ decks && 
-                        <DeckInfo deck={decks[0]}  />
-                    } </h3>
-                    <p>Noe tekst</p>
-                    <p>Tekst</p>
+                
+            {/*<Link to={'/decks/' + d.id} key={d.id}> */}
+                    <div className="column" onClick={this.clickDeck}>
+                        <div className="deck">
+                            {/*<h3>{this.props.decks[this.state.currentCard]}</h3>*/}
+                            
+                            
+                            {/*}
+                            <h3>{ decks && 
+                                <DeckInfo deck={decks[0]}  />
+                                    
+                            } </h3>
+                            */}
+                        <p>Noe tekst</p>
+                        <p>Tekst</p>
+                        </div>
                     </div>
-                </div>
+         
+      
 
                 <div className="column">
                     <div className="deck">
-                    <h3>{ decks && 
-                        <DeckInfo deck={decks[1]}  />
+                    <h3>{ 
+                        
+
                     } </h3>
                     <p>Noe tekst</p>
                     <p>Tekst</p>
@@ -92,17 +116,23 @@ const mapStateToProps = (state) => {
     return {
       decks: state.firestore.ordered.decks, // gives an array of the decks.. flashcard property, we are accessing the decks from the state in the flashcardReducer. We are grabbing this and attatching it to the flashcard property inside the props of this component (flashcard: )
       flashcards: state.firestore.ordered.flashcards,
+      //currentDeck: state.firestore.decks,
       auth: state.firebase.auth
-      //auth: state.firebase.auth
     }
   }
-  
-  
+
+  const mapDispatchToProps = (dispatch) => {
+    return {
+        getDeckid: (c) => dispatch(getDeckid(c))
+    }
+  } 
+
+
   export default compose(
-    connect(mapStateToProps), 
+    connect(mapStateToProps, mapDispatchToProps), 
     firestoreConnect([ // we use firestoreConnect to tell which collection we want to connect to. takes in an array that contains a series of objects
       { collection: 'decks'
-     }
+        }
     ]),
     firestoreConnect([
         { collection: 'flashcards'

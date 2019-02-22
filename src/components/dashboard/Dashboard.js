@@ -1,40 +1,51 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
 import { firestoreConnect } from 'react-redux-firebase' // used to connect to firestore
 import { compose } from 'redux';
 import FlashcardInfo from '../flashcards/FlashcardInfo';
+import { deckAuth } from '../../store/actions/deckActions';
+import { Redirect } from 'react-router-dom'
+import { throws } from 'assert';
+
 
 class Dashboard extends Component {
 
 // intern this.state -> this.setState for å sette den
 // this.state.currentCard for å bruke
-
   constructor(props){
     super(props);
-    this.state = { currentCard: (Math.floor(Math.random() * 6)) };
+    this.state = { currentCard: (Math.floor(Math.random() * 6))};
+    
+   
     //console.log(this.state.currentCard);
     //console.log(this.props.currentCard);
-
-    
   }
-
   
   test = () => {
     //console.log('test', this.props);
     if(this.props.flashcards){
-      var idh = this.props.flashcards[this.state.currentCard].id;
+      var did = 'F8tkIG514gs5ewG50iXs';
+      var idh = this.props.flashcards[this.state.currentCard].deckid;
       //console.log(idh);
       //console.log('BtrHe7U7ZlaUmFza8unn')
-      if(idh === 'BtrHe7U7ZlaUmFza8unn'){
+      if(idh === did){
         console.log('eeeyyyyoo')
       }
       //console.log('id:', this.props.flashcards[this.state.currentCard].id);
       //console.log('rad:', this.props.flashcards[this.state.currentCard].radicals);
     }
   };
-  
 
+  checkIfInDeck = () => {
+    var currentDeckId = 'F8tkIG514gs5ewG50iXs';
+    var currentCardsDeckId = this.props.flashcards[this.state.currentCard].deckid;
+
+    if(currentDeckId === currentCardsDeckId){
+
+    }
+    
+  }
+  
   handleClick = (e) =>  {
     e.preventDefault();
     //currentCard = (Math.floor(Math.random() * 6));
@@ -44,9 +55,9 @@ class Dashboard extends Component {
     });
 
     console.log(this.state.currentCard);
+    //console.log(this.props)
     console.log('test');
   }
-
 
   insertContentFlashcard (){
     //Code to insert content to the flashcard
@@ -87,15 +98,19 @@ class Dashboard extends Component {
 
 */
 
+
     //console.log("hei", flashcards.props.id);
+    
     if (!auth.uid) return <Redirect to='/signin' />
+
     return (
       <div className="dashboard container">
+        
         { flashcards && 
             <FlashcardInfo flashcard={flashcards[this.state.currentCard]}  />
-            
         } 
-        
+
+
         <button onClick={this.handleClick}>Next</button>
       </div>
       
@@ -111,9 +126,8 @@ class Dashboard extends Component {
  * @param {*} state 
  */
 const mapStateToProps = (state) => {
-  console.log(state);
+  //console.log(state);
   return {
-    
     flashcards: state.firestore.ordered.flashcards, // gives an array of the flashcards.. flashcard property, we are accessing the flashcards from the state in the flashcardReducer. We are grabbing this and attatching it to the flashcard property inside the props of this component (flashcard: )
     auth: state.firebase.auth
   }
@@ -131,6 +145,8 @@ export default compose(
   firestoreConnect([ // we use firestoreConnect to tell which collection we want to connect to. takes in an array that contains a series of objects
     { collection: 'flashcards' } // contains one object that says which collection we want to conenct to..
   ])
+
+  
   /**
    * When this component is active, tha collection that we are listening to is the flashcards collection
    * and when when this component first loads or the firestore data is changed in the database, this will induce the firestore reducer to sync the store state

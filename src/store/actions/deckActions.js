@@ -2,7 +2,7 @@
 export const createDeck = (deck) => {
     return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firestore = getFirestore(); // reference to our firestore database
-        const profile = getState().firebase.profile;
+        //const profile = getState().firebase.profile;
         const userId = getState().firebase.auth.uid;
         firestore.collection('decks').add({  // async call (action takes some time to do) -> dispatch is halted
             ...deck,
@@ -14,3 +14,23 @@ export const createDeck = (deck) => {
         })
     }
 };
+
+
+export const getDeckid = (deck) => {
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
+        const firestore = getFirestore();
+        const deckId = getState().firestore.deck.id;
+        
+        /*
+        firestore.collection('decks').
+        (
+            credentials.id
+        ).then(() => {
+            dispatch({ type: 'GET_DECK_ID'})
+        }).catch((err) => {
+            dispatch({ type: 'DECK_AUTH_ERROR', err})
+        });
+        */
+
+    }
+}
