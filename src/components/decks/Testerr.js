@@ -5,7 +5,10 @@ import { compose } from 'redux'
 import { Redirect } from 'react-router-dom'
 
 const Testerr = (props) => {
+    console.log(props);
+
     const {deck, auth } = props;
+    
     if(!auth.uid) return <Redirect to='/signin'/>
     if(deck){
         return (

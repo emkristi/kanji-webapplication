@@ -55,61 +55,24 @@ class Deck extends Component{
         if (!auth.uid) return <Redirect to='/signin' />
         return( 
             <div className="row"> 
-                
-            
                     <div className="column" onClick={this.clickDeck}>
-                        <div className="deck">
                             { decks && decks.map(deck => {
                                 return (
                                 <Link to={'/deck/' + deck.id} key={deck.id}>
-                                    <DeckInfo deck={deck}/>
+                                    <div className="deck">
+                                        <DeckInfo deck={deck}/>
+                                    </div>
                                 </Link>
                                 )
                             })} 
-                           
-                            <p>Noe tekst</p>
-                            <p>Tekst</p>
-                            
-                        </div>
+                              
                     </div>
          
+         </div>
       
 
-                <div className="column">
-                    <div className="deck">
-                        { decks && decks.map(deck => {
-                                return (
-                                <Link to={'/deck/' + deck.id} key={deck.id}>
-                                    <DeckInfo deck={decks[0]}/>
-                                </Link>
-                                )
-                            })} 
-                    <p>Noe tekst</p>
-                    <p>Tekst</p>
-                    </div>
-                </div>
                 
-                <div className="column">
-                    <div className="deck">
-                    <h3>{ decks && 
-                        
-                        <DeckInfo deck={decks[2]}  />
-                    } </h3>
-                    <p>Noe tekst</p>
-                    <p>Tekst</p>
-                    </div>
-                </div>
-                
-                <div className="column">
-                    <div className="deck">
-                    <h3>{ decks && 
-                        <DeckInfo deck={decks[3]}  />
-                    } </h3>
-                    <p>Noe tekst</p>
-                    <p>Tekst</p>
-                </div>
-            </div>
-            </div>
+            
         )
     }
 }

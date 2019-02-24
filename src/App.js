@@ -9,6 +9,7 @@ import Flashcards from './components/flashcards/Flashcards'
 import Deck from './components/decks/Deck'
 import CreateDeck from './components/decks/CreateDeck'
 import Testerr from './components/decks/Testerr'
+import FCard from './components/flashcards/FCard'
 
 class App extends Component {
   render() {
@@ -24,7 +25,7 @@ class App extends Component {
             <Route path='/createdeck' component={CreateDeck} />
             <Route path='/flashcards' component={Flashcards} />
             <Route exact path='/decks' component = {Deck} />
-            <Route path='/decks/:id' component={Testerr} />
+            <Route path='/deck/:id' component={FCard} />
           </Switch>
         </div>
       </BrowserRouter>
