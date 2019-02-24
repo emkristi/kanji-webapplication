@@ -21,7 +21,6 @@ const Testerr = (props) => {
         )
     }
 
-    
 }
 
 const mapStateToProps = (state, ownProps) => {

@@ -24,7 +24,7 @@ class App extends Component {
             <Route path='/createdeck' component={CreateDeck} />
             <Route path='/flashcards' component={Flashcards} />
             <Route exact path='/decks' component = {Deck} />
-            <Route path='/deck/:id' component={Testerr} />
+            <Route path='/decks/:id' component={Testerr} />
           </Switch>
         </div>
       </BrowserRouter>

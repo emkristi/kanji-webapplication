@@ -56,20 +56,20 @@ class Deck extends Component{
         return( 
             <div className="row"> 
                 
-            {/*<Link to={'/decks/' + d.id} key={d.id}> */}
+            
                     <div className="column" onClick={this.clickDeck}>
                         <div className="deck">
-                            {/*<h3>{this.props.decks[this.state.currentCard]}</h3>*/}
+                            { decks && decks.map(deck => {
+                                return (
+                                <Link to={'/deck/' + deck.id} key={deck.id}>
+                                    <DeckInfo deck={deck}/>
+                                </Link>
+                                )
+                            })} 
+                           
+                            <p>Noe tekst</p>
+                            <p>Tekst</p>
                             
-                            
-                            {/*}
-                            <h3>{ decks && 
-                                <DeckInfo deck={decks[0]}  />
-                                    
-                            } </h3>
-                            */}
-                        <p>Noe tekst</p>
-                        <p>Tekst</p>
                         </div>
                     </div>
          
@@ -77,10 +77,13 @@ class Deck extends Component{
 
                 <div className="column">
                     <div className="deck">
-                    <h3>{ 
-                        
-
-                    } </h3>
+                        { decks && decks.map(deck => {
+                                return (
+                                <Link to={'/deck/' + deck.id} key={deck.id}>
+                                    <DeckInfo deck={decks[0]}/>
+                                </Link>
+                                )
+                            })} 
                     <p>Noe tekst</p>
                     <p>Tekst</p>
                     </div>
@@ -89,6 +92,7 @@ class Deck extends Component{
                 <div className="column">
                     <div className="deck">
                     <h3>{ decks && 
+                        
                         <DeckInfo deck={decks[2]}  />
                     } </h3>
                     <p>Noe tekst</p>
