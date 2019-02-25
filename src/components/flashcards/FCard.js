@@ -9,51 +9,29 @@ class FCard extends Component {
 
   constructor(props){
     super(props);
-    this.state = { currentCard: (Math.floor(Math.random() * 6)),
+    this.state = { currentCard: (Math.floor(Math.random() * 2)),
                     currentDeckList: []};
   }
 
-  
+  /*
   test = () => {
     if(this.props.flashcards){
         var dId = 'F8tkIG514gs5ewG50iXs';
         var arrtest = this.props.flashcards.filter(val => val.deckid === dId);  
-
         var kk = 'F8tkIG514gs5ewG50iXs';
-
-        var idh = this.props.flashcards[this.state.currentCard].deckid;
-        
-      
+        var idh = this.props.flashcards[this.state.currentCard].deckid;  
       console.log('test: ', this.props.deck);
-
-
       console.log(arrtest);
     }
   };
-
-  checkIfInDeck = () => {
-    var currentDeckId = 'F8tkIG514gs5ewG50iXs';
-    var currentCardsDeckId = this.props.flashcards[this.state.currentCard].deckid;
-    
-
-    if(currentDeckId === currentCardsDeckId){
-        return true;
-        /*this.setState((state) => {
-            return { currentDeckList: [...state.currentDeckList, cardChecked]}
-        })
-        */
-    }else{
-        return false;
-    }
-    
-  }
+  */
   
   handleClick = (e) =>  {
     e.preventDefault();
     //currentCard = (Math.floor(Math.random() * 6));
   
     this.setState((state, props) => {
-      return { currentCard: (Math.floor(Math.random() * 6))}
+      return { currentCard: (Math.floor(Math.random() * 2))}
     });
 
     console.log(this.state.currentCard);
@@ -65,13 +43,14 @@ class FCard extends Component {
 
   render() {
     const { flashcards, auth, deck } = this.props;
-    console.log(this.props.flashcards);
-    console.log(this.test());
     
-    var dId = 'F8tkIG514gs5ewG50iXs';
-    var arrtest = this.props.flashcards.filter(val => val.deckid === dId);  
+    console.log('deck:', this.props.id);
+    var dId = this.props.id;
+    var arrtest = this.props.flashcards.filter(val => val.deckid === dId); 
+    var arrTestLength = arrtest.length;
+ 
 
-    console.log('arr: ', arrtest);
+    console.log('arr len: ', arrTestLength);
     console.log('fcards: ',this.props.flashcards);
     
     if (!auth.uid) return <Redirect to='/signin' />
@@ -79,17 +58,16 @@ class FCard extends Component {
     return (
       <div className="dashboard container">
         
-        {/*arrtest && 
+        {arrtest && arrtest.length > 0 &&
             <FlashcardInfo flashcard={arrtest[this.state.currentCard]}  />
 
-        */} 
-
-        
-        <p>{deck.title}</p>
-        { flashcards && 
-            <FlashcardInfo flashcard={flashcards[this.state.currentCard]}  />
         } 
         
+        {/* 
+        <p>{deck.title}</p>
+            flashcards && 
+            <FlashcardInfo flashcard={flashcards[this.state.currentCard]}  />
+        */} 
         
         <button onClick={this.handleClick}>Next</button>
       </div>
@@ -101,8 +79,10 @@ class FCard extends Component {
 const mapStateToProps = (state, ownProps) => {
     const id = ownProps.match.params.id;
     const decks = state.firestore.data.decks;
+    console.log(decks);
     const deck = decks ? decks[id] : null
     return {
+        id,
         deck: deck,
         flashcards: state.firestore.ordered.flashcards,
         auth: state.firebase.auth

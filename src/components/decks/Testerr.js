@@ -13,7 +13,7 @@ const Testerr = (props) => {
     if(deck){
         return (
             <div className="container section tester">
-                <p>{deck.title}</p>
+                <p>{deck.id}</p>
             </div>
         )
     } else {

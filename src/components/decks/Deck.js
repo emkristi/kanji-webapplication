@@ -54,20 +54,21 @@ class Deck extends Component{
 
         if (!auth.uid) return <Redirect to='/signin' />
         return( 
-            <div className="column"> 
-                    <div className="row" onClick={this.clickDeck}>
+            <div className="row"> 
+              
+                    <div className="container" onClick={this.clickDeck}>
                             { decks && decks.map(deck => {
                                 return (
-                                <Link to={'/deck/' + deck.id} key={deck.id}>
+                                    <Link to={'/deck/' + deck.id} key={deck.id}>
                                     <div className="deck">
                                         <DeckInfo deck={deck}/>
                                     </div>
-                                </Link>
+                                    </Link>
                                 )
                             })} 
                               
                     </div>
-         
+            
          </div>
       
 

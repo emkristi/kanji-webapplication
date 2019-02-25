@@ -3,9 +3,7 @@ import { connect } from 'react-redux'
 import { firestoreConnect } from 'react-redux-firebase' // used to connect to firestore
 import { compose } from 'redux';
 import FlashcardInfo from '../flashcards/FlashcardInfo';
-import { deckAuth } from '../../store/actions/deckActions';
 import { Redirect } from 'react-router-dom'
-import { throws } from 'assert';
 
 
 class Dashboard extends Component {

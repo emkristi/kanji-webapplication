@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 const DeckInfo = ({deck}) => {
     return(
-        <div className="content">
+        <div className="row">
             <span className="card-title ">{deck.title}</span>
             <p>teste teste</p>
             {/* decks && decks.map(deck => {
