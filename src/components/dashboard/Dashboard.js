@@ -4,7 +4,6 @@ import { Redirect } from 'react-router-dom'
 import { firestoreConnect } from 'react-redux-firebase' //used to connect to firestore
 import { compose } from 'redux';
 import FlashcardInfo from '../flashcards/FlashcardInfo';
-import { NavLink } from 'react-router-dom'
 
 class Dashboard extends Component {
 
@@ -13,96 +12,101 @@ class Dashboard extends Component {
 
   constructor(props){
     super(props);
-    this.state = {currentCard: (Math.floor(Math.random() * 6)),
-                  hCards:[],
-                  eCards:[],
-                  cardList:[0,1,2,3,4,5] //må få denne til å ikke være hardkodet! hente verdier fra DB
+    this.state = {
+      currentCard: 0,
+      hCards:[],            
+      eCards:[],
+      cardList:[],
     };
-    //console.log(this.state.currentCard);
   }
-
 
   test = () => {
     //console.log('test', this.props);
     if(this.props.flashcards){
-      console.log('id:', this.props.flashcards[this.state.currentCard].id);
-      console.log('rad:', this.props.flashcards[this.state.currentCard].radicals);
-    }
+      //console.log('id:', this.props.flashcards[this.state.currentCard].id);
+      //console.log('rad:', this.props.flashcards[this.state.currentCard].radicals);
+    } 
   };
 
   handleHard = (e) =>{
     //e.preventDefault();
-    console.log("This was hard, let me have this card again");
-    console.log("KortId:" + this.state.currentCard /*this.props.flashcards[this.state.currentCard].id*/);
+    //console.log("KortId:" + this.state.currentCard /*this.props.flashcards[this.state.currentCard].id*/);
   
     this.setState((state) => {
       return { hCards: [...state.hCards, this.state.currentCard]} /*this.props.flashcards[this.state.currentCard].id]*/
     });
   
-    console.log("hCard:",this.state.hCards);
+   // console.log("hCard:",this.state.hCards);
   }
 
   handleEasy = (e) => {
     //e.preventDefault();
-    console.log("This is easy! Give me something harder");
-   // console.log("KortId:" + this.state.currentCard /*this.props.flashcards[this.state.currentCard].id*/);
-
-    this.setState((state) => {
-      return { eCards: [...state.eCards, this.state.currentCard]
-              /*this.props.flashcards[this.state.currentCard].id]*/}
-    });
-
-    console.log("eCard:",this.state.eCards);
-    console.log("cardList:", this.state.removeCard)
+    console.log("KortId:" + this.state.currentCard);
+    if(!this.state.eCards.includes(this.state.currentCard)){
+      this.setState((state) => {
+        return { eCards: [...state.eCards, this.state.currentCard]
+                /*this.props.flashcards[this.state.currentCard].id]*/}              
+      });
+      console.log("ecardlist:", this.state.eCards);
+    }
   }
+
   
   handleClick = (e) =>  {
    e.preventDefault();
-   
-    this.setState((state) => {
-      return { 
-        currentCard: (Math.floor(Math.random() * 6))}
-    });
+   const { flashcards } = this.props;
 
-    
-    //cardList.push(this.state.currentCard)  KOMMER DETTE TIL Å FUNKE KANSKJE??
-    
+   console.log("ecards length: ", this.state.eCards.length);
+
+    if(this.state.eCards.length === flashcards.length){
+       console.log("Du blir sendt ut av deck");
+       window.location.href='/decks';
+       return;
+     }
+
+    let currentNumber = (Math.floor(Math.random() * flashcards.length));
     //når det kommer et kort som har kommet før må denne funksjonen overses
-    for (let i = 0; i <this.state.eCards.length; i++) {
-      console.log("cc:",this.state.currentCard);
-      console.log("ec:",this.state.eCards[i]);
-     
-      if(this.state.currentCard === this.state.eCards[i]){
-        console.log("yesssssssssss");
-        for(let j=0; j<this.state.cardList.length; j++){
-            while (this.state.cardList.length!==[]){
-              this.state.cardList.splice(this.state.cardList.indexOf(this.state.eCards[i]),1); //prints true when working. Vet nå at verdien eksisterer i eCards
-              //slett deretter fra cardList
+    while(this.state.eCards.includes(currentNumber)){
+      currentNumber = (Math.floor(Math.random() * flashcards.length));
+      console.log("Nå skal random funksjonen kalles"); 
+    }
 
-              console.log("REMOVED ELEMENT: ", this.state.cardList); //sletter element fra cardList
+    this.setState({
+      currentCard: currentNumber
+    });
+      
+        
+/*
+        for(let j=0; j<this.state.cardList.length; j++){
           
+
+          
+            while (this.state.cardList.length!==[]){
+
+              var test = this.state.cardList;
+              test.splice(this.state.cardList.indexOf(this.state.eCards[i]),1);
+              console.log("test:::::: " + test);
+              this.setState({
+                cardList: test
+              });
+                
+              //Vet nå at verdien eksisterer i eCards
+              //Slett deretter fra cardList
+              console.log("Elements left: ", this.state.cardList); //sletter element fra cardList
+              return this.state.cardList;
+              
+            }
+            while (this.state.cardList.length===0){
+              console.log("FERDUG")
+
               return this.state.cardList;
             }
-        }
-        if(this.state.cardList.length==[]){
-          console.log("Ingen flere kort igjen"); //bruker må sendes til startsiden av deck!!!!
-          alert("ingen flere kort igjen!! Du blir sendt ut av deck");
-          //<li><NavLink to='/decks'></NavLink></li>
-        }
-       
-        
-        //Når eCard er fylt opp og alle elementene her finnes i cardList: send bruker ut av decket. 
-
-
-      }else {
-         console.log("Helllllll no")
-         //Hva skal skje når cc og ec er ulike?
-         //trenger ikke skje noe, for da kommer kortet opp uansett så lenge den ikke er lagret i eCards. 
-
-
-      }
+            */
+      
+      
+      
     }
-  }
+  
 
   insertContentFlashcard (){
     //Code to insert content to the flashcard
@@ -118,8 +122,19 @@ class Dashboard extends Component {
     // destructuring to get the flashcards. this grabs the flashcards object off the props. we can now pass the flashcards down as a prop into the ListOfFlashcards component
     const { flashcards } = this.props;
     const { auth } = this.props;
+    /*
+    if(flashcards && !this.state.cardList.length){
+      for (let i = 0; i <flashcards.length; i++) {
+        this.state.cardList.push(i);
+      }
+      console.log("cardlistennnnn:",this.state.cardList);
+      if(this.state.cardList===[0]){
+        alert("Ingen flere kort igjen, du blir sendt ut av deck");
+        //window.location.href='/decks';
+      }
+    }
    // const currentCard = (Math.floor(Math.random() * 6));
-
+*/
     this.test();
     //console.log('test:', this.props.flashcards[this.state.currentCard].eng);
 /*
@@ -150,6 +165,7 @@ class Dashboard extends Component {
         { flashcards && 
             <FlashcardInfo flashcard={flashcards[this.state.currentCard]}  /> 
         }
+        
         <div onClick={this.handleClick}>
           <button onClick={this.handleHard} id="Hard">Hard</button>
           <button onClick={this.handleEasy} id="Easy">Easy</button>

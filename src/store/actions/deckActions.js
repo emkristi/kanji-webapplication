@@ -2,7 +2,7 @@
 export const createDeck = (deck) => {
     return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firestore = getFirestore(); // reference to our firestore database
-        const profile = getState().firebase.profile;
+        //const profile = getState().firebase.profile;
         const userId = getState().firebase.auth.uid;
         firestore.collection('decks').add({  // async call (action takes some time to do) -> dispatch is halted
             ...deck,
