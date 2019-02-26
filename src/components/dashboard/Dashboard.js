@@ -21,7 +21,6 @@ class Dashboard extends Component {
   }
 
   test = () => {
-    //console.log('test', this.props);
     if(this.props.flashcards){
       //console.log('id:', this.props.flashcards[this.state.currentCard].id);
       //console.log('rad:', this.props.flashcards[this.state.currentCard].radicals);
@@ -29,18 +28,16 @@ class Dashboard extends Component {
   };
 
   handleHard = (e) =>{
-    //e.preventDefault();
     //console.log("KortId:" + this.state.currentCard /*this.props.flashcards[this.state.currentCard].id*/);
   
     this.setState((state) => {
       return { hCards: [...state.hCards, this.state.currentCard]} /*this.props.flashcards[this.state.currentCard].id]*/
     });
-  
+
    // console.log("hCard:",this.state.hCards);
   }
 
   handleEasy = (e) => {
-    //e.preventDefault();
     console.log("KortId:" + this.state.currentCard);
     if(!this.state.eCards.includes(this.state.currentCard)){
       this.setState((state) => {
@@ -51,7 +48,6 @@ class Dashboard extends Component {
     }
   }
 
-  
   handleClick = (e) =>  {
    e.preventDefault();
    const { flashcards } = this.props;
@@ -65,17 +61,16 @@ class Dashboard extends Component {
      }
 
     let currentNumber = (Math.floor(Math.random() * flashcards.length));
-    //når det kommer et kort som har kommet før må denne funksjonen overses
+    
     while(this.state.eCards.includes(currentNumber)){
-      currentNumber = (Math.floor(Math.random() * flashcards.length));
+      currentNumber = (Math.floor(Math.random() * flashcards.length ));
+      console.log("flashcardLengde:", flashcards.length);
       console.log("Nå skal random funksjonen kalles"); 
     }
-
+    
     this.setState({
       currentCard: currentNumber
     });
-      
-        
 /*
         for(let j=0; j<this.state.cardList.length; j++){
           
@@ -102,9 +97,6 @@ class Dashboard extends Component {
               return this.state.cardList;
             }
             */
-      
-      
-      
     }
   
 
