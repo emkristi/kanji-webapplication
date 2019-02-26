@@ -8,7 +8,6 @@ import CreateFlashcard from './components/flashcards/CreateFlashcard'
 import Flashcards from './components/flashcards/Flashcards'
 import Deck from './components/decks/Deck'
 import CreateDeck from './components/decks/CreateDeck'
-import Testerr from './components/decks/Testerr'
 import FCard from './components/flashcards/FCard'
 
 class App extends Component {

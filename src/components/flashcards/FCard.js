@@ -28,14 +28,12 @@ class FCard extends Component {
   
   handleClick = (e) =>  {
     e.preventDefault();
-    //currentCard = (Math.floor(Math.random() * 6));
   
     this.setState((state, props) => {
       return { currentCard: (Math.floor(Math.random() * 2))}
     });
 
     console.log(this.state.currentCard);
-    //console.log(this.props)
     console.log('test');
   }
 
@@ -57,18 +55,10 @@ class FCard extends Component {
 
     return (
       <div className="dashboard container">
-        
         {arrtest && arrtest.length > 0 &&
             <FlashcardInfo flashcard={arrtest[this.state.currentCard]}  />
 
-        } 
-        
-        {/* 
-        <p>{deck.title}</p>
-            flashcards && 
-            <FlashcardInfo flashcard={flashcards[this.state.currentCard]}  />
-        */} 
-        
+        }     
         <button onClick={this.handleClick}>Next</button>
       </div>
       
