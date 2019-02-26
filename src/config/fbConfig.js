@@ -5,7 +5,7 @@ import 'firebase/auth'
 // Initialize Firebase
 var config = {
 
-    apiKey: "...",
+    apiKey: "AIzaSyCDQX_UAYLg44oOF40BGMT14Uk4prHJ5Hk",
     authDomain: "kanjiapp-8f121.firebaseapp.com",
     databaseURL: "https://kanjiapp-8f121.firebaseio.com",
     projectId: "kanjiapp-8f121",

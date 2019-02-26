@@ -11,12 +11,18 @@ class SignUp extends Component {
         lastName: ''
     }
 
+    /**
+     * Function that fires when a user changes an input field
+     */
     handleChange = (e) => {
         this.setState({
             [e.target.id]: e.target.value
         })
     }
 
+     /**
+     * Function for submitting the form
+     */
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.signUp(this.state)
