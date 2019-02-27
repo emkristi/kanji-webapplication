@@ -9,7 +9,7 @@ import Flashcards from './components/flashcards/Flashcards'
 import Deck from './components/decks/Deck'
 import CreateDeck from './components/decks/CreateDeck'
 import FCard from './components/flashcards/FCard'
-
+import PhotoFlashcards from './components/flashcards/PhotoFlashcards';
 class App extends Component {
   render() {
     return (
@@ -25,6 +25,7 @@ class App extends Component {
             <Route path='/flashcards' component={Flashcards} />
             <Route exact path='/decks' component = {Deck} />
             <Route path='/deck/:id' component={FCard} />
+            <Route path='/photoflashcard' component={PhotoFlashcards} />
           </Switch>
         </div>
       </BrowserRouter>

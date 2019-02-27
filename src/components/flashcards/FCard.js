@@ -9,7 +9,7 @@ class FCard extends Component {
 
   constructor(props){
     super(props);
-    this.state = { currentCard: (Math.floor(Math.random() * 2)),
+    this.state = { currentCard: (Math.floor(Math.random() * 6)),
                     currentDeckList: []};
   }
 
@@ -30,14 +30,12 @@ class FCard extends Component {
     e.preventDefault();
   
     this.setState((state, props) => {
-      return { currentCard: (Math.floor(Math.random() * 2))}
+      return { currentCard: (Math.floor(Math.random() * 6))}
     });
 
     console.log(this.state.currentCard);
     console.log('test');
   }
-
-  
 
   render() {
     const { flashcards, auth, deck } = this.props;
@@ -57,11 +55,9 @@ class FCard extends Component {
       <div className="dashboard container">
         {arrtest && arrtest.length > 0 &&
             <FlashcardInfo flashcard={arrtest[this.state.currentCard]}  />
-
         }     
         <button onClick={this.handleClick}>Next</button>
       </div>
-      
     )
   }
 }
