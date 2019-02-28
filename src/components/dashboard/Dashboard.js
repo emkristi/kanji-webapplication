@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { firestoreConnect } from 'react-redux-firebase' // used to connect to firestore
 import { compose } from 'redux';
 import FlashcardInfo from '../flashcards/FlashcardInfo';
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
 
 
 class Dashboard extends Component {
@@ -12,7 +12,7 @@ class Dashboard extends Component {
   constructor(props){
     super(props);
     this.state = { 
-      currentCard: (Math.floor(Math.random() * 7))
+      currentCard: (Math.floor(Math.random() * 6))
     };
      
     //console.log(this.state.currentCard);
@@ -31,10 +31,6 @@ class Dashboard extends Component {
       }
       console.log('id:', this.props.flashcards[this.state.currentCard].id);
       console.log('rad:', this.props.flashcards[this.state.currentCard].radicals);
-
-
-      
-
     }
   };
 
@@ -44,8 +40,7 @@ class Dashboard extends Component {
 
     if(currentDeckId === currentCardsDeckId){
 
-    }
-    
+    } 
   }
 
   handleClick = (e) =>  {
@@ -53,7 +48,7 @@ class Dashboard extends Component {
     //currentCard = (Math.floor(Math.random() * 6));
   
     this.setState((state, props) => {
-      return { currentCard: (Math.floor(Math.random() * 7))}
+      return { currentCard: (Math.floor(Math.random() * 6))}
     });
 
     console.log(this.state.currentCard);

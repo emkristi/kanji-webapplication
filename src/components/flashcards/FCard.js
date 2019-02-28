@@ -40,7 +40,7 @@ class FCard extends Component {
   render() {
     const { flashcards, auth, deck } = this.props;
     
-    console.log('deck:', this.props.id);
+    console.log('deck t:', this.props.deck);
     var dId = this.props.id;
     var arrtest = this.props.flashcards.filter(val => val.deckid === dId); 
     var arrTestLength = arrtest.length;
@@ -54,7 +54,7 @@ class FCard extends Component {
     return (
       <div className="dashboard container">
         {arrtest && arrtest.length > 0 &&
-            <FlashcardInfo flashcard={arrtest[this.state.currentCard]}  />
+            <FlashcardInfo flashcard={arrtest[this.state.currentCard]} deck={this.props.deck}  />
         }     
         <button onClick={this.handleClick}>Next</button>
       </div>
