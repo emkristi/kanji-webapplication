@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { firestoreConnect } from 'react-redux-firebase' //used to connect to firestore
+
 import { compose } from 'redux';
 import FlashcardInfo from '../flashcards/FlashcardInfo';
 
@@ -13,10 +14,11 @@ class Dashboard extends Component {
   constructor(props){
     super(props);
     this.state = {
-      currentCard: 0,
-      hCards:[],            
-      eCards:[],
-      cardList:[],
+      currentCard: 0, //ok
+      hCards:[],        //ok    
+      eCards:[],      //ok
+      cardList:[],    //BRUKES IKKE
+      arrayDB: []     //flashcards fra database
     };
   }
 
@@ -29,7 +31,7 @@ class Dashboard extends Component {
 
   handleHard = (e) =>{
     //console.log("KortId:" + this.state.currentCard /*this.props.flashcards[this.state.currentCard].id*/);
-  
+
     this.setState((state) => {
       return { hCards: [...state.hCards, this.state.currentCard]} /*this.props.flashcards[this.state.currentCard].id]*/
     });
@@ -38,11 +40,11 @@ class Dashboard extends Component {
   }
 
   handleEasy = (e) => {
-    console.log("KortId:" + this.state.currentCard);
+    console.log("currentCard:" + this.state.currentCard);
     if(!this.state.eCards.includes(this.state.currentCard)){
       this.setState((state) => {
         return { eCards: [...state.eCards, this.state.currentCard]
-                /*this.props.flashcards[this.state.currentCard].id]*/}              
+          /*this.props.flashcards[this.state.currentCard].id]*/}              
       });
       console.log("ecardlist:", this.state.eCards);
     }
@@ -52,30 +54,41 @@ class Dashboard extends Component {
    e.preventDefault();
    const { flashcards } = this.props;
 
-   console.log("ecards length: ", this.state.eCards.length);
+   console.log("ecards length: ", this.state.eCards.length); //denne er riktig
 
-    if(this.state.eCards.length === flashcards.length){
+    if(this.state.eCards.length === flashcards.length){ //denne funksjonen er riktig
        console.log("Du blir sendt ut av deck");
        window.location.href='/decks';
        return;
-     }
-
-    let currentNumber = (Math.floor(Math.random() * flashcards.length));
-    
-    while(this.state.eCards.includes(currentNumber)){
-      currentNumber = (Math.floor(Math.random() * flashcards.length ));
-      console.log("flashcardLengde:", flashcards.length);
-      console.log("Nå skal random funksjonen kalles"); 
     }
-    
+    console.log("flashcardlengde", flashcards.length);
+   //console.log("flashcards:", this.props.flashcards); //printer ut flashcardstabellen fra db
+
+
+    let currentNumber = (Math.floor(Math.random() * flashcards.length)); //kun en random funksjon. Denne funker
+      
+    for(let i=0; i<this.state.eCards.length; i++){
+        if(this.state.eCards.includes(this.state.currentCard)){
+          currentNumber = (Math.floor(Math.random() * flashcards.length ));
+          //console.log("flashcardLengde:", flashcards.length);
+          console.log("Nå skal random funksjonen kalles");
+          var test = this.state.arrayDB;
+          test.splice(this.state.arrayDB.indexOf(this.state.eCards[i]),1);
+          console.log("arrayDB:", this.state.arrayDB);
+          return this.state.arrayDB;
+      }
+     // return this.state.arrayDB;
+    }
+    this.setState({
+      arrayDB: this.props.flashcards
+    });
+
     this.setState({
       currentCard: currentNumber
-    });
+    }); 
+ 
 /*
         for(let j=0; j<this.state.cardList.length; j++){
-          
-
-          
             while (this.state.cardList.length!==[]){
 
               var test = this.state.cardList;
@@ -98,8 +111,6 @@ class Dashboard extends Component {
             }
             */
     }
-  
-
   insertContentFlashcard (){
     //Code to insert content to the flashcard
     var card = document.querySelector('.card');
