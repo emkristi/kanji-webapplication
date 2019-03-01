@@ -15,10 +15,9 @@ class Dashboard extends Component {
     super(props);
     this.state = {
       currentCard: 0, //ok
-      hCards:[],        //ok    
-      eCards:[],      //ok
-      cardList:[],    //BRUKES IKKE
-      arrayDB: []     //flashcards fra database
+      hCards:[],     //ok    
+      eCards:[],    //ok
+      cardList:[]   //BRUKES IKKE
     };
   }
 
@@ -35,54 +34,55 @@ class Dashboard extends Component {
     this.setState((state) => {
       return { hCards: [...state.hCards, this.state.currentCard]} /*this.props.flashcards[this.state.currentCard].id]*/
     });
-
+    this.handleClick();
    // console.log("hCard:",this.state.hCards);
   }
 
   handleEasy = (e) => {
-    console.log("currentCard:" + this.state.currentCard);
-    if(!this.state.eCards.includes(this.state.currentCard)){
-      this.setState((state) => {
-        return { eCards: [...state.eCards, this.state.currentCard]
-          /*this.props.flashcards[this.state.currentCard].id]*/}              
-      });
-      console.log("ecardlist:", this.state.eCards);
-    }
+    // console.log("currentCard:" + this.state.currentCard);
+    this.setState((state) => {
+      return { eCards: [...state.eCards, this.state.currentCard]
+        /*this.props.flashcards[this.state.currentCard].id]*/}              
+    });
+    // console.log("ecardlist:", this.state.eCards);
+    this.handleClick();
   }
 
   handleClick = (e) =>  {
-   e.preventDefault();
+   //e.preventDefault();
    const { flashcards } = this.props;
+   let i = this.state.currentCard;
+   console.log("Current card", i);
 
-   console.log("ecards length: ", this.state.eCards.length); //denne er riktig
+   console.log("ecards length: ", this.state.eCards); //denne er riktig
+   console.log("flashcards length: ", flashcards); //denne er riktig
+   
 
-    if(this.state.eCards.length === flashcards.length){ //denne funksjonen er riktig
+    if(this.state.eCards.length+1 === flashcards.length){ //denne funksjonen er riktig
        console.log("Du blir sendt ut av deck");
        window.location.href='/decks';
        return;
     }
-    console.log("flashcardlengde", flashcards.length);
+   // console.log("flashcardlengde", flashcards.length);
    //console.log("flashcards:", this.props.flashcards); //printer ut flashcardstabellen fra db
 
 
-    let currentNumber = (Math.floor(Math.random() * flashcards.length)); //kun en random funksjon. Denne funker
-      
-    for(let i=0; i<this.state.eCards.length; i++){
-        if(this.state.eCards.includes(this.state.currentCard)){
-          currentNumber = (Math.floor(Math.random() * flashcards.length ));
-          //console.log("flashcardLengde:", flashcards.length);
-          console.log("Nå skal random funksjonen kalles");
-          var test = this.state.arrayDB;
-          test.splice(this.state.arrayDB.indexOf(this.state.eCards[i]),1);
-          console.log("arrayDB:", this.state.arrayDB);
-          return this.state.arrayDB;
-      }
+    let currentNumber = (Math.round(Math.random() * (flashcards.length-1))); //kun en random funksjon. Denne funker
+ 
+    while((this.state.eCards.includes(currentNumber) || currentNumber === this.state.currentCard)){
+
+      currentNumber = (Math.round(Math.random() * (flashcards.length-1) ));
+      //console.log("flashcardLengde:", flashcards.length);
+      console.log("Nå skal random funksjonen kalles");
+      /*var test = this.state.arrayDB;
+      test.splice(this.state.arrayDB.indexOf(this.state.eCards[i]),1);
+      console.log("arrayDB:", this.state.arrayDB);
+      return this.state.arrayDB;*/
      // return this.state.arrayDB;
     }
-    this.setState({
+  /*  this.setState({
       arrayDB: this.props.flashcards
-    });
-
+    }); */
     this.setState({
       currentCard: currentNumber
     }); 
@@ -169,7 +169,7 @@ class Dashboard extends Component {
             <FlashcardInfo flashcard={flashcards[this.state.currentCard]}  /> 
         }
         
-        <div onClick={this.handleClick}>
+        <div>
           <button onClick={this.handleHard} id="Hard">Hard</button>
           <button onClick={this.handleEasy} id="Easy">Easy</button>
         </div>
