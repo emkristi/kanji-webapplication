@@ -37,15 +37,57 @@ class FCard extends Component {
     console.log('test');
   }
 
+  // metode som lager en array bestående av gjeldende kort samt 3 random
+  randArray = () => {
+      var arr = [];
+      arr.push(this.state.currentCard);
+
+      while(arr.length < 4){
+        var random = (Math.floor(Math.random() * 6)); 
+
+        if(!arr.includes(random)){
+            arr.push(random);
+        }
+      }
+      return arr;
+  }
+
+  randArrayKan = () => {
+      var arr2 = [];
+      console.log('1', this.props.flashcards[this.state.currentCard].kanji);
+      arr2.push(this.props.flashcards[this.state.currentCard].kanji);
+      //console.log('2', this.props.flashcards[this.state.currentCard].kanji);
+
+
+      while(arr2.length < 4){
+          var r = (Math.floor(Math.random() * 6)); 
+
+          if(!arr2.includes(this.props.flashcards[r].kanji)){
+              arr2.push(this.props.flashcards[r].kanji)
+          }
+      }
+      return arr2;
+  }
+
+        
+    
+
   render() {
     const { flashcards, auth, deck } = this.props;
     
     console.log('deck t:', this.props.deck);
+    //this.randArray();
+    console.log('funker dette?', this.randArray());
+
     var dId = this.props.id;
     var arrtest = this.props.flashcards.filter(val => val.deckid === dId); 
     var arrTestLength = arrtest.length;
- 
 
+    var randomArr = this.randArrayKan();
+
+    console.log('hehhe', this.randArrayKan());
+     
+    
     console.log('arr len: ', arrTestLength);
     console.log('fcards: ',this.props.flashcards);
     
@@ -54,7 +96,7 @@ class FCard extends Component {
     return (
       <div className="dashboard container">
         {arrtest && arrtest.length > 0 &&
-            <FlashcardInfo flashcard={arrtest[this.state.currentCard]} deck={this.props.deck}  />
+            <FlashcardInfo flashcard={arrtest[this.state.currentCard]} deck={this.props.deck} flashcards={this.props.flashcards} randomArrayList={randomArr}  />
         }     
         <button onClick={this.handleClick}>Next</button>
       </div>

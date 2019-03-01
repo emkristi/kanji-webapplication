@@ -5,8 +5,9 @@ import React from 'react'
  * @param {*} param0 
  */
 
-const FlashcardInfo = ({flashcard, deck}) => {
+const FlashcardInfo = ({flashcard, deck, flashcards, randomArrayList}) => {
     console.log(deck.type);
+    console.log(flashcards);
     return(
         <div className="card z-depth-0 project-summary">
             <div className="card-panel grey lighten-4">
@@ -16,11 +17,18 @@ const FlashcardInfo = ({flashcard, deck}) => {
                             <div className="content">
                                 <div className="content front">
                                     <img className="card-content" src={flashcard.pictureUrl}/>
-                                    <span className="card-title ">喿    火    乚     雨</span>
+
+                                    {/* HER SKAL DET KOMME OPP FIRE KANJI OPTIONS, 1 RIKTIG OG 3 RANDOM SOM IKKE ER SAMME SOM DEN RIKTIGE*/}
+                                    
+                                    <span className="card-title ">R: {randomArrayList}</span>
+
+                                    <span className="card-title ">Riktig kanji: {flashcard.kanji}</span>
+                                   
+
                                 </div>
                                 <p>_______________________________</p>
                                 <div className="content front">
-                                    <span className="card-title ">喿</span>
+                                    <span className="card-title ">{flashcard.kanji}</span>
                                 </div>
                             </div>
                         }
@@ -45,14 +53,10 @@ const FlashcardInfo = ({flashcard, deck}) => {
                                             <span className="card-title ">Mnemonic: {flashcard.mnemonic}</span>
                                         }
                                     </div>
-                                    
                                 </div>
                             </div>
                         }
-                    </div>
-
-            
-                         
+                    </div>       
                 </div>
             </div>
         </div>
