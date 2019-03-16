@@ -9,8 +9,10 @@ class FCard extends Component {
 
   constructor(props){
     super(props);
-    this.state = { currentCard: (Math.floor(Math.random() * 6)),
-                    currentDeckList: []};
+    this.state = { 
+        currentCard: (Math.floor(Math.random() * 6)),
+        currentDeckList: []
+    };
   }
 
   /*
@@ -37,35 +39,54 @@ class FCard extends Component {
     console.log('test');
   }
 
+  handleClickCorrect = (e, rikt, randar) => {
+    console.log(rikt);
+    console.log(randar);
+
+  }
+
   // metode som lager en array bestående av gjeldende kort samt 3 random
   randArray = () => {
       var arr = [];
       arr.push(this.state.currentCard);
 
+      console.log('arr1', arr);
+
       while(arr.length < 4){
         var random = (Math.floor(Math.random() * 6)); 
+
+        console.log('randum', random)
 
         if(!arr.includes(random)){
             arr.push(random);
         }
       }
+      console.log('arr2', arr)
       return arr;
   }
 
   randArrayKan = () => {
-      var arr2 = [];
-      console.log('1', this.props.flashcards[this.state.currentCard].kanji);
-      arr2.push(this.props.flashcards[this.state.currentCard].kanji);
-      //console.log('2', this.props.flashcards[this.state.currentCard].kanji);
 
+      var arr2 = [];
+
+      // hent ut random kan og bruk
+      //console.log('1', this.props.flashcards[this.state.currentCard].kanji);
+      
+      arr2.push(this.props.flashcards[this.state.currentCard].kanji);
+      console.log('current card', this.props.flashcards[this.state.currentCard].kanji);
+      console.log('arrrrr2', arr2);
+      //console.log('2', this.props.flashcards[this.state.currentCard].kanji);
 
       while(arr2.length < 4){
           var r = (Math.floor(Math.random() * 6)); 
-
+          console.log('r', this.props.flashcards[r].kanji);
           if(!arr2.includes(this.props.flashcards[r].kanji)){
               arr2.push(this.props.flashcards[r].kanji)
           }
       }
+      console.log('arrr2222', arr2);
+      arr2.sort(function(){ return 0.5 - Math.random() });
+      console.log('rrrrrrand', arr2);
       return arr2;
   }
 
@@ -73,22 +94,34 @@ class FCard extends Component {
     
 
   render() {
-    const { flashcards, auth, deck } = this.props;
+    const { flashcards, auth, deck, flashcardsincurrent } = this.props;
     
-    console.log('deck t:', this.props.deck);
+    //console.log('deck t:', this.props.deck); // Tittel og type deck...
     //this.randArray();
+    //console.log('hhh', );
+  
     console.log('funker dette?', this.randArray());
-
     var dId = this.props.id;
-    var arrtest = this.props.flashcards.filter(val => val.deckid === dId); 
-    var arrTestLength = arrtest.length;
 
+    var riktig = this.props.flashcards[this.state.currentCard].kanji;
+
+    console.log('currcard2', this.props.flashcards[this.state.currentCard].kanji);
+    
+
+    // hent inn i random kan
+
+    // arrtest henter ut alle arrays i gjeldende deck
+    var arrtest = this.props.flashcards.filter(val => val.deckid === this.props.id); 
+    console.log('hehe', arrtest);
+
+    //var arrTestLength = arrtest.length;
+
+    // array av random cards
     var randomArr = this.randArrayKan();
 
     console.log('hehhe', this.randArrayKan());
      
     
-    console.log('arr len: ', arrTestLength);
     console.log('fcards: ',this.props.flashcards);
     
     if (!auth.uid) return <Redirect to='/signin' />
@@ -96,9 +129,8 @@ class FCard extends Component {
     return (
       <div className="dashboard container">
         {arrtest && arrtest.length > 0 &&
-            <FlashcardInfo flashcard={arrtest[this.state.currentCard]} deck={this.props.deck} flashcards={this.props.flashcards} randomArrayList={randomArr}  />
+            <FlashcardInfo hcc={this.handleClickCorrect} hc={this.handleClick} riktigfc={riktig} flashcard={arrtest[this.state.currentCard]} deck={this.props.deck} flashcards={this.props.flashcards} randomArrayList={randomArr}  />
         }     
-        <button onClick={this.handleClick}>Next</button>
       </div>
     )
   }
@@ -107,10 +139,13 @@ class FCard extends Component {
 const mapStateToProps = (state, ownProps) => {
     const id = ownProps.match.params.id;
     const decks = state.firestore.data.decks;
+    let flashcards = state.firestore.ordered.flashcards;
+    let flashcardsincurrent = flashcards.filter(val => val.deckid === id)
     console.log(decks);
     const deck = decks ? decks[id] : null
     return {
         id,
+        flashcardsincurrent,
         deck: deck,
         flashcards: state.firestore.ordered.flashcards,
         auth: state.firebase.auth

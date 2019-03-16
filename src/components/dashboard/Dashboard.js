@@ -3,17 +3,16 @@ import { connect } from 'react-redux'
 import { firestoreConnect } from 'react-redux-firebase' // used to connect to firestore
 import { compose } from 'redux';
 import FlashcardInfo from '../flashcards/FlashcardInfo';
-import { Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom'
 
 
 class Dashboard extends Component {
+
 // intern this.state -> this.setState for å sette den
 // this.state.currentCard for å bruke
   constructor(props){
     super(props);
-    this.state = { 
-      currentCard: (Math.floor(Math.random() * 6))
-    };
+    this.state = { currentCard: (Math.floor(Math.random() * 6))};
      
     //console.log(this.state.currentCard);
     //console.log(this.props.currentCard);
@@ -24,13 +23,13 @@ class Dashboard extends Component {
     if(this.props.flashcards){
       var did = 'F8tkIG514gs5ewG50iXs';
       var idh = this.props.flashcards[this.state.currentCard].deckid;
-      console.log(idh);
-      console.log('BtrHe7U7ZlaUmFza8unn')
+      //console.log(idh);
+      //console.log('BtrHe7U7ZlaUmFza8unn')
       if(idh === did){
         console.log('eeeyyyyoo')
       }
-      console.log('id:', this.props.flashcards[this.state.currentCard].id);
-      console.log('rad:', this.props.flashcards[this.state.currentCard].radicals);
+      //console.log('id:', this.props.flashcards[this.state.currentCard].id);
+      //console.log('rad:', this.props.flashcards[this.state.currentCard].radicals);
     }
   };
 
@@ -40,9 +39,10 @@ class Dashboard extends Component {
 
     if(currentDeckId === currentCardsDeckId){
 
-    } 
+    }
+    
   }
-
+  
   handleClick = (e) =>  {
     e.preventDefault();
     //currentCard = (Math.floor(Math.random() * 6));
@@ -66,31 +66,15 @@ class Dashboard extends Component {
     });
   }
 
-  /*
-
-  displayPicture = (e) => {
-    let reader = new FileReader();
-    let file = event.target.files[0];
-    reader.onloadend = () => {
-      this.setState({
-        picture: file,
-        pictureUrl: reader.result
-      })
-    }
-    reader.readAsDataURL(file);
-  }
-*/
   render() {
     // destructuring to get the flashcards. this grabs the flashcards object off the props. we can now pass the flashcards down as a prop into the ListOfFlashcards component
     const { flashcards } = this.props;
     const { auth } = this.props;
+    const currentCard = (Math.floor(Math.random() * 6));
 
     this.test();
     //console.log('test:', this.props.flashcards[this.state.currentCard].eng);
-
-
-    /*
-
+/*
     console.log(currentCard, "currentcard");
     if (!auth.uid) return <Redirect to='/signin' />
     return (
@@ -107,26 +91,24 @@ class Dashboard extends Component {
         </div>
         <p>Click card to flip</p>
         <button onClick={this.handleClick}>Next</button>
-
 */
 
 
-
+    //console.log("hei", flashcards.props.id);
     
     if (!auth.uid) return <Redirect to='/signin' />
 
-
-    
     return (
-      
-      <div className="dashboard container">  
+      <div className="dashboard container">
         
-  
         { flashcards && 
             <FlashcardInfo flashcard={flashcards[this.state.currentCard]}  />
         } 
+
+
         <button onClick={this.handleClick}>Next</button>
       </div>
+      
     )
   }
 }
@@ -146,6 +128,7 @@ const mapStateToProps = (state) => {
   }
 }
 
+
 export default compose(
   /**
    * connect() is used to connect the dashboard component with the redux store.
@@ -157,6 +140,7 @@ export default compose(
   firestoreConnect([ // we use firestoreConnect to tell which collection we want to connect to. takes in an array that contains a series of objects
     { collection: 'flashcards' } // contains one object that says which collection we want to conenct to..
   ])
+
   
   /**
    * When this component is active, tha collection that we are listening to is the flashcards collection

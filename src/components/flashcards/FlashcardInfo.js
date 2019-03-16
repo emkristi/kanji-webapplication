@@ -5,30 +5,36 @@ import React from 'react'
  * @param {*} param0 
  */
 
-const FlashcardInfo = ({flashcard, deck, flashcards, randomArrayList}) => {
+const FlashcardInfo = ({flashcard, deck, flashcards, randomArrayList, riktigfc, hc, hcc}) => {
     console.log(deck.type);
     console.log(flashcards);
     return(
-        <div className="card z-depth-0 project-summary">
-            <div className="card-panel grey lighten-4">
-                <div className="card-content grey-text text-darken-3">
+        <div className="content">
+            <div className="content">
+                <div className="content">
                     <div className="content">
                         {deck.type === "Images" && 
                             <div className="content">
                                 <div className="content front">
-                                    <img className="card-content" src={flashcard.pictureUrl}/>
+                                    <img className="card-content" src={flashcard.pictureUrl} width="150px" height="150px"/>
 
-                                    {/* HER SKAL DET KOMME OPP FIRE KANJI OPTIONS, 1 RIKTIG OG 3 RANDOM SOM IKKE ER SAMME SOM DEN RIKTIGE*/}
-                                    
-                                    <span className="card-title ">R: {randomArrayList}</span>
-
-                                    <span className="card-title ">Riktig kanji: {flashcard.kanji}</span>
+                                    <div class="row">
+                                        <button onClick={hcc}>{randomArrayList[0]}</button>
+                                        <button>{randomArrayList[1]}</button>
+                                        <button>{randomArrayList[2]}</button>
+                                        <button>{randomArrayList[3]}</button>
+                                    </div>
                                    
-
                                 </div>
                                 <p>_______________________________</p>
                                 <div className="content front">
-                                    <span className="card-title ">{flashcard.kanji}</span>
+                                    <div class="row">
+                                        <span className="card-title ">{riktigfc}</span>
+                                    </div>
+                                    <div class="row">
+                                        <button onClick={hc}>ThankUNext</button>    
+                                    </div>
+                                    
                                 </div>
                             </div>
                         }
