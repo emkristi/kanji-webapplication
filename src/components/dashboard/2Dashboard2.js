@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { firestoreConnect } from 'react-redux-firebase' //used to connect to firestore
+
 import { compose } from 'redux';
 import FlashcardInfo from '../flashcards/FlashcardInfo';
 
@@ -20,7 +21,6 @@ class Dashboard extends Component {
 
   test = () => {
     if(this.props.flashcards){
-
     } 
   };
 
@@ -43,20 +43,10 @@ class Dashboard extends Component {
 
   handleClick = (e) =>  {
    const { flashcards } = this.props;
-   console.log("radical: ", flashcards[this.state.currentCard].radicals); //henter ut radikal fra database med denne funksjonen. 
-   console.log("filter", flashcards.filter(item => item.radicals === "")); //sorterer kanjine til å bare være radikaler.
-   
-   
    let i = this.state.currentCard;
    console.log("Current card", i);
    console.log("ecards length: ", this.state.eCards); 
    console.log("flashcards length: ", flashcards); 
-
-   if(this.state.eCards.length.includes(flashcards.filter(item => item.radicals === ""))){
-     console.log("hei");
-   }
-
-   
    
     if(this.state.eCards.length+1 === flashcards.length){ //denne funksjonen er riktig
        console.log("Du blir sendt ut av deck");
@@ -65,14 +55,14 @@ class Dashboard extends Component {
     }
 
     let currentNumber = (Math.round(Math.random() * (flashcards.length-1)));
-
+ 
     while((this.state.eCards.includes(currentNumber) || currentNumber === this.state.currentCard)){
-      currentNumber = (Math.round(Math.random() * (flashcards.length-1)));
+      currentNumber = (Math.round(Math.random() * (flashcards.length-1) ));
       console.log("Nå skal random funksjonen kalles");
     }
     this.setState({
       currentCard: currentNumber
-    });
+    }); 
   }
 
   insertContentFlashcard (){
@@ -89,6 +79,7 @@ class Dashboard extends Component {
     // destructuring to get the flashcards. this grabs the flashcards object off the props. we can now pass the flashcards down as a prop into the ListOfFlashcards component
     const { flashcards } = this.props;
     const { auth } = this.props;
+
     this.test();
   /*
 
@@ -114,8 +105,9 @@ class Dashboard extends Component {
     return (
       <div className="dashboard container">
         { flashcards && 
-            <FlashcardInfo flashcard={flashcards[this.state.currentCard]}/> 
+            <FlashcardInfo flashcard={flashcards[this.state.currentCard]}  /> 
         }
+        
         <div>
           <button onClick={this.handleHard} id="Hard">Hard</button>
           <button onClick={this.handleEasy} id="Easy">Easy</button>

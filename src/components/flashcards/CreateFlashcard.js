@@ -34,7 +34,7 @@ class CreateFlashcard extends Component {
                         <input type="text" id="kanji" onChange={this.handleChange}/>
                     </div>
 
-                    <div class="input-field">
+                    <div className="input-field">
                         <label htmlFor="eng">English:</label>
                       <input type="text" id="eng" onChange={this.handleChange}/>
                     </div>
