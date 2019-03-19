@@ -2,14 +2,37 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { signIn } from '../../store/actions/authActions'
 import { Redirect } from 'react-router-dom'
+import firebase from 'firebase'
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 
+/*firebase.initializeApp({
+    apiKey: 'AIzaSyCDQX_UAYLg44oOF40BGMT14Uk4prHJ5Hk',
+    authDomain: 'kanjiapp-8f121.firebaseapp.com'
+})
+*/
 class SignIn extends Component {
     // initial state
     state = {
         email: '',
-        password: ''
+        password: '',
+        isSignedIn: false,
+        name:'',
+        userId:''
     }
-
+    uiConfig = {
+        signInFlow: 'popup',
+        signInOptions: [
+            firebase.auth.FacebookAuthProvider.PROVIDER_ID
+        ],
+        callbacks: {
+            signInSuccess: () => false
+        }
+    }
+    componentDidMount = () =>{
+        firebase.auth().onAuthStateChanged(user => {
+            this.setState({isSignedIn:!!user})
+        })
+    }
     /**
      * Function that fires when a user changes an input field
      */
@@ -20,6 +43,12 @@ class SignIn extends Component {
         })
     }
 
+    /*responseFacebook = response =>{
+        console.log("respons", response);
+    }*/
+    componentClicked = (e) =>{
+        console.log("clicked");
+    }
     /**
      * Function for when a user submits the form
      */
@@ -34,6 +63,15 @@ class SignIn extends Component {
 
     return (
       <div className="container">
+          {this.state.isSignedIn ? (
+              <div>Signed in"</div>
+          ):(
+              <StyledFirebaseAuth
+              uiConfig={this.uiConfig}
+              firebaseAuth={firebase.auth()}
+              />
+          )
+        }
         <form onSubmit={this.handleSubmit} className="white">
             <h5 className="grey-text text-darken-3">Sign In</h5>
             <div className="input-field">

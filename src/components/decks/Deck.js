@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
 import { firestoreConnect } from 'react-redux-firebase' // used to connect to firestore
 import { compose } from 'redux';
 import DeckInfo from '../decks/DeckInfo';
 import FCard from '../../components/flashcards/FCard'
 import { Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
+
 
 
 class Deck extends Component{

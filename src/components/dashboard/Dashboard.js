@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { firestoreConnect } from 'react-redux-firebase' // used to connect to firestore
+import { Redirect } from 'react-router-dom'
+import { firestoreConnect } from 'react-redux-firebase' //used to connect to firestore
 import { compose } from 'redux';
 import FlashcardInfo from '../flashcards/FlashcardInfo';
-import { Redirect } from 'react-router-dom'
 
 
 class Dashboard extends Component {
@@ -18,9 +18,18 @@ class Dashboard extends Component {
     //console.log(this.props.currentCard);
   }
   
+/*    this.state = {
+      currentCard: 0,
+      hCards:[],            
+      eCards:[],
+      cardList:[],
+    };
+  }
+
+>>>>>>> login*/
   test = () => {
-    //console.log('test', this.props);
     if(this.props.flashcards){
+
       var did = 'F8tkIG514gs5ewG50iXs';
       var idh = this.props.flashcards[this.state.currentCard].deckid;
       //console.log(idh);
@@ -32,7 +41,33 @@ class Dashboard extends Component {
       //console.log('rad:', this.props.flashcards[this.state.currentCard].radicals);
     }
   };
+  /*
+=======
+      //console.log('id:', this.props.flashcards[this.state.currentCard].id);
+      //console.log('rad:', this.props.flashcards[this.state.currentCard].radicals);
+    } 
+  };
 
+  handleHard = (e) =>{
+  
+    this.setState((state) => {
+      return { hCards: [...state.hCards, this.state.currentCard]}
+    });
+
+   // console.log("hCard:",this.state.hCards);
+  }
+
+  handleEasy = (e) => {
+    console.log("KortId:" + this.state.currentCard);
+    if(!this.state.eCards.includes(this.state.currentCard)){
+      this.setState((state) => {
+        return { eCards: [...state.eCards, this.state.currentCard]
+      });
+      console.log("ecardlist:", this.state.eCards);
+    }
+  }
+>>>>>>> login
+*/
   checkIfInDeck = () => {
     var currentDeckId = 'F8tkIG514gs5ewG50iXs';
     var currentCardsDeckId = this.props.flashcards[this.state.currentCard].deckid;
@@ -44,6 +79,7 @@ class Dashboard extends Component {
   }
   
   handleClick = (e) =>  {
+
     e.preventDefault();
     //currentCard = (Math.floor(Math.random() * 6));
   
@@ -56,6 +92,63 @@ class Dashboard extends Component {
     console.log('test');
   }
 
+
+ /* =======
+   e.preventDefault();
+   const { flashcards } = this.props;
+
+   console.log("ecards length: ", this.state.eCards.length);
+
+    if(this.state.eCards.length === flashcards.length){
+       console.log("Du blir sendt ut av deck");
+       window.location.href='/decks';
+       return;
+     }
+
+    let currentNumber = (Math.floor(Math.random() * flashcards.length));
+    
+    while(this.state.eCards.includes(currentNumber)){
+      currentNumber = (Math.floor(Math.random() * flashcards.length ));
+      console.log("flashcardLengde:", flashcards.length);
+      console.log("Nå skal random funksjonen kalles"); 
+    }
+    
+    this.setState({
+      currentCard: currentNumber
+    });
+    
+/*
+        for(let j=0; j<this.state.cardList.length; j++){
+          
+
+          
+            while (this.state.cardList.length!==[]){
+
+              var test = this.state.cardList;
+              test.splice(this.state.cardList.indexOf(this.state.eCards[i]),1);
+              console.log("test:::::: " + test);
+              this.setState({
+                cardList: test
+              });
+                
+              //Vet nå at verdien eksisterer i eCards
+              //Slett deretter fra cardList
+              console.log("Elements left: ", this.state.cardList); //sletter element fra cardList
+              return this.state.cardList;
+              
+            }
+            while (this.state.cardList.length===0){
+              console.log("FERDUG")
+
+              return this.state.cardList;
+            }
+            
+    }
+  
+
+>>>>>>> login
+
+*/
   insertContentFlashcard (){
     //Code to insert content to the flashcard
     var card = document.querySelector('.card');
@@ -70,8 +163,19 @@ class Dashboard extends Component {
     // destructuring to get the flashcards. this grabs the flashcards object off the props. we can now pass the flashcards down as a prop into the ListOfFlashcards component
     const { flashcards } = this.props;
     const { auth } = this.props;
-    const currentCard = (Math.floor(Math.random() * 6));
-
+    /*
+    if(flashcards && !this.state.cardList.length){
+      for (let i = 0; i <flashcards.length; i++) {
+        this.state.cardList.push(i);
+      }
+      console.log("cardlistennnnn:",this.state.cardList);
+      if(this.state.cardList===[0]){
+        alert("Ingen flere kort igjen, du blir sendt ut av deck");
+        //window.location.href='/decks';
+      }
+    }
+   // const currentCard = (Math.floor(Math.random() * 6));
+*/
     this.test();
     //console.log('test:', this.props.flashcards[this.state.currentCard].eng);
 /*
@@ -107,8 +211,8 @@ class Dashboard extends Component {
 
 
         <button onClick={this.handleClick}>Next</button>
+
       </div>
-      
     )
   }
 }

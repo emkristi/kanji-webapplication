@@ -9,6 +9,10 @@ class Flashcards extends Component{
     }
 
     render({}) {
+/*    
+    render(){
+>>>>>>> login
+*/
         return(
            <div id="flashcard" onClick={this.insertContentFlashcard}>
                 <div className="card blue-grey darken-1" id="flashcard-outside">
