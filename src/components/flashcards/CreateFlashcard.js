@@ -25,6 +25,7 @@ class CreateFlashcard extends Component {
         this.props.createFlashcard(this.state) // we have access to createFlashcard because of the mapDispatchToProps. Inside the function we pass the flashcard we want to create, which the state, so we pass this.state. This flashcard is going to be passed into the function in mapDispatchToProps
     }
     render(){
+        console.log(this.state);
         return (
             <div className="container">
               <form onSubmit={this.handleSubmit} className="white">

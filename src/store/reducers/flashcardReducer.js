@@ -1,4 +1,4 @@
-// Initial state for when we don't have a state yet
+
 const initState = {
     flashcards: [
         

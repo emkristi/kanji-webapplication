@@ -6,8 +6,8 @@ import React from 'react'
  */
 
 const FlashcardInfo = ({flashcard, deck, flashcards, randomArrayList, riktigfc, hc, hcc}) => {
-    console.log(deck.type);
-    console.log(flashcards);
+    //console.log(deck.type);
+    //console.log(flashcards);
     return(
         <div className="content">
             <div className="content">
@@ -42,23 +42,20 @@ const FlashcardInfo = ({flashcard, deck, flashcards, randomArrayList, riktigfc, 
                         {deck.type === "Kanji to english" && 
                             <div className="content">
                                 <div className="content front">
-                                    <span className="card-title ">{flashcard.kanji}</span>
+                                    <span className="card-title ">{riktigfc}</span>
                                 </div>
 
                                 <p>______________________________</p>
                                 <div className="content front">
-                                    <span className="card-title ">{flashcard.eng}</span>
-                                    <div className="content">
-                                        {flashcard.radicals !== "" && 
-                                            <span className="card-title">Radicals: {flashcard.radicals}</span>
-                                        }
+                                <div className="content front">
+                                    <div class="row">
+                                        <span className="card-title ">{flashcard.eng}</span>
                                     </div>
-                            
-                                    <div className="content">
-                                        {flashcard.mnemonic !== "" && 
-                                            <span className="card-title ">Mnemonic: {flashcard.mnemonic}</span>
-                                        }
+                                    <div class="row">
+                                        <button onClick={hc}>ThankUNext</button>    
                                     </div>
+                                    
+                                </div>
                                 </div>
                             </div>
                         }

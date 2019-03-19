@@ -4,7 +4,8 @@ import { createDeck } from '../../store/actions/deckActions'
 
 class CreateDeck extends Component {
     state = {
-        title: ''
+        title: '',
+        test: 'heyo'
     }
     
     handleChange = (e) => {

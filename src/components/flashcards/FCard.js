@@ -4,6 +4,7 @@ import { firestoreConnect } from 'react-redux-firebase' // used to connect to fi
 import { compose } from 'redux';
 import FlashcardInfo from '../flashcards/FlashcardInfo';
 import { Redirect } from 'react-router-dom'
+import {createFlashcard} from '../../store/actions/flashcardActions'
 
 class FCard extends Component {
 
@@ -35,13 +36,16 @@ class FCard extends Component {
       return { currentCard: (Math.floor(Math.random() * 6))}
     });
 
-    console.log(this.state.currentCard);
-    console.log('test');
+    
+    this.props.createFlashcard(this.props.flashcards[this.state.currentCard]); 
+
+    console.log("gjeldende flashcard", this.props.flashcards[this.state.currentCard]);
+
   }
 
-  handleClickCorrect = (e, rikt, randar) => {
-    console.log(rikt);
-    console.log(randar);
+  handleClickCorrect = (e) => {
+    //console.log(rikt);
+    //console.log(randar);
 
   }
 
@@ -50,18 +54,18 @@ class FCard extends Component {
       var arr = [];
       arr.push(this.state.currentCard);
 
-      console.log('arr1', arr);
+      //console.log('arr1', arr);
 
       while(arr.length < 4){
         var random = (Math.floor(Math.random() * 6)); 
 
-        console.log('randum', random)
+        //console.log('randum', random)
 
         if(!arr.includes(random)){
             arr.push(random);
         }
       }
-      console.log('arr2', arr)
+      //console.log('arr2', arr)
       return arr;
   }
 
@@ -73,20 +77,20 @@ class FCard extends Component {
       //console.log('1', this.props.flashcards[this.state.currentCard].kanji);
       
       arr2.push(this.props.flashcards[this.state.currentCard].kanji);
-      console.log('current card', this.props.flashcards[this.state.currentCard].kanji);
-      console.log('arrrrr2', arr2);
+      //console.log('current card', this.props.flashcards[this.state.currentCard].kanji);
+      //console.log('arrrrr2', arr2);
       //console.log('2', this.props.flashcards[this.state.currentCard].kanji);
 
       while(arr2.length < 4){
           var r = (Math.floor(Math.random() * 6)); 
-          console.log('r', this.props.flashcards[r].kanji);
+          //console.log('r', this.props.flashcards[r].kanji);
           if(!arr2.includes(this.props.flashcards[r].kanji)){
               arr2.push(this.props.flashcards[r].kanji)
           }
       }
-      console.log('arrr2222', arr2);
+      //console.log('arrr2222', arr2);
       arr2.sort(function(){ return 0.5 - Math.random() });
-      console.log('rrrrrrand', arr2);
+      //console.log('rrrrrrand', arr2);
       return arr2;
   }
 
@@ -99,30 +103,32 @@ class FCard extends Component {
     //console.log('deck t:', this.props.deck); // Tittel og type deck...
     //this.randArray();
     //console.log('hhh', );
+
+    console.log("flashcards: ", this.props.flashcards);
+    console.log("lagres i db?: ", this.props.flashcards[this.state.currentCard])
+    console.log("current gard:", this.state.currentCard);
   
-    console.log('funker dette?', this.randArray());
+    //console.log('funker dette?', this.randArray());
     var dId = this.props.id;
 
     var riktig = this.props.flashcards[this.state.currentCard].kanji;
 
-    console.log('currcard2', this.props.flashcards[this.state.currentCard].kanji);
+    //console.log('currcard2', this.props.flashcards[this.state.currentCard].kanji);
     
-
-    // hent inn i random kan
 
     // arrtest henter ut alle arrays i gjeldende deck
     var arrtest = this.props.flashcards.filter(val => val.deckid === this.props.id); 
-    console.log('hehe', arrtest);
+    //console.log('hehe', arrtest);
 
     //var arrTestLength = arrtest.length;
 
     // array av random cards
     var randomArr = this.randArrayKan();
 
-    console.log('hehhe', this.randArrayKan());
+    //console.log('hehhe', this.randArrayKan());
      
     
-    console.log('fcards: ',this.props.flashcards);
+    //console.log('fcards: ',this.props.flashcards);
     
     if (!auth.uid) return <Redirect to='/signin' />
 
@@ -136,12 +142,18 @@ class FCard extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+      createFlashcard: (flashcard) => dispatch(createFlashcard(flashcard)) // will take in this.state from handleSubmit as the flashcard. this wil run the function in flashcardActions and return that function then dispatch.
+  }
+}
+
 const mapStateToProps = (state, ownProps) => {
     const id = ownProps.match.params.id;
     const decks = state.firestore.data.decks;
     let flashcards = state.firestore.ordered.flashcards;
     let flashcardsincurrent = flashcards.filter(val => val.deckid === id)
-    console.log(decks);
+    //console.log(decks);
     const deck = decks ? decks[id] : null
     return {
         id,
@@ -153,7 +165,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 export default compose(
-    connect(mapStateToProps), 
+    connect(mapStateToProps, mapDispatchToProps), 
     firestoreConnect([
       { collection: 'decks'
         }
