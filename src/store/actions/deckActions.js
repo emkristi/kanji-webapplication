@@ -6,7 +6,7 @@ export const createDeck = (deck) => {
 
         var test = firestore.collection('users').doc(userId);
 
-        var tabell = ["esfefrfrh"];
+        //var tabell = ["esfefrfrh"];
 
         console.log(firestore.collection('users').doc(userId));
 
@@ -27,7 +27,5 @@ export const addDeckToUser = (deck) => {
     return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firestore = getFirestore();
         const deckId = getState().firestore.deck.id;
-        
-
     }
 }
