@@ -43,7 +43,8 @@ class Dashboard extends Component {
 
   handleClick = (e) =>  {
    const { flashcards } = this.props;
-   console.log("radical: ", flashcards[this.state.currentCard].radicals); //henter ut radikal fra database med denne funksjonen. 
+   const { users } = this.props;  
+   const {auth} = this.props;
    console.log("filter", flashcards.filter(item => item.radicals === "")); //sorterer kanjine til å bare være radikaler.
    
    
@@ -51,26 +52,72 @@ class Dashboard extends Component {
    console.log("Current card", i);
    console.log("ecards length: ", this.state.eCards); 
    console.log("flashcards length: ", flashcards); 
-
-   if(this.state.eCards.length.includes(flashcards.filter(item => item.radicals === ""))){
-     console.log("hei");
+   
+   for(let i=0; i<flashcards.length; i++){
+    console.log("tegn i flashcard",flashcards[i].kanji);
    }
+   
+   console.log("users", users);
 
-   
-   
-    if(this.state.eCards.length+1 === flashcards.length){ //denne funksjonen er riktig
-       console.log("Du blir sendt ut av deck");
-       window.location.href='/decks';
-       return;
+
+   //let a= users[i].flashcards[i].radicals; //henter ut radikalene fra en bruker
+   //får opp et kanji fra database
+   // 1) sjekk om radikalet er gått igjennom, om den finnes i brukerens flashcardarray
+   // 2) Hvis i array => sjekk om andre radikalet er i database
+   // hvis radikal 1 ikke er i database: Da skal dette radikalet komme opp istedet for kanjien. Legg så i flashcardarray. 
+  
+
+/*if (users[i].id === "6kSNDh8XyDfpyaGuQhtfYqzbp4o1"){
+  console.log("id=", users[i].id)
+  let a= users[i].flashcards[i].radicals; //henter ut radikalene fra en bruker
+  console.log("radikalene gitt bruker:",a);
+
+}*/
+
+ /* for (let i=0; i<users.length; i++){
+    if(users[i].id === auth.uid){
+      console.log("uid finnes i id")
+      console.log("usersid", users[i].id);
+      console.log("uid", auth.uid);
+      //IKKE VIS ALLE USERS??!?!
     }
+  }*/
 
+  /*
+  if(users[i].id !== auth.uid){
+    console.log("uid",auth.uid);
+    console.log(users[i].id);
+  } */
+  
+
+  if(this.state.eCards.length+1 === flashcards.length){
+      console.log("Du blir sendt ut av deck");
+      window.location.href='/decks';
+      return;
+  }
     let currentNumber = (Math.round(Math.random() * (flashcards.length-1)));
 
     while((this.state.eCards.includes(currentNumber) || currentNumber === this.state.currentCard)){
       currentNumber = (Math.round(Math.random() * (flashcards.length-1)));
       console.log("Nå skal random funksjonen kalles");
+      console.log("currentnumber", currentNumber);
+
+      /*
+      if(users[i].flashcards[i].radicals[i].includes("nASldc6p15eNon4U40Wa")){
+        console.log("radikal finnes");
+      }*/
+
+      for(let i=0; i<users.length; i++){
+        console.log("users[i]", users[i]);
+        if(users[i].flashcards != null) {
+          users[i].flashcards.forEach(flashCard => {
+            console.log(flashCard.radicals);
+          });
+         }
+        }
     }
     this.setState({
+
       currentCard: currentNumber
     });
   }
@@ -89,7 +136,9 @@ class Dashboard extends Component {
     // destructuring to get the flashcards. this grabs the flashcards object off the props. we can now pass the flashcards down as a prop into the ListOfFlashcards component
     const { flashcards } = this.props;
     const { auth } = this.props;
+    
     this.test();
+
   /*
 
     console.log(currentCard, "currentcard");
@@ -136,6 +185,8 @@ const mapStateToProps = (state) => {
   console.log(state);
   return {
     flashcards: state.firestore.ordered.flashcards, // gives an array of the flashcards.. flashcard property, we are accessing the flashcards from the state in the flashcardReducer. We are grabbing this and attatching it to the flashcard property inside the props of this component (flashcard: )
+    users: state.firestore.ordered.users,
+    decks: state.firestore.ordered.decks,
     auth: state.firebase.auth
   }
 }
@@ -149,7 +200,12 @@ export default compose(
   
   connect(mapStateToProps), 
   firestoreConnect([ // we use firestoreConnect to tell which collection we want to connect to. takes in an array that contains a series of objects
-    { collection: 'flashcards' } // contains one object that says which collection we want to conenct to..
+    { collection: 'flashcards' 
+    } // contains one object that says which collection we want to conenct to..
+  ]),
+  firestoreConnect([ // we use firestoreConnect to tell which collection we want to connect to. takes in an array that contains a series of objects
+    { collection: 'users' 
+    } // contains one object that says which collection we want to conenct to..
   ])
   /**
    * When this component is active, tha collection that we are listening to is the flashcards collection

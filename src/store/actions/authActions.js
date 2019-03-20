@@ -46,7 +46,7 @@ export const signUp = (newUser) => {
             // we use an set method to pass in an object in the document
             return firestore.collection('users').doc(resp.user.uid).set({
                 // what properties do we want for a user:
-                fristname: newUser.firstName,
+                firstName: newUser.firstName,
                 lastName: newUser.lastName,
                 initials: newUser.firstName[0] + newUser.lastName[0]
             })// another then method so when the then above has completed, we want to do something else
