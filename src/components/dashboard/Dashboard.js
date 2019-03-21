@@ -54,40 +54,13 @@ class Dashboard extends Component {
 
     for (let i = 0; i < flashcards.length; i++) {
       console.log("tegn i flashcard", flashcards[i].kanji);
+      console.log("radikal", flashcards[i].radicals);
     }
 
     console.log("users", users);
 
 
     //let a= users[i].flashcards[i].radicals; //henter ut radikalene fra en bruker
-    //får opp et kanji fra database
-    // 1) sjekk om radikalet er gått igjennom, om den finnes i brukerens flashcardarray
-    // 2) Hvis i array => sjekk om andre radikalet er i database
-    // hvis radikal 1 ikke er i database: Da skal dette radikalet komme opp istedet for kanjien. Legg så i flashcardarray. 
-
-
-    /*if (users[i].id === "6kSNDh8XyDfpyaGuQhtfYqzbp4o1"){
-      console.log("id=", users[i].id)
-      let a= users[i].flashcards[i].radicals; //henter ut radikalene fra en bruker
-      console.log("radikalene gitt bruker:",a);
-    
-    }*/
-
-    /* for (let i=0; i<users.length; i++){
-       if(users[i].id === auth.uid){
-         console.log("uid finnes i id")
-         console.log("usersid", users[i].id);
-         console.log("uid", auth.uid);
-         //IKKE VIS ALLE USERS??!?!
-       }
-     }*/
-
-    /*
-    if(users[i].id !== auth.uid){
-      console.log("uid",auth.uid);
-      console.log(users[i].id);
-    } */
-
 
     //Sjekke flashcardtabellen om det finnes radikaler i tabellen. Hvis ja: Gå igjennom denne før kanjien vises.
     if (this.state.eCards.length + 1 === flashcards.length) {
@@ -97,10 +70,10 @@ class Dashboard extends Component {
     }
 
     let user = users[0];
-    let currentNumber;// = (Math.round(Math.random() * (flashcards.length - 1)));
-
+    let currentNumber = (Math.round(Math.random() * (flashcards.length)));
     let temp = true;
     let element = "";
+
     for (let x = 0; x < user.flashcards.length; x++) {
       element += user.flashcards[x].kanji + ", ";
     }
@@ -108,16 +81,18 @@ class Dashboard extends Component {
     for (let x = 0; x < flashcards.length; x++) {
       element2 += flashcards[x].kanji + ", ";
     }
-    console.log(element, user.flashcards.length);
-    console.log(element2, flashcards.length);
+    console.log("user.flashcards.length", element, user.flashcards.length);
+    console.log("flashcards.length", element2, flashcards.length);
+    console.log("this.state.eCards", this.state.eCards.length + 1);
+    console.log("flashcards.length", flashcards.length);
 
-
-    if (user.flashcards.length === flashcards.length + 1) {
+    if (user.flashcards.length === this.state.eCards.length) {
       alert("ingen flere kort som ikke er lest");
       temp = false;
+      return;
     }
 
-    restartWhile:
+    restartWhile: //loop start -over
     while (temp) {
       currentNumber = (Math.round(Math.random() * (flashcards.length - 1)));
 
@@ -125,14 +100,19 @@ class Dashboard extends Component {
 
       if (user.flashcards.includes(flashcards[currentNumber]) || this.state.eCards.includes(currentNumber) || currentNumber === this.state.currentCard) {
         //if (user.flashcards.includes(flashcards[currentNumber]) || user.flashcards[user.flashcards.length - 1] === flashcards[currentNumber]) {
-        continue restartWhile;
+        continue restartWhile; //gå til starten av loopen og finn et nytt currentnumber?
       } else {
+        console.log("kommer hit");
         let tempRadicals = flashcards[currentNumber].radicals;
-        if (tempRadicals.length === 0) temp = false;
+        console.log("tempradicals", tempRadicals);
+        if (!tempRadicals) {
+          temp = false;
+        }
         else {
           for (let i = 0; i < tempRadicals.length; i++) {
             let tempCheck = false;
             for (let j = 0; j < user.flashcards.length; j++) {
+              console.log("tr", tempRadicals[i], user.flashcards[j].kanji);
               if (tempRadicals[i] === user.flashcards[j].kanji) {
                 tempCheck = true;
               }
@@ -189,27 +169,6 @@ class Dashboard extends Component {
     const { auth } = this.props;
 
     this.test();
-
-    /*
-  
-      console.log(currentCard, "currentcard");
-      if (!auth.uid) return <Redirect to='/signin' />
-      return (
-        <div class="card blue-grey darken-1">
-          <div class="card" onClick={this.insertContentFlashcard}>
-            <div class="card__face card__face--front">
-              <div class="container">
-                {flashcards && 
-                    <FlashcardInfo flashcard={flashcards[this.state.currentCard]} />
-                } 
-              </div>
-            </div>
-            <div class="card__face card__face--back">Engelsk + radikal</div>
-          </div>
-          <p>Click card to flip</p>
-          <button onClick={this.handleClick}>Next</button>
-  
-  */
     if (!auth.uid) return <Redirect to='/signin' />
     return (
       <div className="dashboard container">
@@ -233,7 +192,6 @@ class Dashboard extends Component {
  * @param {*} state 
  */
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     flashcards: state.firestore.ordered.flashcards, // gives an array of the flashcards.. flashcard property, we are accessing the flashcards from the state in the flashcardReducer. We are grabbing this and attatching it to the flashcard property inside the props of this component (flashcard: )
     users: state.firestore.ordered.users,
