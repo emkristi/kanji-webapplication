@@ -14,15 +14,13 @@ const FlashcardInfo = ({flashcard, deck, flashcards, randomArrayList, riktigfc, 
                 <div className="content">
                     <div className="content">
                         {deck.type === "Images" && 
-                            <div className="content">
+                            <div class="content">
                                 <div className="content front">
-                                    <img className="card-content" src={flashcard.pictureUrl} width="150px" height="150px"/>
-
+                                    <img className="card-content" src={flashcard.pictureUrl} width="200px" height="200px"/>
                                     <div class="row">
-                                        <button onClick={hcc}>{randomArrayList[0]}</button>
-                                        <button>{randomArrayList[1]}</button>
-                                        <button>{randomArrayList[2]}</button>
-                                        <button>{randomArrayList[3]}</button>
+                                        <button onClick={hcc} id='but1'>{randomArrayList[0]}</button>
+
+                                        <input type='button' id="but2" value={randomArrayList[1]}></input>
                                     </div>
                                    
                                 </div>
@@ -44,12 +42,11 @@ const FlashcardInfo = ({flashcard, deck, flashcards, randomArrayList, riktigfc, 
                                 <div className="content front">
                                     <span className="card-title ">{riktigfc}</span>
                                 </div>
-
                                 <p>______________________________</p>
                                 <div className="content front">
                                 <div className="content front">
                                     <div class="row">
-                                        <span className="card-title ">{flashcard.eng}</span>
+                                       {/* <span className="card-title ">{flashcard.eng}</span> */}
                                     </div>
                                     <div class="row">
                                         <button onClick={hc}>ThankUNext</button>    
@@ -65,5 +62,6 @@ const FlashcardInfo = ({flashcard, deck, flashcards, randomArrayList, riktigfc, 
         </div>
     )
 }
+
 
 export default FlashcardInfo

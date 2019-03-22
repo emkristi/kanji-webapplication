@@ -4,7 +4,7 @@ import { firestoreConnect } from 'react-redux-firebase' // used to connect to fi
 import { compose } from 'redux';
 import FlashcardInfo from '../flashcards/FlashcardInfo';
 import { Redirect } from 'react-router-dom'
-import {createFlashcard} from '../../store/actions/flashcardActions'
+import {addFlashcard} from '../../store/actions/flashcardActions'
 
 class FCard extends Component {
 
@@ -36,16 +36,29 @@ class FCard extends Component {
       return { currentCard: (Math.floor(Math.random() * 6))}
     });
 
-    
-    this.props.createFlashcard(this.props.flashcards[this.state.currentCard]); 
 
-    console.log("gjeldende flashcard", this.props.flashcards[this.state.currentCard]);
+    //console.log("hhh", e);
+    //console.log("click", document.getElementById(e.id).value);
+
+    /*
+    if(riktig == ){
+      console.log("riktiggggg");
+    }
+    */
+    
+
+    this.props.addFlashcard(this.props.flashcards[this.state.currentCard].id); 
 
   }
 
   handleClickCorrect = (e) => {
     //console.log(rikt);
     //console.log(randar);
+    console.log("hei");
+
+    console.log("click", e.data);
+
+
 
   }
 
@@ -98,7 +111,7 @@ class FCard extends Component {
     
 
   render() {
-    const { flashcards, auth, deck, flashcardsincurrent } = this.props;
+    const { flashcards, auth, deck, flashcardsincurrent, users } = this.props;
     
     //console.log('deck t:', this.props.deck); // Tittel og type deck...
     //this.randArray();
@@ -107,6 +120,8 @@ class FCard extends Component {
     console.log("flashcards: ", this.props.flashcards);
     console.log("lagres i db?: ", this.props.flashcards[this.state.currentCard])
     console.log("current gard:", this.state.currentCard);
+
+    console.log("usr??", this.props.user);
   
     //console.log('funker dette?', this.randArray());
     var dId = this.props.id;
@@ -144,7 +159,7 @@ class FCard extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      createFlashcard: (flashcard) => dispatch(createFlashcard(flashcard)) // will take in this.state from handleSubmit as the flashcard. this wil run the function in flashcardActions and return that function then dispatch.
+      addFlashcard: (flashcard) => dispatch(addFlashcard(flashcard)) // will take in this.state from handleSubmit as the flashcard. this wil run the function in flashcardActions and return that function then dispatch.
   }
 }
 
@@ -160,6 +175,7 @@ const mapStateToProps = (state, ownProps) => {
         flashcardsincurrent,
         deck: deck,
         flashcards: state.firestore.ordered.flashcards,
+        users: state.firestore.ordered.users,
         auth: state.firebase.auth
     }
 }
