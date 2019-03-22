@@ -38,6 +38,8 @@ class Deck extends Component{
     render(){
         console.log('her:', this.props);
         const {decks, flashcards, auth} = this.props;
+
+        console.log("ff", flashcards)
     
         //this.checkFlashcards();
         if (!auth.uid) return <Redirect to='/signin' />
@@ -47,12 +49,12 @@ class Deck extends Component{
                         { decks && decks.map(deck => {
                             return (
                                 <div className="column">
-                                <Link to={'/deck/' + deck.id} key={deck.id}>
-                                    <div className="deck">
-                                        <DeckInfo deck={deck}/>
-                            
-                                    </div>
-                                </Link>
+                                    <Link to={'/deck/' + deck.id} key={deck.id}>
+                                        <div className="deck">
+                                            <DeckInfo deck={deck}/>
+                                
+                                        </div>
+                                    </Link>
                                 </div>
                             )
                         })}     
