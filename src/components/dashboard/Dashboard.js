@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { firestoreConnect } from 'react-redux-firebase' //used to connect to firestore
+
 import { compose } from 'redux';
 import FlashcardInfo from '../flashcards/FlashcardInfo';
 
 class Dashboard extends Component {
-
   // intern this.state -> this.setState for å sette den
   // this.state.currentCard for å bruke
   constructor(props) {
@@ -18,19 +18,13 @@ class Dashboard extends Component {
     };
   }
 
-  test = () => {
-    if (this.props.flashcards) {
-
-    }
-  };
-
   handleHard = (e) => {
     this.setState((state) => {
       return {
         hCards: [...state.hCards, this.state.currentCard]
       }
     });
-    this.handleClick();
+    this.getNewFlashcard();
   }
 
   handleEasy = (e) => {
@@ -39,115 +33,27 @@ class Dashboard extends Component {
         eCards: [...state.eCards, this.state.currentCard]
       }
     });
-    this.handleClick();
+    this.getNewFlashcard();
   }
 
-  handleClick = (e) => {
+  getNewFlashcard = () => {
     const { flashcards } = this.props;
-    const { users } = this.props;
-    const { auth } = this.props;
-    console.log("filter", flashcards.filter(item => item.radicals === "")); //sorterer kanjine til å bare være radikaler.
-
-
     let i = this.state.currentCard;
-    console.log("Current card", i);
 
-    for (let i = 0; i < flashcards.length; i++) {
-      console.log("tegn i flashcard", flashcards[i].kanji);
-      console.log("radikal", flashcards[i].radicals);
-    }
-
-    console.log("users", users);
-
-
-    //let a= users[i].flashcards[i].radicals; //henter ut radikalene fra en bruker
-
-    //Sjekke flashcardtabellen om det finnes radikaler i tabellen. Hvis ja: Gå igjennom denne før kanjien vises.
+    //denne funksjonen er riktig
     if (this.state.eCards.length + 1 === flashcards.length) {
-      console.log("Du blir sendt ut av deck");
       window.location.href = '/decks';
       return;
     }
 
-    let user = users[0];
-    let currentNumber = (Math.round(Math.random() * (flashcards.length)));
-    let temp = true;
-    let element = "";
+    let currentNumber = (Math.round(Math.random() * (flashcards.length - 1)));
 
-    for (let x = 0; x < user.flashcards.length; x++) {
-      element += user.flashcards[x].kanji + ", ";
-    }
-    let element2 = "";
-    for (let x = 0; x < flashcards.length; x++) {
-      element2 += flashcards[x].kanji + ", ";
-    }
-    console.log("user.flashcards.length", element, user.flashcards.length);
-    console.log("flashcards.length", element2, flashcards.length);
-    console.log("this.state.eCards", this.state.eCards.length + 1);
-    console.log("flashcards.length", flashcards.length);
-
-    if (user.flashcards.length === this.state.eCards.length) {
-      alert("ingen flere kort som ikke er lest");
-      temp = false;
-      return;
-    }
-
-    restartWhile: //loop start -over
-    while (temp) {
+    while ((this.state.eCards.includes(currentNumber) || currentNumber === this.state.currentCard)) {
       currentNumber = (Math.round(Math.random() * (flashcards.length - 1)));
-
-      console.log(user.flashcards.includes(flashcards[currentNumber]), flashcards[currentNumber], user.flashcards);
-
-      if (user.flashcards.includes(flashcards[currentNumber]) || this.state.eCards.includes(currentNumber) || currentNumber === this.state.currentCard) {
-        //if (user.flashcards.includes(flashcards[currentNumber]) || user.flashcards[user.flashcards.length - 1] === flashcards[currentNumber]) {
-        continue restartWhile; //gå til starten av loopen og finn et nytt currentnumber?
-      } else {
-        console.log("kommer hit");
-        let tempRadicals = flashcards[currentNumber].radicals;
-        console.log("tempradicals", tempRadicals);
-        if (!tempRadicals) {
-          temp = false;
-        }
-        else {
-          for (let i = 0; i < tempRadicals.length; i++) {
-            let tempCheck = false;
-            for (let j = 0; j < user.flashcards.length; j++) {
-              console.log("tr", tempRadicals[i], user.flashcards[j].kanji);
-              if (tempRadicals[i] === user.flashcards[j].kanji) {
-                tempCheck = true;
-              }
-            }
-            if (!tempCheck) {
-              continue restartWhile;
-            }
-            tempCheck = false;
-          }
-          temp = false;
-        }
-      }
     }
 
-    user.flashcards.push(flashcards[currentNumber]);
+    //handle radicals
 
-    /* while ((this.state.eCards.includes(currentNumber) || currentNumber === this.state.currentCard)) {
-       currentNumber = (Math.round(Math.random() * (flashcards.length - 1)));
-       console.log("Nå skal random funksjonen kalles");
-       console.log("currentnumber", currentNumber);
- 
- 
-       /*
-       if(users[i].flashcards[i].radicals[i].includes("nASldc6p15eNon4U40Wa")){
-         console.log("radikal finnes");
-       }*/
-    /* for (let i = 0; i < users[].length; i++) {
-       console.log("users[i]", users[i]);
-       if (users[i].flashcards != null) {
-         users[i].flashcards.forEach(flashCard => {
-           console.log(flashCard.radicals);
-         });
-       }
-     }*/
-    //}
     this.setState({
       currentCard: currentNumber
     });
@@ -156,10 +62,8 @@ class Dashboard extends Component {
   insertContentFlashcard() {
     //Code to insert content to the flashcard
     var card = document.querySelector('.card');
-    console.log("insertContentFlashcard(1)");
     card.addEventListener('click', function () {
       card.classList.toggle('is-flipped');
-      console.log("insertContentFlashcard()");
     });
   }
 
@@ -167,8 +71,26 @@ class Dashboard extends Component {
     // destructuring to get the flashcards. this grabs the flashcards object off the props. we can now pass the flashcards down as a prop into the ListOfFlashcards component
     const { flashcards } = this.props;
     const { auth } = this.props;
-
-    this.test();
+    /*
+  
+      console.log(currentCard, "currentcard");
+      if (!auth.uid) return <Redirect to='/signin' />
+      return (
+        <div class="card blue-grey darken-1">
+          <div class="card" onClick={this.insertContentFlashcard}>
+            <div class="card__face card__face--front">
+              <div class="container">
+                {flashcards && 
+                    <FlashcardInfo flashcard={flashcards[this.state.currentCard]} />
+                } 
+              </div>
+            </div>
+            <div class="card__face card__face--back">Engelsk + radikal</div>
+          </div>
+          <p>Click card to flip</p>
+          <button onClick={this.handleClick}>Next</button>
+  
+  */
     if (!auth.uid) return <Redirect to='/signin' />
     return (
       <div className="dashboard container">
@@ -192,36 +114,16 @@ class Dashboard extends Component {
  * @param {*} state 
  */
 const mapStateToProps = (state) => {
+  console.log(state);
   return {
     flashcards: state.firestore.ordered.flashcards, // gives an array of the flashcards.. flashcard property, we are accessing the flashcards from the state in the flashcardReducer. We are grabbing this and attatching it to the flashcard property inside the props of this component (flashcard: )
-    users: state.firestore.ordered.users,
-    decks: state.firestore.ordered.decks,
     auth: state.firebase.auth
   }
 }
 
 export default compose(
-  /**
-   * connect() is used to connect the dashboard component with the redux store.
-   * connect() is a function which returns a higher order component to take in the Dashboard.
-   * We need to map our state from the store to the props in the dashboard component -> mapStateToProps.
-   */
-
   connect(mapStateToProps),
-  firestoreConnect([ // we use firestoreConnect to tell which collection we want to connect to. takes in an array that contains a series of objects
-    {
-      collection: 'flashcards'
-    } // contains one object that says which collection we want to conenct to..
-  ]),
-  firestoreConnect([ // we use firestoreConnect to tell which collection we want to connect to. takes in an array that contains a series of objects
-    {
-      collection: 'users' //fikse dette!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    } // contains one object that says which collection we want to conenct to..
+  firestoreConnect([
+    { collection: 'flashcards' }
   ])
-  /**
-   * When this component is active, tha collection that we are listening to is the flashcards collection
-   * and when when this component first loads or the firestore data is changed in the database, this will induce the firestore reducer to sync the store state
-   * with that flashcards collection in the firestore. when changes are made -> this component will hear that because its connected to that collection, and it will trigger the firestore reducer to update the state
-   * the state of the firestore property in the rootReducer when this component is active on the page, is going to be synced with the flashcards collection in firestore
-   */
 )(Dashboard)
