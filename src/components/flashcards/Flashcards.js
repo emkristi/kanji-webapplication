@@ -8,8 +8,11 @@ class Flashcards extends Component{
         document.getElementById("change-content").innerHTML =  "Changed content";
     }
 
-    
+    render({}) {
+/*    
     render(){
+>>>>>>> login
+*/
         return(
            <div id="flashcard" onClick={this.insertContentFlashcard}>
                 <div className="card blue-grey darken-1" id="flashcard-outside">

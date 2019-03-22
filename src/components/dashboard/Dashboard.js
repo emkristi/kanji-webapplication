@@ -24,7 +24,7 @@ class Dashboard extends Component {
         hCards: [...state.hCards, this.state.currentCard]
       }
     });
-    this.getNewFlashcard();
+    this.handleClick();
   }
 
   handleEasy = (e) => {
@@ -33,15 +33,14 @@ class Dashboard extends Component {
         eCards: [...state.eCards, this.state.currentCard]
       }
     });
-    this.getNewFlashcard();
+    this.handleClick();
   }
 
-  getNewFlashcard = () => {
+  handleClick = (e) => {
     const { flashcards } = this.props;
     let i = this.state.currentCard;
 
-    //denne funksjonen er riktig
-    if (this.state.eCards.length + 1 === flashcards.length) {
+    if (this.state.eCards.length + 1 === flashcards.length) { //denne funksjonen er riktig
       window.location.href = '/decks';
       return;
     }
@@ -51,9 +50,6 @@ class Dashboard extends Component {
     while ((this.state.eCards.includes(currentNumber) || currentNumber === this.state.currentCard)) {
       currentNumber = (Math.round(Math.random() * (flashcards.length - 1)));
     }
-
-    //handle radicals
-
     this.setState({
       currentCard: currentNumber
     });
@@ -97,6 +93,7 @@ class Dashboard extends Component {
         {flashcards &&
           <FlashcardInfo flashcard={flashcards[this.state.currentCard]} />
         }
+
         <div>
           <button onClick={this.handleHard} id="Hard">Hard</button>
           <button onClick={this.handleEasy} id="Easy">Easy</button>

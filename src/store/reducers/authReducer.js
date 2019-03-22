@@ -16,7 +16,7 @@ const authReducer = (state = initState, action) => {
         case 'LOGIN_ERROR':
             console.log('login error');
             return {
-                // tar med det i init state, ungår ovverrite
+                // tar med det i init state, ungår ovverride
                 ...state,
                 authError: 'Login failed'
             }
