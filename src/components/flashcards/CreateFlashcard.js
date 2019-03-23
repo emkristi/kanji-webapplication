@@ -7,7 +7,7 @@ class AddFlashcard extends Component {
         eng: '',
         kanji: ''
     }
-    
+
     /**
      * Function that fires when a user changes an input field
      */
@@ -24,30 +24,26 @@ class AddFlashcard extends Component {
         e.preventDefault(); // prevents page from reloading
         this.props.addFlashcard(this.state) // we have access to createFlashcard because of the mapDispatchToProps. Inside the function we pass the flashcard we want to create, which the state, so we pass this.state. This flashcard is going to be passed into the function in mapDispatchToProps
     }
-    render(){
+    render() {
         console.log(this.state);
         return (
             <div className="container">
-              <form onSubmit={this.handleSubmit} className="white">
-                  <h5 className="grey-text text-darken-3">Create new flashcard</h5>
+                <form onSubmit={this.handleSubmit} className="white">
+                    <h5 className="grey-text text-darken-3">Create new flashcard</h5>
                     <div className="input-field">
                         <label htmlFor="kanji">Kanji:</label>
-                        <input type="text" id="kanji" onChange={this.handleChange}/>
+                        <input type="text" id="kanji" onChange={this.handleChange} />
                     </div>
-<<<<<<< HEAD
 
                     <div className="input-field">
-=======
-                    <div class="input-field">
->>>>>>> 1a82de4b77a380db2780a9f580cb79301da5f618
                         <label htmlFor="eng">English:</label>
-                      <input type="text" id="eng" onChange={this.handleChange}/>
+                        <input type="text" id="eng" onChange={this.handleChange} />
                     </div>
 
                     <div className="input-field">
                         <button className="btn pink lighten-1 z-depth-0">Create</button>
                     </div>
-              </form>
+                </form>
             </div>
         )
     }

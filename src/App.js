@@ -5,11 +5,11 @@ import SignIn from './components/auth/SignIn'
 import SignUp from './components/auth/SignUp'
 import Dashboard from './components/dashboard/Dashboard'
 import CreateFlashcard from './components/flashcards/CreateFlashcard'
-import Flashcards from './components/flashcards/Flashcards'
-import Deck from './components/decks/Deck'
+import Frontpage from './components/decks/Frontpage'
 import CreateDeck from './components/decks/CreateDeck'
-import FCard from './components/flashcards/FCard'
+import Flashcards from './components/flashcards/Flashcards'
 import PhotoFlashcards from './components/flashcards/PhotoFlashcards';
+
 class App extends Component {
   render() {
     return (
@@ -17,15 +17,13 @@ class App extends Component {
         <div className="App">
           <Navbar />
           <Switch>
-            <Route exact path='/' component={Dashboard} />
+            <Route exact path='/' component={Frontpage} />
             <Route path='/signin' component={SignIn} />
             <Route path='/signup' component={SignUp} />
             <Route path='/createflashcard' component={CreateFlashcard} />
             <Route path='/createdeck' component={CreateDeck} />
-            <Route path='/flashcards' component={Flashcards} />
-            <Route exact path='/decks' component = {Deck} />
-            <Route path='/deck/:id' component={FCard} />
-            <Route path='/photoflashcard' component={PhotoFlashcards} />
+            <Route path='/:id' component={Flashcards} />
+            <Route path='/img/:id' component={PhotoFlashcards} />
           </Switch>
         </div>
       </BrowserRouter>
