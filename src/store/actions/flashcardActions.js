@@ -1,7 +1,7 @@
 export const addFlashcard = (flashcardidd) => {
     // because we are using thunk -> can return a function instead of an action
-    
-    return (dispatch, getState, {getFirebase, getFirestore}) => {
+
+    return (dispatch, getState, { getFirebase, getFirestore }) => {
         const firestore = getFirestore(); // reference to our firestore database
 
         const userId = getState().firebase.auth.uid;
@@ -15,10 +15,10 @@ export const addFlashcard = (flashcardidd) => {
         firestore.collection('users').doc(userId).update({  // async call (action takes some time to do) -> dispatch is halted
             flashcardArray: firestore.FieldValue.arrayUnion(flashcardId)
         }).then(() => { // .then fires when the action above is complete
-            dispatch({type: 'CREATE_flashcard', flashcardidd});    
-            console.log("WORK?!!!!");
+            dispatch({ type: 'CREATE_flashcard', flashcardidd });
+            console.log("flashcard added to user");
         }).catch((err) => {
-            dispatch({type: 'CREATE_flashcard_ERROR', err});    
+            dispatch({ type: 'CREATE_flashcard_ERROR', err });
         })
     }
 };
