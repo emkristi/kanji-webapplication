@@ -5,9 +5,23 @@ import React from 'react'
  * @param {*} param0 
  */
 
-const FlashcardInfo = ({flashcard, deck, flashcards, randomArrayList, riktigfc, hc, hcc}) => {
-    //console.log(deck.type);
-    //console.log(flashcards);
+const FlashcardInfo = ({flashcard}) => {
+    
+    return (
+            <div className="container">
+                <img className="content" src={flashcard.pictureUrl} alt="current kanji" width="200px" height="200px"/>
+               
+                <span className="card-title"> {flashcard.kanji} </span>
+                <span className="card-title"> {flashcard.eng} </span>
+                <span className="card-title"> {flashcard.radicals.length > 0 && flashcard.radicals.map(r => r.id)} </span>
+            </div>
+        
+    )
+}
+
+export default FlashcardInfo
+
+/*
     return(
         <div className="content">
             <div className="content">
@@ -28,11 +42,7 @@ const FlashcardInfo = ({flashcard, deck, flashcards, randomArrayList, riktigfc, 
                                 <div className="content front">
                                     <div class="row">
                                         <span className="card-title ">{riktigfc}</span>
-                                    </div>
-                                    <div class="row">
-                                        <button onClick={hc}>ThankUNext</button>    
-                                    </div>
-                                    
+                                    </div>                       
                                 </div>
                             </div>
                         }
@@ -46,12 +56,7 @@ const FlashcardInfo = ({flashcard, deck, flashcards, randomArrayList, riktigfc, 
                                 <div className="content front">
                                 <div className="content front">
                                     <div class="row">
-                                       {/* <span className="card-title ">{flashcard.eng}</span> */}
                                     </div>
-                                    <div class="row">
-                                        <button onClick={hc}>ThankUNext</button>    
-                                    </div>
-                                    
                                 </div>
                                 </div>
                             </div>
@@ -62,6 +67,5 @@ const FlashcardInfo = ({flashcard, deck, flashcards, randomArrayList, riktigfc, 
         </div>
     )
 }
+*/
 
-
-export default FlashcardInfo

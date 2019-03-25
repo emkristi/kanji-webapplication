@@ -4,7 +4,8 @@ import { createDeck } from '../../store/actions/deckActions'
 
 class CreateDeck extends Component {
     state = {
-        title: ''
+        title: '',
+        type: ''
     }
     
     handleChange = (e) => {
@@ -28,9 +29,18 @@ class CreateDeck extends Component {
                     <div className="input-field">
                         <label htmlFor="title">Title:</label>
                         <input type="text" id="title" onChange={this.handleChange}/>
+
+                        
+                        
                     </div>
                     <div className="input-field">
-                        <button className="btn yellow lighten-1 z-depth-0">Create</button>
+                        <label htmlFor="type">Type:</label>
+                        <input type="text" id="type" onChange={this.handleChange}/>
+                    </div>
+
+                    
+                    <div className="input-field">
+                        <button className="btn yellow lighten-1 z-depth-0">Create deck</button>
                     </div>
               </form>
             </div>

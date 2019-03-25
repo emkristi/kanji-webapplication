@@ -26,7 +26,7 @@ const store = createStore(rootReducer,
         // ---> Component dispatches and action and call an action creator. Inside the action creator the process is halted and we return a function instead of an action, we go out and grab/update data, then we resume the dispatch and pass it to the reducer 
         applyMiddleware(thunk.withExtraArgument({ getFirebase, getFirestore })), // withExtraArgument allows us to pass an extra argument i flashcardAction, which is an obj. We destructure getFirebase and getFirestore, and can then use those objects to interact with our firebase and firestore 
         reduxFirestore(fbConfig), // second store enhancer. 
-        reactReduxFirebase(fbConfig, { attachAuthIsReady: true }),
+        reactReduxFirebase(fbConfig, {useFirestoreForProfile: true, userProfile: 'users', attachAuthIsReady: true }),
         window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
     )
 );

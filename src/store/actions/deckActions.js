@@ -10,8 +10,8 @@ export const createDeck = (deck) => {
 
         console.log(firestore.collection('users').doc(userId));
 
-        firestore.collection('users').doc(userId).update({  // async call (action takes some time to do) -> dispatch is halted
-            decks: firestore.FieldValue.arrayUnion(deck)
+        firestore.collection('decks').add({  // async call (action takes some time to do) -> dispatch is halted
+            ...deck
         }).then(() => { // .then fires when the action above is complete
             dispatch({type: 'CREATE_deck', deck});    
             // here we carry on with the dispatch. passing in action.
