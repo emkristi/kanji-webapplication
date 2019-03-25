@@ -107,7 +107,6 @@ class PhotoFlashcards extends Component {
     });
   }
 
-  /*
   handleFButton = (e) => {
     const { flashcards, match: { params: { id } } } = this.props;
     const { currentCard } = this.state;
@@ -118,8 +117,6 @@ class PhotoFlashcards extends Component {
     }
   }
 
-  */
-  /*
   randomKanjiArray = () => {
     const { flashcards, match: { params: { id } } } = this.props;
     const { currentCard } = this.state;
@@ -141,14 +138,14 @@ class PhotoFlashcards extends Component {
 
     return arr;
   }
-  */
+  
  
 
   render() {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
     const { currentCard } = this.state;
 
-   // var randomArray = this.randomKanjiArray();
+    var randomArray = this.randomKanjiArray();
    // console.log("r", randomArray);
 
     if (!auth.uid) return <Redirect to='/signin' />;
@@ -180,12 +177,12 @@ class PhotoFlashcards extends Component {
               <FlashcardInfo flashcard={categoryfcs[currentCard]} />
             }
           </div>
-          {/*
+          
           <button onClick={this.handleFButton} id='but1' value={randomArray[0]}>{randomArray[0]}</button>
           <button onClick={this.handleFButton} id='but2' value={randomArray[1]}>{randomArray[1]}</button>
           <button onClick={this.handleFButton} id='but3' value={randomArray[2]}>{randomArray[2]}</button>
           <button onClick={this.handleFButton} id='but3' value={randomArray[3]}>{randomArray[3]}</button>
-          */}
+          
         </div>
         <div>
           {<button onClick={this.handleHard} id="Hard">Hard</button>}
