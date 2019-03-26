@@ -4,7 +4,8 @@ import { Redirect } from 'react-router-dom'
 import { firestoreConnect } from 'react-redux-firebase' //used to connect to firestore
 import { compose } from 'redux';
 import Flashcard from '../flashcards/Flashcard';
-import { addFlashcard } from '../../store/actions/flashcardActions'
+import { addCompletedFlashcards } from '../../store/actions/flashcardActions'
+import { removeCompletedFlashcards } from '../../store/actions/flashcardActions'
 
 class Flashcards extends Component {
   // intern this.state -> this.setState for å sette den
@@ -19,6 +20,7 @@ class Flashcards extends Component {
 
   handleHard = (e) => {
     this.changeFc();
+    
   }
 
   handleEasy = (e) => {
@@ -27,9 +29,21 @@ class Flashcards extends Component {
 
     let categoryfcs = flashcards.filter(val => val.deckid === id);
     // Legg til flashcard i DB
-    this.props.addFlashcard(categoryfcs[currentCard].id);
+    this.props.addCompletedFlashcards(categoryfcs);
 
     this.changeFc();
+  }
+
+  testKnapp = (e) => {
+    const { flashcards, match: { params: { id } } } = this.props;
+    const { currentCard } = this.state;
+
+    let categoryfcs = flashcards.filter(val => val.deckid === id);
+
+    for(let i = 0; i < categoryfcs.length; ++i){
+
+    }
+    
   }
 
   findIndexOfFcId = (categoryfcs, fcid) => {
@@ -138,6 +152,7 @@ class Flashcards extends Component {
         <div>
           {<button onClick={this.handleHard} id="Hard">Hard</button>}
           <button onClick={this.handleEasy} id="Easy">Easy</button>
+          <button onClick={this.testKnapp} id="TestK">Test</button>
         </div>
       </div>
     )
@@ -145,7 +160,9 @@ class Flashcards extends Component {
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    addFlashcard: (flashcard) => dispatch(addFlashcard(flashcard))
+    addCompletedFlashcards: (flashcard) => dispatch(addCompletedFlashcards(flashcard)),
+    removeCompletedFlashcards: (flashcard) => dispatch(removeCompletedFlashcards(flashcard))
+
   }
 }
 const mapStateToProps = (state) => {
