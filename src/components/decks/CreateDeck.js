@@ -20,28 +20,43 @@ class CreateDeck extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.createDeck(this.state)
+        
+        // vi button her???
+        //if(e.value == "")
+        
+        this.props.history.push('/createflashcard');
     }
+
+    myFunction() {
+        document.getElementById("myDIV").style.display = "none";
+      }
+
     render(){
         return (
             <div className="container">
-              <form onSubmit={this.handleSubmit} className="white">
+              <form onSubmit={this.handleSubmit} className="white" value="heck">
                   <h5 className="grey-text text-darken-3">Create new deck</h5>
                     <div className="input-field">
                         <label htmlFor="title">Title:</label>
                         <input type="text" id="title" onChange={this.handleChange}/>
 
-                        
-                        
                     </div>
                     <div className="input-field">
                         <label htmlFor="type">Type:</label>
                         <input type="text" id="type" onChange={this.handleChange}/>
                     </div>
-
                     
                     <div className="input-field">
                         <button className="btn yellow lighten-1 z-depth-0">Create deck</button>
                     </div>
+
+                    <button onclick="myFunction()">Test</button>
+
+                    <div id="myDIV">
+                        This is my DIV element.
+                    </div>
+
+
               </form>
             </div>
         )

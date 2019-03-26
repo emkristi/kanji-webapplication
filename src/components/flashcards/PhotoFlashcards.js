@@ -113,7 +113,12 @@ class PhotoFlashcards extends Component {
     let categoryfcs = flashcards.filter(val => val.deckid === id);
 
     if(e.target.value === categoryfcs[currentCard].kanji){
-      console.log("rikgitg!");
+
+      // KALL FUNKSJONEN HER?
+      document.getElementById("myDIV").style.display = "none";
+      document.getElementById("myDIV2").style.display = "block";
+
+
     }
   }
 
@@ -139,8 +144,6 @@ class PhotoFlashcards extends Component {
     return arr;
   }
   
- 
-
   render() {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
     const { currentCard } = this.state;
@@ -172,22 +175,30 @@ class PhotoFlashcards extends Component {
     return (
       <div className="dashboard container">
         <div className="card-panel">
+
+          {/*
           <div className="card-content grey-text text-darken-3">
+
             {(categoryfcs.length > 0) &&
               <FlashcardInfo flashcard={categoryfcs[currentCard]} />
             }
           </div>
+          */}
           
-          <button onClick={this.handleFButton} id='but1' value={randomArray[0]}>{randomArray[0]}</button>
-          <button onClick={this.handleFButton} id='but2' value={randomArray[1]}>{randomArray[1]}</button>
-          <button onClick={this.handleFButton} id='but3' value={randomArray[2]}>{randomArray[2]}</button>
-          <button onClick={this.handleFButton} id='but3' value={randomArray[3]}>{randomArray[3]}</button>
+          <div className="container forside" id="myDIV">
+            <img className="content" src={categoryfcs[currentCard].pictureUrl} alt="current kanji" width="200px" height="200px"/>
+            <button onClick={this.handleFButton} id='but1' value={randomArray[0]}>{randomArray[0]}</button>
+            <button onClick={this.handleFButton} id='but2' value={randomArray[1]}>{randomArray[1]}</button>
+            <button onClick={this.handleFButton} id='but3' value={randomArray[2]}>{randomArray[2]}</button>
+            <button onClick={this.handleFButton} id='but3' value={randomArray[3]}>{randomArray[3]}</button>
+          </div>
           
         </div>
-        <div>
-          {<button onClick={this.handleHard} id="Hard">Hard</button>}
+        <div className="container bakside" hidden>
+          <button onClick={this.handleHard} id="Hard">Hard</button>
           <button onClick={this.handleEasy} id="Easy">Easy</button>
         </div>
+      
       </div>
     )
 
