@@ -5,34 +5,34 @@
  * @param {c} credentials 
  */
 export const signIn = (credentials) => {
-    return (dispatch, getState, {getFirebase}) => {
+    return (dispatch, getState, { getFirebase }) => {
         const firebase = getFirebase();
 
         firebase.auth().signInWithEmailAndPassword(
             credentials.email,
             credentials.password
         ).then(() => {
-            dispatch({ type: 'LOGIN_SUCCESS'})
+            dispatch({ type: 'LOGIN_SUCCESS' })
         }).catch((err) => {
-            dispatch({ type: 'LOGIN_ERROR', err})
+            dispatch({ type: 'LOGIN_ERROR', err })
         });
 
     }
 }
 
 export const signOut = () => {
-    return(dispatch, getState, {getFirebase}) => {
+    return (dispatch, getState, { getFirebase }) => {
         const firebase = getFirebase();
 
         firebase.auth().signOut().then(() => {
-            dispatch({ type: 'SIGNOUT_SUCCESS'});
+            dispatch({ type: 'SIGNOUT_SUCCESS' });
         })
     }
 }
 
 export const signUp = (newUser) => {
     // using firebase for authentification service by friebase, need firestore to communicate with firestore database
-    return (dispatch, getState, {getFirebase, getFirestore}) => {
+    return (dispatch, getState, { getFirebase, getFirestore }) => {
         const firebase = getFirebase();
         const firestore = getFirestore();
 
@@ -50,10 +50,10 @@ export const signUp = (newUser) => {
                 lastName: newUser.lastName,
                 initials: newUser.firstName[0] + newUser.lastName[0]
             })// another then method so when the then above has completed, we want to do something else
-        }).then(() => { 
-            dispatch({type: 'SIGNUP_SUCCESS'})
+        }).then(() => {
+            dispatch({ type: 'SIGNUP_SUCCESS' })
         }).catch(err => { // catch if any of the above fail
-            dispatch({type: 'SIGNUP_ERROR', err})
+            dispatch({ type: 'SIGNUP_ERROR', err })
         }) // we handle these dispatches in the authReducer
     }
 

@@ -28,13 +28,12 @@ class Flashcards extends Component {
     let categoryfcs = flashcards.filter(val => val.deckid === id);
     // Legg til flashcard i DB
     this.props.addFlashcard(categoryfcs[currentCard].id);
-
     this.changeFc();
   }
 
   findIndexOfFcId = (categoryfcs, fcid) => {
     let value = categoryfcs.find((val) => {
-      return (val.id == fcid)
+      return (val.id === fcid)
     });
     return categoryfcs.indexOf(value);
   }
@@ -49,7 +48,7 @@ class Flashcards extends Component {
     const { currentCard, bufferfc } = this.state;
 
     let categoryfcs = flashcards.filter(f => f.deckid === id);
-    let user = users.find(u => u.id == auth.uid);
+    let user = users.find(u => u.id === auth.uid);
     const seenFc = user.flashcardArray ? user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id) : [];
 
     // If no more unseen flashcards, go back to frontpage
@@ -73,7 +72,7 @@ class Flashcards extends Component {
       while (temp) {
         currentNumber = (Math.round(Math.random() * (categoryfcs.length - 1)));
         // If this random flashcard is not seen before
-        if (!((user.flashcardArray && user.flashcardArray.includes(categoryfcs[currentNumber].id) || currentNumber === currentCard))) {
+        if (!(((user.flashcardArray && user.flashcardArray.includes(categoryfcs[currentNumber].id)) || (currentNumber === currentCard)))) {
           //Check if random flashcard's got radicals
           let fcradicals = categoryfcs[currentNumber].radicals;
           if (fcradicals.length > 0) {
@@ -109,6 +108,7 @@ class Flashcards extends Component {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
     const { currentCard } = this.state;
 
+    console.log(users);
     if (!auth.uid) return <Redirect to='/signin' />;
 
     // Only show flashcards in current category
@@ -120,15 +120,15 @@ class Flashcards extends Component {
     // Check if you've seen every flashcard
     let user;
     if (users) {
-      user = users.find(u => u.id == auth.uid);
+      user = users.find(u => u.id === auth.uid);
+      console.log(user)
       if (user.flashcardArray
-        && user.flashcardArray.filter(f => this.findFlashcardById(f).deckid == id).length === categoryfcs.length) {
-        return (<div>Du har vært gjennom alle i denne kategorien <button onClick={() => window.location.href = '/'}>Gå tilbake</button></div>);
+        && user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id).length === categoryfcs.length) {
+        return (<div>Du har vært gjennom alle i denne kategorien <button onClick={() => window.location.href = '/'}>Gå tilbake</button></div>)
       }
     }
-
     // Error handling
-    if (!categoryfcs[currentCard]) return (<div>Not defined</div>);
+    // if (!categoryfcs[currentCard]) return (<div>Not defined</div>);
 
     return (
       <div className="dashboard container">
@@ -136,7 +136,7 @@ class Flashcards extends Component {
           <Flashcard flashcard={categoryfcs[currentCard]} />
         }
         <div>
-          {<button onClick={this.handleHard} id="Hard">Hard</button>}
+          <button onClick={this.handleHard} id="Hard">Hard</button>
           <button onClick={this.handleEasy} id="Easy">Easy</button>
         </div>
       </div>
