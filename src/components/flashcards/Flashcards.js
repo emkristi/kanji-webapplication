@@ -29,7 +29,7 @@ class Flashcards extends Component {
 
     let categoryfcs = flashcards.filter(val => val.deckid === id);
     // Legg til flashcard i DB
-    this.props.addCompletedFlashcards(categoryfcs);
+    this.props.addCompletedFlashcards(categoryfcs[currentCard].id);
 
     this.changeFc();
   }
