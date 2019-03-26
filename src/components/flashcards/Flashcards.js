@@ -104,6 +104,20 @@ class Flashcards extends Component {
     });
   }
 
+  changeContent() {
+    /*document.getElementById('card-panel-div').classList.toggle("test");
+
+    var x = document.getElementById("front");
+    var y = document.getElementById("back");
+    if (x.classList.length > 0) {
+      x.classList.remove("hide");
+      y.classList.add("hide");
+    } else {
+      y.classList.remove("hide");
+      x.classList.add("hide");
+    }*/
+  }
+
   render() {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
     const { currentCard } = this.state;
@@ -135,10 +149,11 @@ class Flashcards extends Component {
         {(categoryfcs.length > 0) &&
           <Flashcard flashcard={categoryfcs[currentCard]} />
         }
-        <div>
-          <button onClick={this.handleHard} id="Hard">Hard</button>
-          <button onClick={this.handleEasy} id="Easy">Easy</button>
+        <div id="hardEasyKnapper">
+          <button onClick={this.handleHard} className="waves-effect waves-light btn" id="Hard">Hard</button>
+          <button onClick={this.handleEasy} className="waves-effect waves-light btn" id="Easy">Easy</button>
         </div>
+        <div id="test"><p></p></div>
       </div>
     )
   }
