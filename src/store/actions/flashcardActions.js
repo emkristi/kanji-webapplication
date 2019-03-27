@@ -9,11 +9,8 @@ export const addCompletedFlashcards = (flashcardidd) => {
 
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         const firestore = getFirestore(); // reference to our firestore database
-
         const userId = getState().firebase.auth.uid;
         const flashcardId = flashcardidd;
-     
-        console.log(firestore.collection('users').doc(userId));
 
         firestore.collection('users').doc(userId).update({  
             flashcardArray: firestore.FieldValue.arrayUnion(flashcardId)
@@ -28,18 +25,18 @@ export const addCompletedFlashcards = (flashcardidd) => {
 
 export const removeCompletedFlashcards = (flashcardid) => {
 
-    return (dispatch, getState, {getFirestore}) => {
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firestore = getFirestore();
-
         const userId = getState().firebase.auth.uid;
-        
+        const fid = flashcardid;
+
         firestore.collection('users').doc(userId).update({
-            flashchardArray: firestore.FieldValue.delete(flashcardid)
+            flashcardArray: firestore.FieldValue.arrayRemove(fid)
         }).then(() => { 
             dispatch({ type: 'REMOVE_COMPLETED_FLASHCARDS', flashcardid });
             console.log("flashcards removed from user");
         }).catch((err) => {
-            dispatch({ type: 'REMOVE_COMPLETED_FLASHCARDS', err });
+            dispatch({ type: 'REMOVE_COMPLETED_FLASHCARDS_ERROR', err });
         })
     }
 

@@ -34,16 +34,20 @@ class Flashcards extends Component {
     this.changeFc();
   }
 
-  testKnapp = (e) => {
+  restartDeck = (e) => {
     const { flashcards, match: { params: { id } } } = this.props;
-    const { currentCard } = this.state;
-
     let categoryfcs = flashcards.filter(val => val.deckid === id);
 
-    for(let i = 0; i < categoryfcs.length; ++i){
+    const { currentCard } = this.state;
 
+    for(let i = 0; i < categoryfcs.length; ++i){
+      this.props.removeCompletedFlashcards(categoryfcs[i].id)
     }
-    
+
+
+    //const did = categoryfcs[currentCard].deckid;
+
+    window.location.reload();
   }
 
   findIndexOfFcId = (categoryfcs, fcid) => {
@@ -137,7 +141,10 @@ class Flashcards extends Component {
       user = users.find(u => u.id == auth.uid);
       if (user.flashcardArray
         && user.flashcardArray.filter(f => this.findFlashcardById(f).deckid == id).length === categoryfcs.length) {
-        return (<div>Du har vært gjennom alle i denne kategorien <button onClick={() => window.location.href = '/'}>Gå tilbake</button></div>);
+        return (<div>
+                  Du har vært gjennom alle i denne kategorien <button onClick={() => window.location.href = '/'}>Gå tilbake</button>
+                  <button onClick={this.restartDeck} id="restartbutton">Start på nytt</button>
+                  </div>);
       }
     }
 
@@ -152,7 +159,6 @@ class Flashcards extends Component {
         <div>
           {<button onClick={this.handleHard} id="Hard">Hard</button>}
           <button onClick={this.handleEasy} id="Easy">Easy</button>
-          <button onClick={this.testKnapp} id="TestK">Test</button>
         </div>
       </div>
     )
