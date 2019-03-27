@@ -4,7 +4,8 @@ import { firestoreConnect } from 'react-redux-firebase' // used to connect to fi
 import { compose } from 'redux';
 import FlashcardInfo from '../flashcards/FlashcardInfo';
 import { Redirect } from 'react-router-dom'
-import { addFlashcard } from '../../store/actions/flashcardActions'
+import { addCompletedFlashcards } from '../../store/actions/flashcardActions'
+import { removeCompletedFlashcards } from '../../store/actions/flashcardActions'
 
 class PhotoFlashcards extends Component {
   constructor(props) {
@@ -27,10 +28,23 @@ class PhotoFlashcards extends Component {
 
     let categoryfcs = flashcards.filter(val => val.deckid === id);
     // Legg til flashcard i DB
-    this.props.addFlashcard(categoryfcs[currentCard].id);
+    this.props.addCompletedFlashcards(categoryfcs[currentCard].id);
 
     this.changeFc();
 
+  }
+
+  restartDeck = (e) => {
+    const { flashcards, match: { params: { id } } } = this.props;
+    let categoryfcs = flashcards.filter(val => val.deckid === id);
+
+    const { currentCard } = this.state;
+
+    for(let i = 0; i < categoryfcs.length; ++i){
+      this.props.removeCompletedFlashcards(categoryfcs[i].id)
+    }
+
+    //window.location.reload();
   }
 
 
@@ -115,9 +129,6 @@ class PhotoFlashcards extends Component {
     if(e.target.value === categoryfcs[currentCard].kanji){
 
       // KALL FUNKSJONEN HER?
-      document.getElementById("myDIV").style.display = "none";
-      document.getElementById("myDIV2").style.display = "block";
-
 
     }
   }
@@ -165,7 +176,9 @@ class PhotoFlashcards extends Component {
       user = users.find(u => u.id === auth.uid);
       if (user.flashcardArray
         && user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id).length === categoryfcs.length) {
-        return (<div>Du har vært gjennom alle i denne kategorien <button onClick={() => window.location.href = '/'}>Gå tilbake</button></div>);
+        return (<div>Du har vært gjennom alle i denne kategorien <button onClick={() => window.location.href = '/'}>Gå tilbake</button>
+                          <button onClick={this.restartDeck} id="restartbutton">Start på nytt</button>
+              </div>);
       }
     }
 
@@ -194,7 +207,7 @@ class PhotoFlashcards extends Component {
           </div>
           
         </div>
-        <div className="container bakside" hidden>
+        <div className="container bakside">
           <button onClick={this.handleHard} id="Hard">Hard</button>
           <button onClick={this.handleEasy} id="Easy">Easy</button>
         </div>
@@ -217,7 +230,8 @@ class PhotoFlashcards extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addFlashcard: (flashcard) => dispatch(addFlashcard(flashcard))
+    addCompletedFlashcards: (flashcard) => dispatch(addCompletedFlashcards(flashcard)),
+    removeCompletedFlashcards: (flashcard) => dispatch(removeCompletedFlashcards(flashcard))
   }
 }
 const mapStateToProps = (state) => {

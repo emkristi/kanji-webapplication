@@ -44,10 +44,7 @@ class Flashcards extends Component {
       this.props.removeCompletedFlashcards(categoryfcs[i].id)
     }
 
-
-    //const did = categoryfcs[currentCard].deckid;
-
-    window.location.reload();
+    //window.location.reload();
   }
 
   findIndexOfFcId = (categoryfcs, fcid) => {
