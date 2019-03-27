@@ -13,12 +13,16 @@ const initState = {
  */
 const flashcardReducer = (state = initState, action) => {
     switch (action.type){  // checking the action type. 
-        case 'CREATE_flashcard': 
-            console.log('created flashcard', action.flashcard)
+        case 'ADD_COMPLETED_FLASHCARDS': 
+            console.log('added completed flashcards', action.flashcard)
             return state;
-        case 'CREATE_flashcard_ERROR':
-            console.log('create flashcard error', action.err)
+        case 'ADD_COMPLETED_FLASHCARDS_ERROR':
+            console.log('add complete flashcards error', action.err)
             return state;
+        case 'REMOVE_COMPLETED_FLASHCARDS':
+            console.log('removed completed flashcards', action.flashcard)
+        case 'REMOVE_COMPLETED_FLASHCARDS_ERROR':
+            console.log('remove completed flashcards error', action.err)
         default:
             return state;
     }

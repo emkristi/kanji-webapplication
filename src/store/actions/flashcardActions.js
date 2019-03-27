@@ -1,24 +1,43 @@
-export const addFlashcard = (flashcardidd) => {
-    // because we are using thunk -> can return a function instead of an action
+/**
+ * Adds flashcards that has been completed by a user to an array 
+ * for that user. 
+ * 
+ * @param {*} flashcardidd 
+ */
+
+export const addCompletedFlashcards = (flashcardidd) => {
 
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         const firestore = getFirestore(); // reference to our firestore database
-
         const userId = getState().firebase.auth.uid;
         const flashcardId = flashcardidd;
-        /* access flashcards collection from our firebase, adding new document
-         firestore.collection('flashcards') gets us a reference to our flashcard collection
-         .add() to add collection. we pass inn an object. the object represents the document that will be added to the collection */
-        console.log(firestore.collection('users').doc(userId));
 
-
-        firestore.collection('users').doc(userId).update({  // async call (action takes some time to do) -> dispatch is halted
+        firestore.collection('users').doc(userId).update({  
             flashcardArray: firestore.FieldValue.arrayUnion(flashcardId)
-        }).then(() => { // .then fires when the action above is complete
-            dispatch({ type: 'CREATE_flashcard', flashcardidd });
+        }).then(() => { 
+            dispatch({ type: 'ADD_COMPLETED_FLASHCARDS', flashcardidd });
             console.log("flashcard added to user");
         }).catch((err) => {
-            dispatch({ type: 'CREATE_flashcard_ERROR', err });
+            dispatch({ type: 'ADD_COMPLETED_FLASHCARDS_ERROR', err });
         })
     }
 };
+
+export const removeCompletedFlashcards = (flashcardid) => {
+
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
+        const firestore = getFirestore();
+        const userId = getState().firebase.auth.uid;
+        const fid = flashcardid;
+
+        firestore.collection('users').doc(userId).update({
+            flashcardArray: firestore.FieldValue.arrayRemove(fid)
+        }).then(() => { 
+            dispatch({ type: 'REMOVE_COMPLETED_FLASHCARDS', flashcardid });
+            console.log("flashcards removed from user");
+        }).catch((err) => {
+            dispatch({ type: 'REMOVE_COMPLETED_FLASHCARDS_ERROR', err });
+        })
+    }
+
+}

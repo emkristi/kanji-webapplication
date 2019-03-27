@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { addFlashcard } from '../../store/actions/flashcardActions'
+import { addCompletedFlashcards } from '../../store/actions/flashcardActions'
 
 class AddFlashcard extends Component {
     state = {
@@ -22,7 +22,7 @@ class AddFlashcard extends Component {
      */
     handleSubmit = (e) => {
         e.preventDefault(); // prevents page from reloading
-        this.props.addFlashcard(this.state) // we have access to createFlashcard because of the mapDispatchToProps. Inside the function we pass the flashcard we want to create, which the state, so we pass this.state. This flashcard is going to be passed into the function in mapDispatchToProps
+        this.props.addCompletedFlashcards(this.state) // we have access to createFlashcard because of the mapDispatchToProps. Inside the function we pass the flashcard we want to create, which the state, so we pass this.state. This flashcard is going to be passed into the function in mapDispatchToProps
     }
     render() {
         
@@ -63,7 +63,7 @@ const mapDispatchToProps = (dispatch) => {
         // the function takes in the individual flashcard that we pass inn, then it dispatches an action creator (createFlashcard()) and pass in that individual flashcard into the action creator
         // the action creator is the one imported from store/actions/flashcardActions.js
         // the action creator returns the function in flashcardActions.js which will do an async call then carry on with the dispatch
-        addFlashcard: (flashcard) => dispatch(addFlashcard(flashcard)) // will take in this.state from handleSubmit as the flashcard. this wil run the function in flashcardActions and return that function then dispatch.
+        addFlashcard: (flashcard) => dispatch(addCompletedFlashcards(flashcard)) // will take in this.state from handleSubmit as the flashcard. this wil run the function in flashcardActions and return that function then dispatch.
     }
 }
 

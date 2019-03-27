@@ -4,7 +4,8 @@ import { Redirect } from 'react-router-dom'
 import { firestoreConnect } from 'react-redux-firebase' //used to connect to firestore
 import { compose } from 'redux';
 import Flashcard from '../flashcards/Flashcard';
-import { addFlashcard } from '../../store/actions/flashcardActions'
+import { addCompletedFlashcards } from '../../store/actions/flashcardActions'
+import { removeCompletedFlashcards } from '../../store/actions/flashcardActions'
 
 class Flashcards extends Component {
   // intern this.state -> this.setState for å sette den
@@ -19,6 +20,7 @@ class Flashcards extends Component {
 
   handleHard = (e) => {
     this.changeFc();
+    
   }
 
   handleEasy = (e) => {
@@ -27,9 +29,25 @@ class Flashcards extends Component {
 
     let categoryfcs = flashcards.filter(val => val.deckid === id);
     // Legg til flashcard i DB
-    this.props.addFlashcard(categoryfcs[currentCard].id);
+    this.props.addCompletedFlashcards(categoryfcs[currentCard].id);
 
     this.changeFc();
+  }
+
+  restartDeck = (e) => {
+    const { flashcards, match: { params: { id } } } = this.props;
+    let categoryfcs = flashcards.filter(val => val.deckid === id);
+
+    const { currentCard } = this.state;
+
+    for(let i = 0; i < categoryfcs.length; ++i){
+      this.props.removeCompletedFlashcards(categoryfcs[i].id)
+    }
+
+
+    //const did = categoryfcs[currentCard].deckid;
+
+    window.location.reload();
   }
 
   findIndexOfFcId = (categoryfcs, fcid) => {
@@ -123,7 +141,10 @@ class Flashcards extends Component {
       user = users.find(u => u.id == auth.uid);
       if (user.flashcardArray
         && user.flashcardArray.filter(f => this.findFlashcardById(f).deckid == id).length === categoryfcs.length) {
-        return (<div>Du har vært gjennom alle i denne kategorien <button onClick={() => window.location.href = '/'}>Gå tilbake</button></div>);
+        return (<div>
+                  Du har vært gjennom alle i denne kategorien <button onClick={() => window.location.href = '/'}>Gå tilbake</button>
+                  <button onClick={this.restartDeck} id="restartbutton">Start på nytt</button>
+                  </div>);
       }
     }
 
@@ -145,7 +166,9 @@ class Flashcards extends Component {
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    addFlashcard: (flashcard) => dispatch(addFlashcard(flashcard))
+    addCompletedFlashcards: (flashcard) => dispatch(addCompletedFlashcards(flashcard)),
+    removeCompletedFlashcards: (flashcard) => dispatch(removeCompletedFlashcards(flashcard))
+
   }
 }
 const mapStateToProps = (state) => {
