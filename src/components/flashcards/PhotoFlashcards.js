@@ -40,7 +40,7 @@ class PhotoFlashcards extends Component {
 
     const { currentCard } = this.state;
 
-    for(let i = 0; i < categoryfcs.length; ++i){
+    for (let i = 0; i < categoryfcs.length; ++i) {
       this.props.removeCompletedFlashcards(categoryfcs[i].id)
     }
 
@@ -59,7 +59,7 @@ class PhotoFlashcards extends Component {
     const { flashcards } = this.props;
     return flashcards.find(f => f.id === id);
   }
-  
+
   changeFc = (e) => {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
     const { currentCard, bufferfc } = this.state;
@@ -126,7 +126,7 @@ class PhotoFlashcards extends Component {
     const { currentCard } = this.state;
     let categoryfcs = flashcards.filter(val => val.deckid === id);
 
-    if(e.target.value === categoryfcs[currentCard].kanji){
+    if (e.target.value === categoryfcs[currentCard].kanji) {
 
       // KALL FUNKSJONEN HER?
 
@@ -141,26 +141,26 @@ class PhotoFlashcards extends Component {
     var arr = [];
     arr.push(categoryfcs[currentCard].kanji);
 
-    while(arr.length < 4){
+    while (arr.length < 4) {
       var r = (Math.round(Math.random() * (categoryfcs.length - 1)));
 
-      if(!arr.includes(categoryfcs[r].kanji)){
+      if (!arr.includes(categoryfcs[r].kanji)) {
         arr.push(categoryfcs[r].kanji);
       }
     }
-    arr.sort(function() {
+    arr.sort(function () {
       return .5 - Math.random();
     });
 
     return arr;
   }
-  
+
   render() {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
     const { currentCard } = this.state;
 
     var randomArray = this.randomKanjiArray();
-   // console.log("r", randomArray);
+    // console.log("r", randomArray);
 
     if (!auth.uid) return <Redirect to='/signin' />;
 
@@ -177,8 +177,8 @@ class PhotoFlashcards extends Component {
       if (user.flashcardArray
         && user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id).length === categoryfcs.length) {
         return (<div>Du har vært gjennom alle i denne kategorien <button onClick={() => window.location.href = '/'}>Gå tilbake</button>
-                          <button onClick={this.restartDeck} id="restartbutton">Start på nytt</button>
-              </div>);
+          <button onClick={this.restartDeck} id="restartbutton">Start på nytt</button>
+        </div>);
       }
     }
 
@@ -197,23 +197,25 @@ class PhotoFlashcards extends Component {
             }
           </div>
           */}
-          
+
           <div className="container forside" id="myDIV">
-            <img className="content" src={categoryfcs[currentCard].pictureUrl} alt="current kanji" width="200px" height="200px"/>
+            <img className="content" src={categoryfcs[currentCard].pictureUrl} alt="current kanji" width="200px" height="200px" />
             <button onClick={this.handleFButton} id='but1' value={randomArray[0]}>{randomArray[0]}</button>
             <button onClick={this.handleFButton} id='but2' value={randomArray[1]}>{randomArray[1]}</button>
             <button onClick={this.handleFButton} id='but3' value={randomArray[2]}>{randomArray[2]}</button>
             <button onClick={this.handleFButton} id='but3' value={randomArray[3]}>{randomArray[3]}</button>
           </div>
-          
+
         </div>
         <div className="container bakside">
           <button onClick={this.handleHard} id="Hard">Hard</button>
           <button onClick={this.handleEasy} id="Easy">Easy</button>
         </div>
-      
+
       </div>
     )
+
+
 
 
     /*
