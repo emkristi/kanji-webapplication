@@ -30,10 +30,7 @@ class PhotoFlashcards extends Component {
     this.props.addFlashcard(categoryfcs[currentCard].id);
 
     this.changeFc();
-
   }
-
-
   findIndexOfFcId = (categoryfcs, fcid) => {
     let value = categoryfcs.find((val) => {
       return (val.id === fcid)

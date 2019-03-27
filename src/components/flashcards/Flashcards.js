@@ -140,15 +140,18 @@ class Flashcards extends Component {
         && user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id).length === categoryfcs.length) {
         return (<div>Du har vært gjennom alle i denne kategorien <button onClick={() => window.location.href = '/'}>Gå tilbake</button></div>)
       }
+
     }
     // Error handling
     // if (!categoryfcs[currentCard]) return (<div>Not defined</div>);
 
     return (
       <div className="dashboard container">
-        {(categoryfcs.length > 0) &&
-          <Flashcard flashcard={categoryfcs[currentCard]} />
-        }
+        <div className="kanEng">
+          {(categoryfcs.length > 0) &&
+            <Flashcard flashcard={categoryfcs[currentCard]} />
+          }
+        </div>
         <div id="hardEasyKnapper">
           <button onClick={this.handleHard} className="waves-effect waves-light btn" id="Hard">Hard</button>
           <button onClick={this.handleEasy} className="waves-effect waves-light btn" id="Easy">Easy</button>
