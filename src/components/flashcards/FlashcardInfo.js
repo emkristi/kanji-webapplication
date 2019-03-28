@@ -6,13 +6,19 @@ import React from 'react'
  */
 
 const FlashcardInfo = ({flashcard}) => {
-    
     return (
             <div className="container">
                 <div className="flashcard back">
-                    <span className="card-title"> {flashcard.kanji} </span>
-                    <span className="card-title"> {flashcard.eng} </span>
-                    <span className="card-title"> {flashcard.radicals.length > 0 && flashcard.radicals.map(r => r.id)} </span>
+                    <span className="card-title">Bakside: </span>
+                    <br></br>
+                    <span className="card-title">{flashcard.kanji} </span>
+                    <span className="card-title">{flashcard.eng} </span>
+                    <br></br>
+                    {flashcard.mnemonic !== "" && 
+                        <span className="card-title ">Mnemonic: {flashcard.mnemonic}</span>
+                    }
+                    <br></br>
+                    <span className="card-title">{flashcard.radicals.length > 0 && flashcard.radicals.map(r => r.id)} </span>
                 </div>
             </div>
         

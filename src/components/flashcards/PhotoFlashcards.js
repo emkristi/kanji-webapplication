@@ -15,12 +15,14 @@ class PhotoFlashcards extends Component {
       bufferfc: []
     };
 
-    console.log("bruker: ", this.props);
+    //console.log("bruker: ", this.props);
   }
 
   handleHard = (e) => {
     this.changeFc();
   }
+
+  
 
   handleEasy = (e) => {
     const { flashcards, match: { params: { id } } } = this.props;
@@ -34,17 +36,66 @@ class PhotoFlashcards extends Component {
 
   }
 
-  restartDeck = (e) => {
+  removeFlashcards () {
     const { flashcards, match: { params: { id } } } = this.props;
-    let categoryfcs = flashcards.filter(val => val.deckid === id);
 
-    const { currentCard } = this.state;
+    let categoryfcs = flashcards.filter(val => val.deckid === id);
 
     for (let i = 0; i < categoryfcs.length; ++i) {
       this.props.removeCompletedFlashcards(categoryfcs[i].id)
     }
 
+  }
+
+  reloadWindow () {
+    window.location.reload();
+  }
+
+  restartDeck = (e) => {
+    //const { flashcards, match: { params: { id } } } = this.props;
+    const { flashcards, match: { params: { id } }, auth, users } = this.props;
+    const { currentCard } = this.state;
+
+    let categoryfcs = flashcards.filter(val => val.deckid === id);
+    let user = users.find(u => u.id === auth.uid);
+
+    
+
+    //const fcslength = user.flashcardArray.length;
+    //console.log(fcslength);
+
+    for (let i = 0; i < categoryfcs.length; ++i) {
+      this.props.removeCompletedFlashcards(categoryfcs[i].id)
+
+      if(i === categoryfcs.length -1){
+        console.log("...");
+      }
+    }
+
+    console.log("...");
+
+
+   // const newlength = user.flashcardArray.length;
+
+   /*
+    if ( (fcslength - newlength) == categoryfcs.length) { 
+      window.reload(); 
+    }
+    */
+    
+
+    //console.log(fcslength);
+
     //window.location.reload();
+  }
+
+  editMnemonic = (e) => {
+    const { flashcards, match: { params: { id } } } = this.props;
+    const { currentCard } = this.state;
+
+    let categoryfcs = flashcards.filter(val => val.deckid === id);
+    // Legg til flashcard i DB
+    //this.props.addCompletedFlashcards(categoryfcs[currentCard].id);
   }
 
 
@@ -127,8 +178,9 @@ class PhotoFlashcards extends Component {
     let categoryfcs = flashcards.filter(val => val.deckid === id);
 
     if (e.target.value === categoryfcs[currentCard].kanji) {
-
+      console.log("RIKTIG!");
       // KALL FUNKSJONEN HER?
+      return (<div>heyo!</div>);
 
     }
   }
@@ -182,35 +234,71 @@ class PhotoFlashcards extends Component {
       }
     }
 
+
     // Error handling
     if (!categoryfcs[currentCard]) return (<div>Not defined</div>);
 
     return (
       <div className="dashboard container">
-        <div className="card-panel">
+
+      <div className="card-panel">
 
           {/*
           <div className="card-content grey-text text-darken-3">
-
             {(categoryfcs.length > 0) &&
               <FlashcardInfo flashcard={categoryfcs[currentCard]} />
             }
           </div>
           */}
 
-          <div className="container forside" id="myDIV">
+          <div className="row container forside" id="myDIV">
             <img className="content" src={categoryfcs[currentCard].pictureUrl} alt="current kanji" width="200px" height="200px" />
+            <br></br>
             <button onClick={this.handleFButton} id='but1' value={randomArray[0]}>{randomArray[0]}</button>
             <button onClick={this.handleFButton} id='but2' value={randomArray[1]}>{randomArray[1]}</button>
             <button onClick={this.handleFButton} id='but3' value={randomArray[2]}>{randomArray[2]}</button>
             <button onClick={this.handleFButton} id='but3' value={randomArray[3]}>{randomArray[3]}</button>
           </div>
+        </div>
+        <div className="row container bakside">
+          <div className="row">
+          {(categoryfcs.length > 0) &&
+              <FlashcardInfo flashcard={categoryfcs[currentCard]} />
+            }
+          </div>
+
+          <div>
+            <button onClick={this.handleHard} id="Hard">Hard</button>
+            <button onClick={this.handleEasy} id="Easy">Easy</button>
+          </div>
+        </div>
+
+        {/*}
+        <div className="flip-card">
+          <div class="flip-card-inner">
+            
+            <div className="container flip-card-front" id="myDIV">
+              <div className="row">
+                <img className="content" src={categoryfcs[currentCard].pictureUrl} alt="current kanji" width="200px" height="200px" />
+              </div>
+              <div className="row">
+                <button onClick={this.handleFButton} id='but1' value={randomArray[0]}>{randomArray[0]}</button>
+                <button onClick={this.handleFButton} id='but2' value={randomArray[1]}>{randomArray[1]}</button>
+                <button onClick={this.handleFButton} id='but3' value={randomArray[2]}>{randomArray[2]}</button>
+                <button onClick={this.handleFButton} id='but3' value={randomArray[3]}>{randomArray[3]}</button>
+              </div>
+              
+            </div>
+
+            <div className="container flip-card-back">
+              <button onClick={this.handleHard} id="Hard">Hard</button>
+              <button onClick={this.handleEasy} id="Easy">Easy</button>
+            </div>
+            
+          </div>
 
         </div>
-        <div className="container bakside">
-          <button onClick={this.handleHard} id="Hard">Hard</button>
-          <button onClick={this.handleEasy} id="Easy">Easy</button>
-        </div>
+        */}
 
       </div>
     )
