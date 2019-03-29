@@ -6,21 +6,32 @@ import FlashcardInfo from '../flashcards/FlashcardInfo';
 import { Redirect } from 'react-router-dom'
 import { addCompletedFlashcards } from '../../store/actions/flashcardActions'
 import { removeCompletedFlashcards } from '../../store/actions/flashcardActions'
+import ReactCardFlip from 'react-card-flip';
 
 class PhotoFlashcards extends Component {
   constructor(props) {
     super(props);
     this.state = {
       currentCard: 0,
-      bufferfc: []
+      bufferfc: [],
+      isFlipped: false
     };
 
-    console.log("bruker: ", this.props);
+
+    //console.log("bruker: ", this.props);
+  }
+
+  flipClick = (e) => {
+    e.preventDefault();
+    this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
+    console.log("flappy floppy?");
   }
 
   handleHard = (e) => {
     this.changeFc();
   }
+
+  
 
   handleEasy = (e) => {
     const { flashcards, match: { params: { id } } } = this.props;
@@ -34,17 +45,65 @@ class PhotoFlashcards extends Component {
 
   }
 
-  restartDeck = (e) => {
+  removeFlashcards () {
     const { flashcards, match: { params: { id } } } = this.props;
-    let categoryfcs = flashcards.filter(val => val.deckid === id);
 
-    const { currentCard } = this.state;
+    let categoryfcs = flashcards.filter(val => val.deckid === id);
 
     for (let i = 0; i < categoryfcs.length; ++i) {
       this.props.removeCompletedFlashcards(categoryfcs[i].id)
     }
 
+  }
+
+  reloadWindow () {
+    window.location.reload();
+  }
+
+  restartDeck = (e) => {
+    //const { flashcards, match: { params: { id } } } = this.props;
+    const { flashcards, match: { params: { id } }, auth, users } = this.props;
+    const { currentCard } = this.state;
+
+    let categoryfcs = flashcards.filter(val => val.deckid === id);
+    let user = users.find(u => u.id === auth.uid);
+
+    
+
+    //const fcslength = user.flashcardArray.length;
+    //console.log(fcslength);
+
+    for (let i = 0; i < categoryfcs.length; ++i) {
+      this.props.removeCompletedFlashcards(categoryfcs[i].id)
+
+      if(i === categoryfcs.length -1){
+      }
+    }
+
+    console.log("...");
+
+
+   // const newlength = user.flashcardArray.length;
+
+   /*
+    if ( (fcslength - newlength) == categoryfcs.length) { 
+      window.reload(); 
+    }
+    */
+    
+
+    //console.log(fcslength);
+
     //window.location.reload();
+  }
+
+  editMnemonic = (e) => {
+    const { flashcards, match: { params: { id } } } = this.props;
+    const { currentCard } = this.state;
+
+    let categoryfcs = flashcards.filter(val => val.deckid === id);
+    // Legg til flashcard i DB
+    //this.props.addCompletedFlashcards(categoryfcs[currentCard].id);
   }
 
 
@@ -119,6 +178,8 @@ class PhotoFlashcards extends Component {
     this.setState({
       currentCard: currentNumber
     });
+
+    this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
   }
 
   handleFButton = (e) => {
@@ -127,8 +188,10 @@ class PhotoFlashcards extends Component {
     let categoryfcs = flashcards.filter(val => val.deckid === id);
 
     if (e.target.value === categoryfcs[currentCard].kanji) {
+      console.log("RIKTIG!");
+      this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
 
-      // KALL FUNKSJONEN HER?
+      return (<div>heyo!</div>);
 
     }
   }
@@ -182,51 +245,39 @@ class PhotoFlashcards extends Component {
       }
     }
 
+
     // Error handling
     if (!categoryfcs[currentCard]) return (<div>Not defined</div>);
 
     return (
       <div className="dashboard container">
-        <div className="card-panel">
 
-          {/*
-          <div className="card-content grey-text text-darken-3">
+      <ReactCardFlip isFlipped={this.state.isFlipped} flipDirection="horizontal">
+        <div className="tester" key="front">
+          <div><img className="content" src={categoryfcs[currentCard].pictureUrl} alt="current kanji" width="200px" height="200px" /></div>
+          <br></br>
+          <button onClick={this.handleFButton} id='but1' value={randomArray[0]}>{randomArray[0]}</button>
+          <button onClick={this.handleFButton} id='but2' value={randomArray[1]}>{randomArray[1]}</button>
+          <button onClick={this.handleFButton} id='but3' value={randomArray[2]}>{randomArray[2]}</button>
+          <button onClick={this.handleFButton} id='but3' value={randomArray[3]}>{randomArray[3]}</button>
+          <br></br>
+        </div>
 
-            {(categoryfcs.length > 0) &&
+        <div className="tester2" key="back">
+          <div className="battons">
+          {(categoryfcs.length > 0) &&
               <FlashcardInfo flashcard={categoryfcs[currentCard]} />
             }
+            <br></br>
+            <button onClick={this.handleHard} id="Hard">Hard</button>
+            <button onClick={this.handleEasy} id="Easy">Easy</button>
           </div>
-          */}
-
-          <div className="container forside" id="myDIV">
-            <img className="content" src={categoryfcs[currentCard].pictureUrl} alt="current kanji" width="200px" height="200px" />
-            <button onClick={this.handleFButton} id='but1' value={randomArray[0]}>{randomArray[0]}</button>
-            <button onClick={this.handleFButton} id='but2' value={randomArray[1]}>{randomArray[1]}</button>
-            <button onClick={this.handleFButton} id='but3' value={randomArray[2]}>{randomArray[2]}</button>
-            <button onClick={this.handleFButton} id='but3' value={randomArray[3]}>{randomArray[3]}</button>
-          </div>
-
-        </div>
-        <div className="container bakside">
-          <button onClick={this.handleHard} id="Hard">Hard</button>
-          <button onClick={this.handleEasy} id="Easy">Easy</button>
+          
         </div>
 
+      </ReactCardFlip>
       </div>
     )
-
-
-
-
-    /*
-    return (
-      <div className="dashboard container">
-        {arrtest && arrtest.length > 0 &&
-            <FlashcardInfo flashcard={arrtest[this.state.currentCard]} deck={this.props.deck} flashcards={this.props.flashcards}  />
-        }     
-        <button onClick={this.handleClick}>Next</button>
-      </div>
-    )*/
   }
 }
 

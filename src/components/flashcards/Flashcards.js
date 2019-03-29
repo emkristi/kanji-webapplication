@@ -133,7 +133,6 @@ class Flashcards extends Component {
 
 	changeContent() {
 		/*document.getElementById('card-panel-div').classList.toggle("test");
-
     var x = document.getElementById("front");
     var y = document.getElementById("back");
     if (x.classList.length > 0) {
@@ -189,25 +188,26 @@ class Flashcards extends Component {
 								{categoryfcs[currentCard].radicals.length > 0 &&
 									categoryfcs[currentCard].radicals.map((r) => r.id)}
 							</span>
-							<div id="hardEasyKnapper">
-								<button onClick={this.handleHard} className="waves-effect waves-light btn" id="Hard">
-									Hard
-								</button>
-								<button onClick={this.handleEasy} className="waves-effect waves-light btn" id="Easy">
-									Easy
-								</button>
-								{categoryfcs[currentCard].strokeOrderUrl && (
-									<img
-										className="strokePicture"
-										src={categoryfcs[currentCard].strokeOrderUrl}
-										alt="stroke order"
-										width="200px"
-										height="200px"
-									/>
-								)}
-							</div>
+
+							{categoryfcs[currentCard].strokeOrderUrl && (
+								<img
+									className="strokePicture"
+									src={categoryfcs[currentCard].strokeOrderUrl}
+									alt="stroke order"
+									width="200px"
+									height="200px"
+								/>
+							)}
 						</div>
 					</div>
+				</div>
+				<div id="hardEasyKnapper">
+					<button onClick={this.handleHard} className="waves-effect waves-light btn" id="Hard">
+						Hard
+					</button>
+					<button onClick={this.handleEasy} className="waves-effect waves-light btn" id="Easy">
+						Easy
+					</button>
 				</div>
 			</div>
 		);

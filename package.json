@@ -6,6 +6,7 @@
     "firebase": "^5.9.0",
     "firebaseui": "^3.5.2",
     "react": "^16.8.4",
+    "react-card-flip": "^0.6.0",
     "react-dom": "^16.7.0",
     "react-firebaseui": "^3.1.2",
     "react-flippy": "^0.1.2",
