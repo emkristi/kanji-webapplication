@@ -6,16 +6,25 @@ import FlashcardInfo from '../flashcards/FlashcardInfo';
 import { Redirect } from 'react-router-dom'
 import { addCompletedFlashcards } from '../../store/actions/flashcardActions'
 import { removeCompletedFlashcards } from '../../store/actions/flashcardActions'
+import ReactCardFlip from 'react-card-flip';
 
 class PhotoFlashcards extends Component {
   constructor(props) {
     super(props);
     this.state = {
       currentCard: 0,
-      bufferfc: []
+      bufferfc: [],
+      isFlipped: false
     };
 
+
     //console.log("bruker: ", this.props);
+  }
+
+  flipClick = (e) => {
+    e.preventDefault();
+    this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
+    console.log("flappy floppy?");
   }
 
   handleHard = (e) => {
@@ -68,7 +77,6 @@ class PhotoFlashcards extends Component {
       this.props.removeCompletedFlashcards(categoryfcs[i].id)
 
       if(i === categoryfcs.length -1){
-        console.log("...");
       }
     }
 
@@ -170,6 +178,8 @@ class PhotoFlashcards extends Component {
     this.setState({
       currentCard: currentNumber
     });
+
+    this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
   }
 
   handleFButton = (e) => {
@@ -179,7 +189,8 @@ class PhotoFlashcards extends Component {
 
     if (e.target.value === categoryfcs[currentCard].kanji) {
       console.log("RIKTIG!");
-      // KALL FUNKSJONEN HER?
+      this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
+
       return (<div>heyo!</div>);
 
     }
@@ -241,80 +252,32 @@ class PhotoFlashcards extends Component {
     return (
       <div className="dashboard container">
 
-      <div className="card-panel">
-
-          {/*
-          <div className="card-content grey-text text-darken-3">
-            {(categoryfcs.length > 0) &&
-              <FlashcardInfo flashcard={categoryfcs[currentCard]} />
-            }
-          </div>
-          */}
-
-          <div className="row container forside" id="myDIV">
-            <img className="content" src={categoryfcs[currentCard].pictureUrl} alt="current kanji" width="200px" height="200px" />
-            <br></br>
-            <button onClick={this.handleFButton} id='but1' value={randomArray[0]}>{randomArray[0]}</button>
-            <button onClick={this.handleFButton} id='but2' value={randomArray[1]}>{randomArray[1]}</button>
-            <button onClick={this.handleFButton} id='but3' value={randomArray[2]}>{randomArray[2]}</button>
-            <button onClick={this.handleFButton} id='but3' value={randomArray[3]}>{randomArray[3]}</button>
-          </div>
+      <ReactCardFlip isFlipped={this.state.isFlipped} flipDirection="horizontal">
+        <div className="tester" key="front">
+          <div><img className="content" src={categoryfcs[currentCard].pictureUrl} alt="current kanji" width="200px" height="200px" /></div>
+          <br></br>
+          <button onClick={this.handleFButton} id='but1' value={randomArray[0]}>{randomArray[0]}</button>
+          <button onClick={this.handleFButton} id='but2' value={randomArray[1]}>{randomArray[1]}</button>
+          <button onClick={this.handleFButton} id='but3' value={randomArray[2]}>{randomArray[2]}</button>
+          <button onClick={this.handleFButton} id='but3' value={randomArray[3]}>{randomArray[3]}</button>
+          <br></br>
         </div>
-        <div className="row container bakside">
-          <div className="row">
+
+        <div className="tester2" key="back">
+          <div className="battons">
           {(categoryfcs.length > 0) &&
               <FlashcardInfo flashcard={categoryfcs[currentCard]} />
             }
-          </div>
-
-          <div>
+            <br></br>
             <button onClick={this.handleHard} id="Hard">Hard</button>
             <button onClick={this.handleEasy} id="Easy">Easy</button>
           </div>
+          
         </div>
 
-        {/*}
-        <div className="flip-card">
-          <div class="flip-card-inner">
-            
-            <div className="container flip-card-front" id="myDIV">
-              <div className="row">
-                <img className="content" src={categoryfcs[currentCard].pictureUrl} alt="current kanji" width="200px" height="200px" />
-              </div>
-              <div className="row">
-                <button onClick={this.handleFButton} id='but1' value={randomArray[0]}>{randomArray[0]}</button>
-                <button onClick={this.handleFButton} id='but2' value={randomArray[1]}>{randomArray[1]}</button>
-                <button onClick={this.handleFButton} id='but3' value={randomArray[2]}>{randomArray[2]}</button>
-                <button onClick={this.handleFButton} id='but3' value={randomArray[3]}>{randomArray[3]}</button>
-              </div>
-              
-            </div>
-
-            <div className="container flip-card-back">
-              <button onClick={this.handleHard} id="Hard">Hard</button>
-              <button onClick={this.handleEasy} id="Easy">Easy</button>
-            </div>
-            
-          </div>
-
-        </div>
-        */}
-
+      </ReactCardFlip>
       </div>
     )
-
-
-
-
-    /*
-    return (
-      <div className="dashboard container">
-        {arrtest && arrtest.length > 0 &&
-            <FlashcardInfo flashcard={arrtest[this.state.currentCard]} deck={this.props.deck} flashcards={this.props.flashcards}  />
-        }     
-        <button onClick={this.handleClick}>Next</button>
-      </div>
-    )*/
   }
 }
 

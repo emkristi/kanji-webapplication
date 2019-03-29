@@ -16,6 +16,8 @@ class Flashcards extends Component {
       currentCard: 0,
       bufferfc: []
     };
+
+    
   }
 
   handleHard = (e) => {
@@ -134,9 +136,21 @@ class Flashcards extends Component {
     }*/
   }
 
+  checkK() {
+    
+    const { flashcards, match: { params: { id } }, auth, users } = this.props;
+    const { currentCard, bufferfc } = this.state;
+
+    //let categoryfcs = flashcards.filter(f => f.deckid === id);
+
+    
+
+  }
+
   render() {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
     const { currentCard } = this.state;
+
 
     console.log(users);
     if (!auth.uid) return <Redirect to='/signin' />;
@@ -146,6 +160,13 @@ class Flashcards extends Component {
     if (flashcards) {
       categoryfcs = flashcards.filter(f => f.deckid === id)
     }
+
+    console.log("cf", categoryfcs);
+    var r = categoryfcs[currentCard].radicals;
+    //map(r => r.id)
+    //var rad = categoryfcs.filter(f => f.id === r);
+    console.log("rrrr", r);
+    //console.log("radddd", rad);
 
     // Check if you've seen every flashcard
     let user;
@@ -161,14 +182,17 @@ class Flashcards extends Component {
       }
 
     }
+
     // Error handling
     // if (!categoryfcs[currentCard]) return (<div>Not defined</div>);
+
+    this.checkK();
 
     return (
       <div className="dashboard container">
         <div className="kanEng">
           {(categoryfcs.length > 0) &&
-            <Flashcard flashcard={categoryfcs[currentCard]} />
+            <Flashcard flashcard={categoryfcs[currentCard]} flashcards={categoryfcs} />
           }
         </div>
         <div id="hardEasyKnapper">
