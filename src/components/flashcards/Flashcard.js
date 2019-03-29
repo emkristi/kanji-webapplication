@@ -1,5 +1,5 @@
-import React from 'react'
-
+import React from 'react';
+/*
 const Flashcard = ({ flashcard }) => {
 
     return (
@@ -16,4 +16,4 @@ const Flashcard = ({ flashcard }) => {
         </div>
     )
 }
-export default Flashcard
+export default Flashcard*/
