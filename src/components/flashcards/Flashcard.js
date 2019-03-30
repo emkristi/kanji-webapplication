@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Flashcard = ({ flashcard, rad }) => {
+const Flashcard = ({ flashcard, radicals }) => {
 
     return (
         <div className="flip-card">
@@ -11,7 +11,9 @@ const Flashcard = ({ flashcard, rad }) => {
                 <div className="flip-card-back">
                     <span className="card-title"> {flashcard.eng} </span>
                     <span className="card-title"> {flashcard.mnemonic} </span>
-                    <span className="card-title"> {flashcard.radicals.length > 0 && flashcard.radicals.map(r => r.id)}</span>
+                    <span className="card-title">
+                        {radicals.length > 0 && radicals.map(r => <span key={r}>{r}</span>)}
+                    </span>
                 </div>
             </div>
         </div>

@@ -8,6 +8,18 @@ import { Link } from 'react-router-dom'
 import { Redirect } from 'react-router-dom'
 
 class Frontpage extends Component {
+
+
+    // sjekk om alle flashcards i et deck finnes i flashcardArray til brukeren
+    checkDeck = () => {
+        const { flashcards, match: { params: { id } }, auth, users } = this.props;
+
+        
+
+        //radarray = rad.map(r => flashcards.find(f => f.id === r.id).kanji);
+    } 
+
+
     render() {
         const { decks, flashcards, auth } = this.props;
         if (!auth.uid) return <Redirect to='/signin' />
@@ -35,7 +47,8 @@ const mapStateToProps = (state) => {
     return {
         decks: state.firestore.ordered.decks, // gives an array of the decks.. flashcard property, we are accessing the decks from the state in the flashcardReducer. We are grabbing this and attatching it to the flashcard property inside the props of this component (flashcard: )
         flashcards: state.firestore.ordered.flashcards,
-        auth: state.firebase.auth
+        auth: state.firebase.auth,
+        users: state.firestore.ordered.users
     }
 }
 
@@ -49,6 +62,11 @@ export default compose(
     firestoreConnect([
         {
             collection: 'flashcards'
+        }
+    ]),
+    firestoreConnect([
+        { 
+            collection: 'users' 
         }
     ])
 )(Frontpage)

@@ -199,23 +199,30 @@ class PhotoFlashcards extends Component {
   randomKanjiArray = () => {
     const { flashcards, match: { params: { id } } } = this.props;
     const { currentCard } = this.state;
-    let categoryfcs = flashcards.filter(val => val.deckid === id);
 
+    let categoryfcs = [];
     var arr = [];
-    arr.push(categoryfcs[currentCard].kanji);
+    if(flashcards ){
+      categoryfcs = flashcards.filter(val => val.deckid === id);
+      if(categoryfcs[currentCard]){
+        arr.push(categoryfcs[currentCard].kanji);
 
-    while (arr.length < 4) {
-      var r = (Math.round(Math.random() * (categoryfcs.length - 1)));
-
-      if (!arr.includes(categoryfcs[r].kanji)) {
-        arr.push(categoryfcs[r].kanji);
+        while (arr.length < 4) {
+          var r = (Math.round(Math.random() * (categoryfcs.length - 1)));
+    
+          if (!arr.includes(categoryfcs[r].kanji)) {
+            arr.push(categoryfcs[r].kanji);
+          }
+        }
+        arr.sort(function () {
+          return .5 - Math.random();
+        });
+    
+        return arr;
       }
     }
-    arr.sort(function () {
-      return .5 - Math.random();
-    });
 
-    return arr;
+    
   }
 
   render() {

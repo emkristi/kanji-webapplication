@@ -15,14 +15,11 @@ class Flashcards extends Component {
     this.state = {
       currentCard: 0,
       bufferfc: []
-    };
-
-    
+    };    
   }
 
   handleHard = (e) => {
     this.changeFc();
-
   }
 
   handleEasy = (e) => {
@@ -37,13 +34,12 @@ class Flashcards extends Component {
   }
 
   restartDeck = (e) => {
-    const { flashcards, match: { params: { id } } } = this.props;
+    const { flashcards, match: { params: { id } }, removeCompletedFlashcards } = this.props;
     let categoryfcs = flashcards.filter(val => val.deckid === id);
-
     const { currentCard } = this.state;
 
     for (let i = 0; i < categoryfcs.length; ++i) {
-      this.props.removeCompletedFlashcards(categoryfcs[i].id)
+      removeCompletedFlashcards(categoryfcs[i].id);
     }
 
     //window.location.reload();
@@ -136,23 +132,11 @@ class Flashcards extends Component {
     }*/
   }
 
-  checkK() {
-    
-    const { flashcards, match: { params: { id } }, auth, users } = this.props;
-    const { currentCard, bufferfc } = this.state;
-
-    //let categoryfcs = flashcards.filter(f => f.deckid === id);
-
-    
-
-  }
-
   render() {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
     const { currentCard } = this.state;
 
 
-    console.log(users);
     if (!auth.uid) return <Redirect to='/signin' />;
 
     // Only show flashcards in current category
@@ -161,12 +145,12 @@ class Flashcards extends Component {
       categoryfcs = flashcards.filter(f => f.deckid === id)
     }
 
-    console.log("cf", categoryfcs);
-    var r = categoryfcs[currentCard].radicals;
-    //map(r => r.id)
-    //var rad = categoryfcs.filter(f => f.id === r);
-    console.log("rrrr", r);
-    //console.log("radddd", rad);
+    let radarray = [];
+    if(categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards) {
+      let rad = categoryfcs[currentCard].radicals;
+      radarray = rad.map(r => flashcards.find(f => f.id === r.id).kanji);
+    }
+    
 
     // Check if you've seen every flashcard
     let user;
@@ -191,8 +175,8 @@ class Flashcards extends Component {
     return (
       <div className="dashboard container">
         <div className="kanEng">
-          {(categoryfcs.length > 0) &&
-            <Flashcard flashcard={categoryfcs[currentCard]} flashcards={categoryfcs} />
+          {(categoryfcs.length > 0) && 
+            <Flashcard flashcard={categoryfcs[currentCard]} radicals={radarray}/>
           }
         </div>
         <div id="hardEasyKnapper">

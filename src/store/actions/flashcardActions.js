@@ -41,3 +41,7 @@ export const removeCompletedFlashcards = (flashcardid) => {
     }
 
 }
+
+export const updateMnemonic = (flashcardid) => {
+    
+}
