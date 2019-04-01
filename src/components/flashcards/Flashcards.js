@@ -152,7 +152,7 @@ class Flashcards extends Component {
     const { currentCard } = this.state;
 
 
-    console.log(users);
+    //console.log(users);
     if (!auth.uid) return <Redirect to='/signin' />;
 
     // Only show flashcards in current category
@@ -161,11 +161,11 @@ class Flashcards extends Component {
       categoryfcs = flashcards.filter(f => f.deckid === id)
     }
 
-    console.log("cf", categoryfcs);
-    var r = categoryfcs[currentCard].radicals;
+    //console.log("cf", categoryfcs);
+    //var r = categoryfcs[currentCard].radicals;
     //map(r => r.id)
     //var rad = categoryfcs.filter(f => f.id === r);
-    console.log("rrrr", r);
+    //console.log("rrrr", r);
     //console.log("radddd", rad);
 
     // Check if you've seen every flashcard
