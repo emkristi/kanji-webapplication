@@ -18,6 +18,10 @@ code {
     monospace;
 }
 
+.deckk{
+  color: red;
+}
+
 #flashcard{
   display: flex;
   justify-content: center;

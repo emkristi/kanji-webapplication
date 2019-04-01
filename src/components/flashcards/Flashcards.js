@@ -15,11 +15,12 @@ class Flashcards extends Component {
     this.state = {
       currentCard: 0,
       bufferfc: []
-    };    
+    };
   }
 
   handleHard = (e) => {
     this.changeFc();
+
   }
 
   handleEasy = (e) => {
@@ -36,6 +37,7 @@ class Flashcards extends Component {
   restartDeck = (e) => {
     const { flashcards, match: { params: { id } }, removeCompletedFlashcards } = this.props;
     let categoryfcs = flashcards.filter(val => val.deckid === id);
+
     const { currentCard } = this.state;
 
     for (let i = 0; i < categoryfcs.length; ++i) {
@@ -118,24 +120,9 @@ class Flashcards extends Component {
     });
   }
 
-  changeContent() {
-    /*document.getElementById('card-panel-div').classList.toggle("test");
-
-    var x = document.getElementById("front");
-    var y = document.getElementById("back");
-    if (x.classList.length > 0) {
-      x.classList.remove("hide");
-      y.classList.add("hide");
-    } else {
-      y.classList.remove("hide");
-      x.classList.add("hide");
-    }*/
-  }
-
   render() {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
     const { currentCard } = this.state;
-
 
     if (!auth.uid) return <Redirect to='/signin' />;
 
@@ -145,18 +132,20 @@ class Flashcards extends Component {
       categoryfcs = flashcards.filter(f => f.deckid === id)
     }
 
+    /*
     let radarray = [];
     if(categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards) {
       let rad = categoryfcs[currentCard].radicals;
       radarray = rad.map(r => flashcards.find(f => f.id === r.id).kanji);
     }
+    */
     
 
     // Check if you've seen every flashcard
     let user;
     if (users) {
       user = users.find(u => u.id === auth.uid);
-      console.log(user)
+      //console.log(user)
       if (user.flashcardArray
         && user.flashcardArray.filter(f => this.findFlashcardById(f).deckid == id).length === categoryfcs.length) {
         return (<div>
@@ -168,15 +157,16 @@ class Flashcards extends Component {
     }
 
     // Error handling
-    // if (!categoryfcs[currentCard]) return (<div>Not defined</div>);
+    if (!categoryfcs[currentCard]) return (<div>Not defined</div>);
 
-    this.checkK();
+ 
+      
 
     return (
-      <div className="dashboard container">
+     <div className="dashboard container">
         <div className="kanEng">
           {(categoryfcs.length > 0) && 
-            <Flashcard flashcard={categoryfcs[currentCard]} radicals={radarray}/>
+            <Flashcard flashcard={categoryfcs[currentCard]}/>
           }
         </div>
         <div id="hardEasyKnapper">
@@ -185,6 +175,7 @@ class Flashcards extends Component {
         </div>
         <div id="test"><p></p></div>
       </div>
+      
     )
   }
 }
@@ -215,3 +206,4 @@ export default compose(
     { collection: 'users' }
   ])
 )(Flashcards)
+

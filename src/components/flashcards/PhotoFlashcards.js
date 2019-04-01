@@ -16,9 +16,6 @@ class PhotoFlashcards extends Component {
       bufferfc: [],
       isFlipped: false
     };
-
-
-    //console.log("bruker: ", this.props);
   }
 
   flipClick = (e) => {
@@ -77,6 +74,7 @@ class PhotoFlashcards extends Component {
       this.props.removeCompletedFlashcards(categoryfcs[i].id)
 
       if(i === categoryfcs.length -1){
+        console.log("heyo");
       }
     }
 
@@ -190,9 +188,6 @@ class PhotoFlashcards extends Component {
     if (e.target.value === categoryfcs[currentCard].kanji) {
       console.log("RIKTIG!");
       this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
-
-      return (<div>heyo!</div>);
-
     }
   }
 

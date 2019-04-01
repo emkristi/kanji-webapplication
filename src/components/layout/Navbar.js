@@ -8,12 +8,14 @@ const Navbar = (props) => {
     const { auth, profile } = props;
     const links = auth.uid ? <SignedInLinks profile={profile} /> : <SignedOutLinks />
     return (
+
         <nav className="nav-wrapper pink lighten-3">
             <div className="container">
                 <Link to='/' className="brand-logo">Memji</Link>
                 {links}
             </div>
         </nav>
+        
     )
 }
 

@@ -12,7 +12,7 @@ const Flashcard = ({ flashcard, radicals }) => {
                     <span className="card-title"> {flashcard.eng} </span>
                     <span className="card-title"> {flashcard.mnemonic} </span>
                     <span className="card-title">
-                        {radicals.length > 0 && radicals.map(r => <span key={r}>{r}</span>)}
+                        {/*radicals.length > 0 && radicals.map(r => <span key={r}>{r}</span>)*/}
                     </span>
                 </div>
             </div>

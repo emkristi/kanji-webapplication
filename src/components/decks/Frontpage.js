@@ -9,34 +9,52 @@ import { Redirect } from 'react-router-dom'
 
 class Frontpage extends Component {
 
-
-    // sjekk om alle flashcards i et deck finnes i flashcardArray til brukeren
-    checkDeck = () => {
-        const { flashcards, match: { params: { id } }, auth, users } = this.props;
-
-        
-
-        //radarray = rad.map(r => flashcards.find(f => f.id === r.id).kanji);
-    } 
-
-
     render() {
-        const { decks, flashcards, auth } = this.props;
+        const { decks, flashcards, auth, users } = this.props;
+
+        //console.log(flashcards);
+        //this.checkDeck();
+
+        let user;
+        if (users) {
+            user = users.find(u => u.id === auth.uid);
+        }
+
+        //console.log(user.flashcardArray);
+
+
         if (!auth.uid) return <Redirect to='/signin' />
         return (
             <div className="row">
                 <div className="content">
-                    {decks && decks.map(deck => {
-                        return (
-                            <div key={deck.id} className="column">
-                                <Link to={deck.type === "Images" ? '/img/' + deck.id : '/' + deck.id} key={deck.id}>
-                                    <div className="deck">
-                                        <DeckInfo deck={deck} />
+                    {flashcards && user && decks && decks.map(deck => {
+                        let unfinisheddecks = flashcards.filter(fcard => fcard.deckid === deck.id && user.flashcardArray.indexOf(fcard) === -1);
+                            if ( unfinisheddecks.length > 0 ) {
+                                return (
+                                    <div key={deck.id} className="column deckk col s6">
+                                        <div className="deck">
+                                            <Link to={deck.type === "Images" ? '/img/' + deck.id : '/' + deck.id} key={deck.id}>
+                                                <DeckInfo deck={deck} />
+                                            </Link>
+                                        </div>
                                     </div>
-                                </Link>
-                            </div>
-                        )
-                    })}
+                                )
+                                
+                            } else {
+                                return (
+                                    <div key={deck.id} className="column deckk col s6">
+                                        <div className="deck">
+                                                <DeckInfo deck={deck} />
+                                         
+                                        </div>
+                                    </div>
+                                )
+                            }
+                        
+                        
+                    }
+                    
+                    )}
                 </div>
             </div>
         )

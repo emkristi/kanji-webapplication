@@ -48,7 +48,8 @@ export const signUp = (newUser) => {
                 // what properties do we want for a user:
                 firstName: newUser.firstName,
                 lastName: newUser.lastName,
-                initials: newUser.firstName[0] + newUser.lastName[0]
+                initials: newUser.firstName[0] + newUser.lastName[0],
+                flashcardArray: []
             })// another then method so when the then above has completed, we want to do something else
         }).then(() => {
             dispatch({ type: 'SIGNUP_SUCCESS' })
