@@ -200,25 +200,17 @@ class Flashcards extends Component {
       <div className="dashboard container">
         <div className="container">
           {(categoryfcs.length > 0) &&
-          <div className="DRITT">
+          <div className="container">
             <Flashcard flashcard={categoryfcs[currentCard]} flashcards={categoryfcs}   />
-            <span className="card-title">
-              {categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards &&
-                  <span> {radarray}</span>
-              }
-            </span>
+              <span className="card-title">
+                {categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards &&
+                    <span> {radarray}</span>
+                }
+              </span>
             </div>
           }
-                  {/*radlength > 0 && radarray.radicals && radarray &&
-                    radarray.radicals.map((r) => <span key={r}>{r}</span>)*/}
-               
-            
-            
-          
         </div>
 
-
-        
         <div id="hardEasyKnapper">
           <button onClick={this.handleHard} className="waves-effect waves-light btn" id="Hard">Hard</button>
           <button onClick={this.handleEasy} className="waves-effect waves-light btn" id="Easy">Easy</button>

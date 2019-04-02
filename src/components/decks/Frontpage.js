@@ -8,8 +8,16 @@ import { Link } from 'react-router-dom'
 import { Redirect } from 'react-router-dom'
 
 class Frontpage extends Component {
+    
     render() {
-        const { decks, flashcards, auth } = this.props;
+        /*
+        let user;
+        if (users) {
+            user = users.find(u => u.id === auth.uid);
+        }
+        */
+
+        const { decks, flashcards, auth, users } = this.props;
         if (!auth.uid) return <Redirect to='/signin' />
         return (
             <div className="row">

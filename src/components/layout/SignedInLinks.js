@@ -10,7 +10,6 @@ const SignedInLinks = (props) => {
     
     return (
         <ul className="right">
-            <li><NavLink to='/createdeck'>Add flashcard deck</NavLink></li>
             <li><NavLink to='/' className="pink lighten-1">
                 {props.profile.initials}
             </NavLink></li>
