@@ -16,13 +16,10 @@ class Flashcards extends Component {
       currentCard: 0,
       bufferfc: []
     };
-
-    
   }
 
   handleHard = (e) => {
     this.changeFc();
-
   }
 
   handleEasy = (e) => {
@@ -143,8 +140,6 @@ class Flashcards extends Component {
 
     //let categoryfcs = flashcards.filter(f => f.deckid === id);
 
-    
-
   }
 
   render() {
@@ -172,7 +167,7 @@ class Flashcards extends Component {
     let user;
     if (users) {
       user = users.find(u => u.id === auth.uid);
-      console.log(user)
+     // console.log(user)
       if (user.flashcardArray
         && user.flashcardArray.filter(f => this.findFlashcardById(f).deckid == id).length === categoryfcs.length) {
         return (<div>
@@ -183,18 +178,47 @@ class Flashcards extends Component {
 
     }
 
+    let radarray = [];
+    let radlength;
+    
+    if(categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards) {
+      let rad = categoryfcs[currentCard].radicals;
+      console.log(rad);
+      radarray = rad.map(r => flashcards.find(f => f.id === r.id).kanji);
+      console.log(radarray);
+      radlength = radarray.length;
+    }
+    
+
     // Error handling
     // if (!categoryfcs[currentCard]) return (<div>Not defined</div>);
 
     this.checkK();
+    let rad;
 
     return (
       <div className="dashboard container">
-        <div className="kanEng">
+        <div className="container">
           {(categoryfcs.length > 0) &&
-            <Flashcard flashcard={categoryfcs[currentCard]} flashcards={categoryfcs} />
+          <div className="DRITT">
+            <Flashcard flashcard={categoryfcs[currentCard]} flashcards={categoryfcs}   />
+            <span className="card-title">
+              {categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards &&
+                  <span> {radarray}</span>
+              }
+            </span>
+            </div>
           }
+                  {/*radlength > 0 && radarray.radicals && radarray &&
+                    radarray.radicals.map((r) => <span key={r}>{r}</span>)*/}
+               
+            
+            
+          
         </div>
+
+
+        
         <div id="hardEasyKnapper">
           <button onClick={this.handleHard} className="waves-effect waves-light btn" id="Hard">Hard</button>
           <button onClick={this.handleEasy} className="waves-effect waves-light btn" id="Easy">Easy</button>

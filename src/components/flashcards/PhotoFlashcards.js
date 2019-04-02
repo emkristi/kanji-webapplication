@@ -16,9 +16,6 @@ class PhotoFlashcards extends Component {
       bufferfc: [],
       isFlipped: false
     };
-
-
-    //console.log("bruker: ", this.props);
   }
 
   flipClick = (e) => {
@@ -77,6 +74,7 @@ class PhotoFlashcards extends Component {
       this.props.removeCompletedFlashcards(categoryfcs[i].id)
 
       if(i === categoryfcs.length -1){
+        
       }
     }
 
@@ -199,23 +197,31 @@ class PhotoFlashcards extends Component {
   randomKanjiArray = () => {
     const { flashcards, match: { params: { id } } } = this.props;
     const { currentCard } = this.state;
-    let categoryfcs = flashcards.filter(val => val.deckid === id);
 
+    let categoryfcs;
     var arr = [];
-    arr.push(categoryfcs[currentCard].kanji);
-
-    while (arr.length < 4) {
-      var r = (Math.round(Math.random() * (categoryfcs.length - 1)));
-
-      if (!arr.includes(categoryfcs[r].kanji)) {
-        arr.push(categoryfcs[r].kanji);
-      }
+    if(flashcards){
+      categoryfcs = flashcards.filter(val => val.deckid === id);
+      arr.push(categoryfcs[currentCard].kanji);
     }
-    arr.sort(function () {
-      return .5 - Math.random();
-    });
+    
+    if(categoryfcs){
+      while (arr.length < 4) {
+        var r = (Math.round(Math.random() * (categoryfcs.length - 1)));
+  
+        if (!arr.includes(categoryfcs[r].kanji)) {
+          arr.push(categoryfcs[r].kanji);
+        }
+      }
+      arr.sort(function () {
+        return .5 - Math.random();
+      });
+  
+      return arr;
 
-    return arr;
+    }
+    
+    
   }
 
   render() {
@@ -245,6 +251,17 @@ class PhotoFlashcards extends Component {
       }
     }
 
+    let radicalarray = [];
+    /*
+    
+    if(flashcards && categoryfcs){
+      console.log(currentCard);
+      console.log(categoryfcs[currentCard].radicals.id);
+
+    }
+    */
+    //let rad = categoryfcs[categoryfcs].radicals;
+
 
     // Error handling
     if (!categoryfcs[currentCard]) return (<div>Not defined</div>);
@@ -252,22 +269,21 @@ class PhotoFlashcards extends Component {
     return (
       <div className="dashboard container">
 
+      <div className="photofcard">
       <ReactCardFlip isFlipped={this.state.isFlipped} flipDirection="horizontal">
+        
         <div className="tester" key="front">
           <div><img className="content" src={categoryfcs[currentCard].pictureUrl} alt="current kanji" width="200px" height="200px" /></div>
           <br></br>
-          <button onClick={this.handleFButton} id='but1' value={randomArray[0]}>{randomArray[0]}</button>
-          <button onClick={this.handleFButton} id='but2' value={randomArray[1]}>{randomArray[1]}</button>
+          <button type="button" className="btn btn-primary btn-lg outline" onClick={this.handleFButton} id='but1' value={randomArray[0]}>{randomArray[0]}</button>
+          <button className="btn btn-primary btn-lg outline" onClick={this.handleFButton} id='but2' value={randomArray[1]}>{randomArray[1]}</button>
           <button onClick={this.handleFButton} id='but3' value={randomArray[2]}>{randomArray[2]}</button>
           <button onClick={this.handleFButton} id='but3' value={randomArray[3]}>{randomArray[3]}</button>
           <br></br>
         </div>
 
         <div className="tester2" key="back">
-          <div className="battons">
-          {(categoryfcs.length > 0) &&
-              <FlashcardInfo flashcard={categoryfcs[currentCard]} />
-            }
+          <div className="pfbuttons">
             <br></br>
             <button onClick={this.handleHard} id="Hard">Hard</button>
             <button onClick={this.handleEasy} id="Easy">Easy</button>
@@ -276,6 +292,7 @@ class PhotoFlashcards extends Component {
         </div>
 
       </ReactCardFlip>
+      </div>
       </div>
     )
   }
