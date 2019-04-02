@@ -146,7 +146,7 @@ class Flashcards extends Component {
 	render() {
 		const { flashcards, match: { params: { id } }, auth, users } = this.props;
 		const { currentCard } = this.state;
-		if (!auth.uid) return <Redirect to="/signin" />;
+		//if (!auth.uid) return <Redirect to="/signin" />;
 
 		// Only show flashcards in current category
 		let categoryfcs = [];
@@ -188,7 +188,6 @@ class Flashcards extends Component {
 								{categoryfcs[currentCard].radicals.length > 0 &&
 									categoryfcs[currentCard].radicals.map((r) => r.id)}
 							</span>
-
 							{categoryfcs[currentCard].strokeOrderUrl && (
 								<img
 									className="strokePicture"
@@ -208,6 +207,20 @@ class Flashcards extends Component {
 					<button onClick={this.handleEasy} className="waves-effect waves-light btn" id="Easy">
 						Easy
 					</button>
+				</div>
+				<div class="row">
+					<form class="col s12">
+						<div class="row">
+							<div class="input-field col s6">
+								<i class="material-icons prefix">mode_edit</i>
+								<textarea id="textarea1" class="materialize-textarea" />
+								<label for="textarea1">Make your own mnemonic</label>
+								<span class="helper-text" data-error="wrong" data-success="right">
+									{categoryfcs[currentCard].mnemonic}
+								</span>
+							</div>
+						</div>
+					</form>
 				</div>
 			</div>
 		);
