@@ -7,7 +7,8 @@ import CreateFlashcard from './components/flashcards/CreateFlashcard'
 import Frontpage from './components/decks/Frontpage'
 import CreateDeck from './components/decks/CreateDeck'
 import Flashcards from './components/flashcards/Flashcards'
-import PhotoFlashcards from './components/flashcards/PhotoFlashcards';
+import PhotoFlashcards from './components/flashcards/PhotoFlashcards'
+import Startpage from './components/startpage/Startpage'
 
 class App extends Component {
   render() {
@@ -16,6 +17,7 @@ class App extends Component {
         <div className="App">
           <Navbar />
           <Switch>
+            <Route exact path='/hh' component={Startpage} />
             <Route exact path='/' component={Frontpage} />
             <Route path='/signin' component={SignIn} />
             <Route path='/signup' component={SignUp} />

@@ -5,7 +5,7 @@ const DeckInfo = ({deck}) => {
     return(
         <div className="container">
             <h3 className="content">{deck.title}</h3>
-            <p>Deck type: {deck.type}</p>
+            <p className="b">{deck.type}</p>
         </div>      
     )
 }

@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { firestoreConnect } from 'react-redux-firebase' // used to connect to firestore
 import { compose } from 'redux';
-import FlashcardInfo from '../flashcards/FlashcardInfo';
 import { Redirect } from 'react-router-dom'
 import { addCompletedFlashcards } from '../../store/actions/flashcardActions'
 import { removeCompletedFlashcards } from '../../store/actions/flashcardActions'
@@ -58,14 +57,13 @@ class PhotoFlashcards extends Component {
   }
 
   restartDeck = (e) => {
-    //const { flashcards, match: { params: { id } } } = this.props;
-    const { flashcards, match: { params: { id } }, auth, users } = this.props;
-    const { currentCard } = this.state;
+    const { flashcards, match: { params: { id } } } = this.props;
+    //const { flashcards, match: { params: { id } }, auth, users } = this.props;
+    //const { currentCard } = this.state;
 
     let categoryfcs = flashcards.filter(val => val.deckid === id);
-    let user = users.find(u => u.id === auth.uid);
+    //let user = users.find(u => u.id === auth.uid);
 
-    
 
     //const fcslength = user.flashcardArray.length;
     //console.log(fcslength);
@@ -146,7 +144,7 @@ class PhotoFlashcards extends Component {
       while (temp) {
         currentNumber = (Math.round(Math.random() * (categoryfcs.length - 1)));
         // If this random flashcard is not seen before
-        if (!((user.flashcardArray && user.flashcardArray.includes(categoryfcs[currentNumber].id) || currentNumber === currentCard))) {
+        if (!(((user.flashcardArray && user.flashcardArray.includes(categoryfcs[currentNumber].id)) || (currentNumber === currentCard)))) {
           //Check if random flashcard's got radicals
           let fcradicals = categoryfcs[currentNumber].radicals;
           if (fcradicals.length > 0) {
@@ -267,19 +265,32 @@ class PhotoFlashcards extends Component {
     if (!categoryfcs[currentCard]) return (<div>Not defined</div>);
 
     return (
-      <div className="dashboard container">
-
       <div className="photofcard">
       <ReactCardFlip isFlipped={this.state.isFlipped} flipDirection="horizontal">
         
         <div className="tester" key="front">
           <div><img className="content" src={categoryfcs[currentCard].pictureUrl} alt="current kanji" width="200px" height="200px" /></div>
           <br></br>
-          <button type="button" className="btn btn-primary btn-lg outline" onClick={this.handleFButton} id='but1' value={randomArray[0]}>{randomArray[0]}</button>
-          <button className="btn btn-primary btn-lg outline" onClick={this.handleFButton} id='but2' value={randomArray[1]}>{randomArray[1]}</button>
-          <button onClick={this.handleFButton} id='but3' value={randomArray[2]}>{randomArray[2]}</button>
-          <button onClick={this.handleFButton} id='but3' value={randomArray[3]}>{randomArray[3]}</button>
+          <div className="row">
+            <div className="column">
+            <button type="button" className="btn btn-primary btn-lg outline" onClick={this.handleFButton} id='but1' value={randomArray[0]}>{randomArray[0]}</button>
+            </div>
+            <div className="column">
+              <button className="btn btn-primary btn-lg outline" onClick={this.handleFButton} id='but2' value={randomArray[1]}>{randomArray[1]}</button>
+            </div>
+          </div>
+          <div className="row">
+            <div className="column">
+            <button className="btn btn-primary btn-lg outline" onClick={this.handleFButton} id='but3' value={randomArray[2]}>{randomArray[2]}</button>
+
+            </div>
+            <div className="column">
+            <button className="btn btn-primary btn-lg outline" onClick={this.handleFButton} id='but3' value={randomArray[3]}>{randomArray[3]}</button>
+            
+            </div>
           <br></br>
+          </div>
+          
         </div>
 
         <div className="tester2" key="back">
@@ -292,7 +303,6 @@ class PhotoFlashcards extends Component {
         </div>
 
       </ReactCardFlip>
-      </div>
       </div>
     )
   }

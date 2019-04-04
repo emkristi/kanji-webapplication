@@ -37,7 +37,7 @@ class Flashcards extends Component {
     const { flashcards, match: { params: { id } } } = this.props;
     let categoryfcs = flashcards.filter(val => val.deckid === id);
 
-    const { currentCard } = this.state;
+    //const { currentCard } = this.state;
 
     for (let i = 0; i < categoryfcs.length; ++i) {
       this.props.removeCompletedFlashcards(categoryfcs[i].id)
@@ -65,6 +65,8 @@ class Flashcards extends Component {
     let categoryfcs = flashcards.filter(f => f.deckid === id);
     let user = users.find(u => u.id === auth.uid);
     const seenFc = user.flashcardArray ? user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id) : [];
+
+    
 
     // If no more unseen flashcards, go back to frontpage
     if (seenFc.length === categoryfcs.length - 1) {
@@ -117,6 +119,9 @@ class Flashcards extends Component {
     this.setState({
       currentCard: currentNumber
     });
+
+    console.log("Sette flashcards", seenFc); 
+    console.log("Flashcard array", user.flashcardArray);
   }
 
   changeContent() {
@@ -133,14 +138,7 @@ class Flashcards extends Component {
     }*/
   }
 
-  checkK() {
-    
-    const { flashcards, match: { params: { id } }, auth, users } = this.props;
-    const { currentCard, bufferfc } = this.state;
 
-    //let categoryfcs = flashcards.filter(f => f.deckid === id);
-
-  }
 
   render() {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
@@ -156,45 +154,55 @@ class Flashcards extends Component {
       categoryfcs = flashcards.filter(f => f.deckid === id)
     }
 
-    //console.log("cf", categoryfcs);
-    //var r = categoryfcs[currentCard].radicals;
-    //map(r => r.id)
-    //var rad = categoryfcs.filter(f => f.id === r);
-    //console.log("rrrr", r);
-    //console.log("radddd", rad);
-
+  
     // Check if you've seen every flashcard
     let user;
     if (users) {
       user = users.find(u => u.id === auth.uid);
-     // console.log(user)
+      //console.log(user);
+      console.log("fcard array database nr2", user.flashcardArray);
+      console.log("flashcards i decket", categoryfcs);
+      //console.log("denne som blir tom?", user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id));
+
+
+      /*
+      if (user.flashcardArray === ""){
+        return (<div>
+          Du har vært gjennom alle i denne kategorien <button onClick={() => window.location.href = '/'}>Gå tilbake</button>
+          <button onClick={this.restartDeck} id="restartbutton">Start på nytt</button>
+        </div>);
+
+      } */
+      
       if (user.flashcardArray
-        && user.flashcardArray.filter(f => this.findFlashcardById(f).deckid == id).length === categoryfcs.length) {
+        && user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id).length === categoryfcs.length) {
+          console.log("hei");
         return (<div>
           Du har vært gjennom alle i denne kategorien <button onClick={() => window.location.href = '/'}>Gå tilbake</button>
           <button onClick={this.restartDeck} id="restartbutton">Start på nytt</button>
         </div>);
       }
+      
 
     }
 
     let radarray = [];
-    let radlength;
+    //let radlength;
     
     if(categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards) {
       let rad = categoryfcs[currentCard].radicals;
-      console.log(rad);
+      //console.log(rad);
       radarray = rad.map(r => flashcards.find(f => f.id === r.id).kanji);
-      console.log(radarray);
-      radlength = radarray.length;
+      //console.log(radarray);
+      //radlength = radarray.length;
     }
     
 
     // Error handling
     // if (!categoryfcs[currentCard]) return (<div>Not defined</div>);
 
-    this.checkK();
-    let rad;
+
+    //let rad;
 
     return (
       <div className="dashboard container">

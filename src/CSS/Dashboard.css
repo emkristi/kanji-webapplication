@@ -1,4 +1,11 @@
+content{
+    background-color: red;
+    color: pink;
+}
+
 dashboard container{
     padding: 20px;
     margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
 }
