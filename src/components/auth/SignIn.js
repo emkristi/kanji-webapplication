@@ -60,7 +60,7 @@ class SignIn extends Component {
 
   render() {
     const {authError, auth} = this.props;
-    if (auth.uid) return <Redirect to='/decks' /> 
+    if (auth.uid) return <Redirect to='/' /> 
 
     return (
       <div className="container col-sm-6">

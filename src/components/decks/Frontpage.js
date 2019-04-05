@@ -30,7 +30,7 @@ class Frontpage extends Component {
 						decks &&
 						decks.map((deck) => {
 							let unfinisheddecks;
-							if (user.flashcardArray == null) {
+							if (user.flashcardArray === null) {
 								unfinisheddecks = flashcards;
 							} else {
 								unfinisheddecks = flashcards.filter(
