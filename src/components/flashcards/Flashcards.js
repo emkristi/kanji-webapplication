@@ -15,6 +15,7 @@ class Flashcards extends Component {
     this.state = {
       currentCard: 0,
       bufferfc: []
+      //testArr: []
     };
   }
 
@@ -60,7 +61,7 @@ class Flashcards extends Component {
 
   changeFc = (e) => {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
-    const { currentCard, bufferfc } = this.state;
+    const { currentCard, bufferfc, testArr } = this.state;
 
     let categoryfcs = flashcards.filter(f => f.deckid === id);
     let user = users.find(u => u.id === auth.uid);
@@ -121,6 +122,7 @@ class Flashcards extends Component {
     });
 
     console.log("Sette flashcards", seenFc); 
+    console.log("ttest arr", testArr);
     console.log("Flashcard array", user.flashcardArray);
   }
 
@@ -160,8 +162,8 @@ class Flashcards extends Component {
     if (users) {
       user = users.find(u => u.id === auth.uid);
       //console.log(user);
-      console.log("fcard array database nr2", user.flashcardArray);
-      console.log("flashcards i decket", categoryfcs);
+      //console.log("fcard array database nr2", user.flashcardArray);
+      //console.log("flashcards i decket", categoryfcs);
       //console.log("denne som blir tom?", user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id));
 
 
@@ -176,7 +178,7 @@ class Flashcards extends Component {
       
       if (user.flashcardArray
         && user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id).length === categoryfcs.length) {
-          console.log("hei");
+          //console.log("hei");
         return (<div>
           Du har vært gjennom alle i denne kategorien <button onClick={() => window.location.href = '/'}>Gå tilbake</button>
           <button onClick={this.restartDeck} id="restartbutton">Start på nytt</button>
