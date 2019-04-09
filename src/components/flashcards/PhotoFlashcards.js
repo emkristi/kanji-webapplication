@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom'
 import { addCompletedFlashcards } from '../../store/actions/flashcardActions'
 import { removeCompletedFlashcards } from '../../store/actions/flashcardActions'
 import ReactCardFlip from 'react-card-flip';
+import './flashcardcss.css';
 
 class PhotoFlashcards extends Component {
   constructor(props) {

@@ -5,9 +5,32 @@ import { compose } from 'redux';
 import DeckInfo from './DeckInfo';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
+import { removeCompletedFlashcards } from '../../store/actions/flashcardActions'
 import './Decks.css';
 
+
 class Frontpage extends Component {
+
+    restartDeck = (cardsInDeck) => {
+		for(let i = 0; i < cardsInDeck.length; ++i){
+				//this.props.removeCompletedFlashcards(cardsInDeck[i].id);
+				console.log("hello");
+		}
+		/*
+        cardsInDeck.forEach((val) => {
+            this.props.removeCompletedFlashcards(val.id);
+            console.log("fjernet fra db??");
+		});
+		*/
+	}
+	
+	handleButton = (e) => {
+		e.preventDefault();
+		//this.state.removeCompletedFlashcards("A8XHuB8TfzeLc2osKtjc");
+		this.props.removeCompletedFlashcards("A8XHuB8TfzeLc2osKtjc");
+		console.log("hey");
+	}
+
 	render() {
 		const { decks, flashcards, auth, users } = this.props;
 
@@ -40,7 +63,7 @@ class Frontpage extends Component {
 
 							if (unfinisheddecks.length > 0) {
 								return (
-									<div key={deck.id} className="col-sm-6">
+									<div key={deck.id} className="column col-sm-6">
 										<div className="deck">
 											<Link
 												to={deck.type === 'Images' ? '/img/' + deck.id : '/' + deck.id}
@@ -53,20 +76,32 @@ class Frontpage extends Component {
 									</div>
 								);
 							} else {
+                                let cardsInDeck = flashcards.filter((fcard) => fcard.deckid === deck.id);
+                                
 								return (
-									<div key={deck.id} className="col-sm-6">
+                                    
+									<div key={deck.id} className="column col-sm-6">
 										<div className="deck">
 											<DeckInfo deck={deck} />
+											<button>Restart deck</button>
+                                           {/* <button onClick={this.restartDeck(cardsInDeck)}>Start again</button>*/}
 										</div>
+                                        
 									</div>
 								);
 							}
 						})}
-				</div>
+				</div>    
 			</div>
 		);
 	}
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+	  removeCompletedFlashcards: (flashcard) => dispatch(removeCompletedFlashcards(flashcard))
+    }
+  }
 
 const mapStateToProps = (state) => {
 	return {
@@ -78,7 +113,7 @@ const mapStateToProps = (state) => {
 };
 
 export default compose(
-	connect(mapStateToProps),
+	connect(mapStateToProps, mapDispatchToProps),
 	firestoreConnect([
 		// we use firestoreConnect to tell which collection we want to connect to. takes in an array that contains a series of objects
 		{

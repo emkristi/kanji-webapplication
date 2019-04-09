@@ -8,13 +8,12 @@ import { addCompletedFlashcards } from '../../store/actions/flashcardActions'
 import { removeCompletedFlashcards } from '../../store/actions/flashcardActions'
 
 class Flashcards extends Component {
-  // intern this.state -> this.setState for å sette den
-  // this.state.currentCard for å bruke
   constructor(props) {
     super(props);
     this.state = {
       currentCard: 0,
-      bufferfc: []
+      bufferfc: [],
+      fcArray: []
       //testArr: []
     };
   }
@@ -28,9 +27,9 @@ class Flashcards extends Component {
     const { currentCard } = this.state;
 
     let categoryfcs = flashcards.filter(val => val.deckid === id);
+
     // Legg til flashcard i DB
     this.props.addCompletedFlashcards(categoryfcs[currentCard].id);
-
     this.changeFc();
   }
 
@@ -61,20 +60,23 @@ class Flashcards extends Component {
 
   changeFc = (e) => {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
-    const { currentCard, bufferfc, testArr } = this.state;
+    const { currentCard, bufferfc, fcArray, localfcardarr} = this.state;
+
+    
 
     let categoryfcs = flashcards.filter(f => f.deckid === id);
     let user = users.find(u => u.id === auth.uid);
+    // seenFc -> flashcards som allerede er gått gjennom..
     const seenFc = user.flashcardArray ? user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id) : [];
 
-    
+    //localflashcardarray = seenFc;
 
     // If no more unseen flashcards, go back to frontpage
     if (seenFc.length === categoryfcs.length - 1) {
       window.location.href = '/';
       return;
     }
-
+    
     let currentNumber = 0;
     // If flashcards in buffer, show first element and remove element from buffer
     if (bufferfc.length > 0) {
@@ -116,36 +118,26 @@ class Flashcards extends Component {
         }
       }
     }
+
+    console.log(user);
+    console.log(seenFc);
+
     // set found current number
     this.setState({
-      currentCard: currentNumber
+      currentCard: currentNumber,
+      test: seenFc
     });
 
-    console.log("Sette flashcards", seenFc); 
-    console.log("ttest arr", testArr);
-    console.log("Flashcard array", user.flashcardArray);
+
+    console.log("local fcarray", localfcardarr); 
+    //console.log("ttest arr", testArr);
+    //console.log("Flashcard array", user.flashcardArray);
   }
-
-  changeContent() {
-    /*document.getElementById('card-panel-div').classList.toggle("test");
-
-    var x = document.getElementById("front");
-    var y = document.getElementById("back");
-    if (x.classList.length > 0) {
-      x.classList.remove("hide");
-      y.classList.add("hide");
-    } else {
-      y.classList.remove("hide");
-      x.classList.add("hide");
-    }*/
-  }
-
 
 
   render() {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
     const { currentCard } = this.state;
-
 
     //console.log(users);
     if (!auth.uid) return <Redirect to='/signin' />;
@@ -155,7 +147,6 @@ class Flashcards extends Component {
     if (flashcards) {
       categoryfcs = flashcards.filter(f => f.deckid === id)
     }
-
   
     // Check if you've seen every flashcard
     let user;
@@ -164,37 +155,25 @@ class Flashcards extends Component {
       //console.log(user);
       //console.log("fcard array database nr2", user.flashcardArray);
       //console.log("flashcards i decket", categoryfcs);
-      //console.log("denne som blir tom?", user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id));
-
-
-      /*
-      if (user.flashcardArray === ""){
-        return (<div>
-          Du har vært gjennom alle i denne kategorien <button onClick={() => window.location.href = '/'}>Gå tilbake</button>
-          <button onClick={this.restartDeck} id="restartbutton">Start på nytt</button>
-        </div>);
-
-      } */
       
       if (user.flashcardArray
         && user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id).length === categoryfcs.length) {
-          //console.log("hei");
         return (<div>
           Du har vært gjennom alle i denne kategorien <button onClick={() => window.location.href = '/'}>Gå tilbake</button>
           <button onClick={this.restartDeck} id="restartbutton">Start på nytt</button>
         </div>);
       }
-      
-
     }
 
     let radarray = [];
-    //let radlength;
     
     if(categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards) {
       let rad = categoryfcs[currentCard].radicals;
       //console.log(rad);
       radarray = rad.map(r => flashcards.find(f => f.id === r.id).kanji);
+
+     
+
       //console.log(radarray);
       //radlength = radarray.length;
     }
@@ -225,7 +204,6 @@ class Flashcards extends Component {
           <button onClick={this.handleHard} className="waves-effect waves-light btn" id="Hard">Hard</button>
           <button onClick={this.handleEasy} className="waves-effect waves-light btn" id="Easy">Easy</button>
         </div>
-        <div id="test"><p></p></div>
       </div>
     )
   }
