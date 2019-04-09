@@ -5,7 +5,10 @@ import { firestoreConnect } from 'react-redux-firebase' //used to connect to fir
 import { compose } from 'redux';
 import Flashcard from '../flashcards/Flashcard';
 import { addCompletedFlashcards } from '../../store/actions/flashcardActions'
-import { removeCompletedFlashcards } from '../../store/actions/flashcardActions'
+//import { removeCompletedFlashcards } from '../../store/actions/flashcardActions'
+import { updateUser } from '../../store/actions/userActions'
+import { updateusers } from '../../store/actions/userActions'
+import { loaduser } from '../../store/actions/userActions'
 
 class Flashcards extends Component {
   constructor(props) {
@@ -14,11 +17,13 @@ class Flashcards extends Component {
       currentCard: 0,
       bufferfc: [],
       fcArray: []
-      //testArr: []
     };
   }
 
   handleHard = (e) => {
+
+    this.props.updateusers("gWiRBKD6I15oVO1oYlwp");
+
     this.changeFc();
   }
 
@@ -29,22 +34,21 @@ class Flashcards extends Component {
     let categoryfcs = flashcards.filter(val => val.deckid === id);
 
     // Legg til flashcard i DB
-    this.props.addCompletedFlashcards(categoryfcs[currentCard].id);
+    //this.props.addCompletedFlashcards(categoryfcs[currentCard].id);
+    
     this.changeFc();
   }
 
+  /*
   restartDeck = (e) => {
     const { flashcards, match: { params: { id } } } = this.props;
     let categoryfcs = flashcards.filter(val => val.deckid === id);
 
-    //const { currentCard } = this.state;
-
     for (let i = 0; i < categoryfcs.length; ++i) {
       this.props.removeCompletedFlashcards(categoryfcs[i].id)
     }
-
-    //window.location.reload();
   }
+  */
 
   findIndexOfFcId = (categoryfcs, fcid) => {
     let value = categoryfcs.find((val) => {
@@ -62,13 +66,40 @@ class Flashcards extends Component {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
     const { currentCard, bufferfc, fcArray, localfcardarr} = this.state;
 
-    
-
     let categoryfcs = flashcards.filter(f => f.deckid === id);
     let user = users.find(u => u.id === auth.uid);
-    // seenFc -> flashcards som allerede er gått gjennom..
+
+    // seenFc -> flashcards som allerede er gått gjennom
     const seenFc = user.flashcardArray ? user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id) : [];
 
+    console.log("1", user);
+
+    this.props.loaduser();
+
+    this.props.updateUser(categoryfcs[currentCard].id);
+
+    console.log(categoryfcs[currentCard].id);
+    
+    console.log("2", user)
+
+    this.props.loaduser();
+
+    //console.log("3", updatedUser);
+
+    console.log("4", user);
+
+
+
+    
+    /*
+    for(let i = 0; i < seenFc.length; i++){
+      this.props.updateUser(seenFc[i]);
+    }
+    console.log("3", user);
+    */
+
+
+   
     //localflashcardarray = seenFc;
 
     // If no more unseen flashcards, go back to frontpage
@@ -119,19 +150,13 @@ class Flashcards extends Component {
       }
     }
 
+   
     console.log(user);
     console.log(seenFc);
 
-    // set found current number
     this.setState({
-      currentCard: currentNumber,
-      test: seenFc
+      currentCard: currentNumber
     });
-
-
-    console.log("local fcarray", localfcardarr); 
-    //console.log("ttest arr", testArr);
-    //console.log("Flashcard array", user.flashcardArray);
   }
 
 
@@ -158,11 +183,15 @@ class Flashcards extends Component {
       
       if (user.flashcardArray
         && user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id).length === categoryfcs.length) {
-        return (<div>
-          Du har vært gjennom alle i denne kategorien <button onClick={() => window.location.href = '/'}>Gå tilbake</button>
-          <button onClick={this.restartDeck} id="restartbutton">Start på nytt</button>
-        </div>);
+        return(
+          <div>
+            Du har vært gjennom alle i denne kategorien <button onClick={() => window.location.href = '/'}>Gå tilbake</button>
+          </div>
+        );
+        
       }
+
+
     }
 
     let radarray = [];
@@ -211,7 +240,10 @@ class Flashcards extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     addCompletedFlashcards: (flashcard) => dispatch(addCompletedFlashcards(flashcard)),
-    removeCompletedFlashcards: (flashcard) => dispatch(removeCompletedFlashcards(flashcard))
+    //removeCompletedFlashcards: (flashcard) => dispatch(removeCompletedFlashcards(flashcard)),
+    updateUser: (flashcard) => dispatch(updateUser(flashcard)),
+    updateusers: (flashcard) => dispatch(updateusers(flashcard)),
+    loaduser: () => dispatch(loaduser())
 
   }
 }
@@ -226,12 +258,8 @@ const mapStateToProps = (state) => {
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   firestoreConnect([
-    { collection: 'flashcards' }
-  ]),
-  firestoreConnect([
-    { collection: 'decks' }
-  ]),
-  firestoreConnect([
-    { collection: 'users' }
+    { collection: 'flashcards' },
+    { collection: 'decks' },
+    { collection: 'users'}
   ])
 )(Flashcards)

@@ -11,11 +11,13 @@ import './Decks.css';
 
 class Frontpage extends Component {
 
-    restartDeck = (cardsInDeck) => {
-		for(let i = 0; i < cardsInDeck.length; ++i){
-				//this.props.removeCompletedFlashcards(cardsInDeck[i].id);
-				console.log("hello");
-		}
+    restartDeck = (cardsInDeck) => e => {
+			e.preventDefault();
+
+			for(let i = 0; i < cardsInDeck.length; ++i){
+					this.props.removeCompletedFlashcards(cardsInDeck[i].id);
+					console.log("removed ", cardsInDeck[i].id);
+			}
 		/*
         cardsInDeck.forEach((val) => {
             this.props.removeCompletedFlashcards(val.id);
@@ -26,7 +28,6 @@ class Frontpage extends Component {
 	
 	handleButton = (e) => {
 		e.preventDefault();
-		//this.state.removeCompletedFlashcards("A8XHuB8TfzeLc2osKtjc");
 		this.props.removeCompletedFlashcards("A8XHuB8TfzeLc2osKtjc");
 		console.log("hey");
 	}
@@ -83,7 +84,7 @@ class Frontpage extends Component {
 									<div key={deck.id} className="column col-sm-6">
 										<div className="deck">
 											<DeckInfo deck={deck} />
-											<button>Restart deck</button>
+											<button onClick={this.restartDeck(cardsInDeck)}>Restart deck</button>
                                            {/* <button onClick={this.restartDeck(cardsInDeck)}>Start again</button>*/}
 										</div>
                                         

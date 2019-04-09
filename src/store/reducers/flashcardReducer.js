@@ -20,12 +20,14 @@ const flashcardReducer = (state = initState, action) => {
         case 'ADD_COMPLETED_FLASHCARDS_ERROR':
             console.log('add complete flashcards error', action.err)
             return state;
+            /*
         case 'REMOVE_COMPLETED_FLASHCARDS':
             console.log('removed completed flashcards', action.flashcard)
             return state;
         case 'REMOVE_COMPLETED_FLASHCARDS_ERROR':
             console.log('remove completed flashcards error', action.err)
             return state;
+            */
         default:
             return state;
     }
