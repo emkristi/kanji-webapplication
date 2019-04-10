@@ -6,7 +6,7 @@ import { Redirect } from 'react-router-dom'
 import { addCompletedFlashcards } from '../../store/actions/flashcardActions'
 import { removeCompletedFlashcards } from '../../store/actions/flashcardActions'
 import ReactCardFlip from 'react-card-flip';
-import './flashcardcss.css';
+import './photoflashcardcss.css';
 
 class PhotoFlashcards extends Component {
   constructor(props) {
@@ -266,35 +266,25 @@ class PhotoFlashcards extends Component {
     if (!categoryfcs[currentCard]) return (<div>Not defined</div>);
 
     return (
-      <div className="photofcard">
-      <ReactCardFlip isFlipped={this.state.isFlipped} flipDirection="horizontal">
+      <div className="card center">
+      <ReactCardFlip isFlipped={this.state.isFlipped} flipDirection="horizontal" >
         
         <div className="tester" key="front">
           <div><img className="content" src={categoryfcs[currentCard].pictureUrl} alt="current kanji" width="200px" height="200px" /></div>
           <br></br>
           <div className="row">
-            <div className="column">
-            <button type="button" className="btn btn-primary btn-lg outline" onClick={this.handleFButton} id='but1' value={randomArray[0]}>{randomArray[0]}</button>
-            </div>
-            <div className="column">
+              
+              <button type="button" className="btn btn-primary btn-lg outline" onClick={this.handleFButton} id='but1' value={randomArray[0]}>{randomArray[0]}</button>
               <button className="btn btn-primary btn-lg outline" onClick={this.handleFButton} id='but2' value={randomArray[1]}>{randomArray[1]}</button>
-            </div>
-          </div>
-          <div className="row">
-            <div className="column">
-            <button className="btn btn-primary btn-lg outline" onClick={this.handleFButton} id='but3' value={randomArray[2]}>{randomArray[2]}</button>
-
-            </div>
-            <div className="column">
-            <button className="btn btn-primary btn-lg outline" onClick={this.handleFButton} id='but3' value={randomArray[3]}>{randomArray[3]}</button>
-            
-            </div>
-          <br></br>
-          </div>
-          
+              <button className="btn btn-primary btn-lg outline" onClick={this.handleFButton} id='but3' value={randomArray[2]}>{randomArray[2]}</button>
+              <button className="btn btn-primary btn-lg outline" onClick={this.handleFButton} id='but3' value={randomArray[3]}>{randomArray[3]}</button>  
+   
+         </div>
         </div>
 
         <div className="tester2" key="back">
+          <div>Kanji: {categoryfcs[currentCard].kanji}</div>
+          <div>English: {categoryfcs[currentCard].eng}</div>
           <div className="pfbuttons">
             <br></br>
             <button onClick={this.handleHard} id="Hard">Hard</button>

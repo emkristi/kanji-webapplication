@@ -9,6 +9,8 @@ import { addCompletedFlashcards } from '../../store/actions/flashcardActions'
 import { updateUser } from '../../store/actions/userActions'
 import { updateusers } from '../../store/actions/userActions'
 import { loaduser } from '../../store/actions/userActions'
+import './flashcardcss.css';
+
 
 class Flashcards extends Component {
   constructor(props) {
@@ -16,9 +18,21 @@ class Flashcards extends Component {
     this.state = {
       currentCard: 0,
       bufferfc: [],
-      fcArray: []
+      fcArray: [],
+      users: this.props.users
     };
+
+    this.props.loaduser();
   }
+
+
+  getData(){
+    setTimeout(() => {
+      console.log()
+    })
+  }
+
+
 
   handleHard = (e) => {
 
@@ -72,21 +86,25 @@ class Flashcards extends Component {
     // seenFc -> flashcards som allerede er gått gjennom
     const seenFc = user.flashcardArray ? user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id) : [];
 
-    console.log("1", user);
+    //console.log("1", user);
+
+    console.log(this.state.items);
 
     this.props.loaduser();
 
     this.props.updateUser(categoryfcs[currentCard].id);
 
-    console.log(categoryfcs[currentCard].id);
+    //console.log(categoryfcs[currentCard].id);
     
-    console.log("2", user)
+    //console.log("2", user)
 
     this.props.loaduser();
 
+    console.log(loaduser);
+
     //console.log("3", updatedUser);
 
-    console.log("4", user);
+    //console.log("4", user);
 
 
 

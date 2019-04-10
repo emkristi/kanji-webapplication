@@ -1,7 +1,5 @@
 const initState = {
-    flashcards: [
-
-    ],
+   
     users: [
 
     ]
