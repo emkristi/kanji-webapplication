@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import { firestoreConnect } from 'react-redux-firebase'; //used to connect to firestore
 import { compose } from 'redux';
 //import Flashcard from '../flashcards/Flashcard';
 import { addCompletedFlashcards } from '../../store/actions/flashcardActions';
 import { removeCompletedFlashcards } from '../../store/actions/flashcardActions';
-
+import CreateMnemonic from '../flashcards/CreateMnemonic';
 class Flashcards extends Component {
 	// intern this.state -> this.setState for å sette den
 	// this.state.currentCard for å bruke
@@ -37,7 +36,7 @@ class Flashcards extends Component {
 		const { flashcards, match: { params: { id } } } = this.props;
 		let categoryfcs = flashcards.filter((val) => val.deckid === id);
 
-		const { currentCard } = this.state;
+		//const { currentCard } = this.state;
 
 		for (let i = 0; i < categoryfcs.length; ++i) {
 			this.props.removeCompletedFlashcards(categoryfcs[i].id);
@@ -208,16 +207,17 @@ class Flashcards extends Component {
 						Easy
 					</button>
 				</div>
-				<div class="row">
-					<form class="col s12">
-						<div class="row">
-							<div class="input-field col s6">
-								<i class="material-icons prefix">mode_edit</i>
-								<textarea id="textarea1" class="materialize-textarea" />
-								<label for="textarea1">Make your own mnemonic</label>
-								<span class="helper-text" data-error="wrong" data-success="right">
+				<div className="row">
+					<form className="col s12">
+						<div className="row">
+							<div className="input-field col s6">
+								<i className="material-icons prefix">mode_edit</i>
+								<textarea id="textarea1" className="materialize-textarea" />
+								<label htmlFor="textarea1">Make your own mnemonic</label>
+								<span className="helper-text" data-error="wrong" data-success="right">
 									{categoryfcs[currentCard].mnemonic}
 								</span>
+								<CreateMnemonic />
 							</div>
 						</div>
 					</form>
