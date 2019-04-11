@@ -112,9 +112,10 @@ class Flashcards extends Component {
 
     //console.log("3", updatedUser);
 
-    //console.log("4", user);
+    console.log("4", user);
 
 
+    
 
     
     /*
@@ -276,8 +277,8 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     flashcards: state.firestore.ordered.flashcards, // gives an array of the flashcards.. flashcard property, we are accessing the flashcards from the state in the flashcardReducer. We are grabbing this and attatching it to the flashcard property inside the props of this component (flashcard: )
-    auth: state.firebase.auth,
-    users: state.firestore.ordered.users
+    auth: state.firebase.auth /*,
+    users: state.firestore.ordered.users*/
   }
 }
 
@@ -287,5 +288,8 @@ export default compose(
     { collection: 'flashcards' },
     { collection: 'decks' },
     { collection: 'users'}
-  ])
+  ]),
+  connect((state, props) => ({ 
+    users: state.firestore.ordered.users
+  }))
 )(Flashcards)
