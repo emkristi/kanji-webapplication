@@ -18,18 +18,26 @@ class Flashcards extends Component {
     this.state = {
       currentCard: 0,
       bufferfc: [],
-      fcArray: [],
-      users: this.props.users
+      fcArray: []
+      //users: this.props.users
     };
 
-    this.props.loaduser();
+    //this.props.loaduser();
   }
 
-
+/*
   getData(){
     setTimeout(() => {
       console.log()
     })
+  }
+*/
+  componentDidMount(){
+    this.props.firestore.setListener({collection: 'users'})
+  }
+
+  componentWillUnmount(){
+    this.props.firestore.unsetListener({collection: 'users'})
   }
 
 
@@ -88,9 +96,9 @@ class Flashcards extends Component {
 
     //console.log("1", user);
 
-    console.log(this.state.items);
+    //console.log(this.state.items);
 
-    this.props.loaduser();
+    //this.props.loaduser();
 
     this.props.updateUser(categoryfcs[currentCard].id);
 
@@ -100,7 +108,7 @@ class Flashcards extends Component {
 
     this.props.loaduser();
 
-    console.log(loaduser);
+    //console.log(loaduser);
 
     //console.log("3", updatedUser);
 
