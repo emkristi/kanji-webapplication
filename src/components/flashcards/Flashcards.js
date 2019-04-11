@@ -6,6 +6,7 @@ import { compose } from 'redux';
 import { addCompletedFlashcards } from '../../store/actions/flashcardActions';
 import { removeCompletedFlashcards } from '../../store/actions/flashcardActions';
 import CreateMnemonic from '../flashcards/CreateMnemonic';
+import MnemonicInfo from '../decks/MnemonicInfo';
 class Flashcards extends Component {
 	// intern this.state -> this.setState for å sette den
 	// this.state.currentCard for å bruke

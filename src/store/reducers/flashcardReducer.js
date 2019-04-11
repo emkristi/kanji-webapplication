@@ -21,9 +21,6 @@ const flashcardReducer = (state = initState, action) => {
 			console.log('removed completed flashcards', action.flashcard);
 		case 'REMOVE_COMPLETED_FLASHCARDS_ERROR':
 			console.log('remove completed flashcards error', action.err);
-		case 'CREATE_MNEMONIC':
-			console.log('created mnemonic', action.mnemonic);
-			return state;
 		default:
 			return state;
 	}
