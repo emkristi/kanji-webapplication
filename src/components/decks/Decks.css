@@ -10,7 +10,6 @@ body {
     margin-right: auto;
   }
 
-/* . foran pga class */
 .deck {
     background: white;
     border-style: none;
@@ -20,7 +19,6 @@ body {
     opacity: 0.8;
     width: 350px;
     height: 250px;
-
 }
 
 .deck:hover {
