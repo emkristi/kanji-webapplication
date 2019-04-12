@@ -20,12 +20,13 @@ class CreateMnemonic extends Component {
 		this.props.createMnemonic(this.state);
 	};
 	render() {
+		const mnemonics = this.props;
 		return (
 			<div className="container">
 				<form onSubmit={this.handleSubmit} className="white">
 					<h5 className="grey-text text-darken-3"> </h5>
 					<div className="input-field">
-						<label htmlFor="mnemonic">Mnemonic</label>
+						<label htmlFor="mnemonic">Create your own mnemonic!</label>
 						<textarea id="mnemonic" className="materialize-textarea" onChange={this.handleChange} />
 					</div>
 					<div className="input-field">

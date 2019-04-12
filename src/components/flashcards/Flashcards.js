@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase'; //used to connect to firestore
 import { compose } from 'redux';
-//import Flashcard from '../flashcards/Flashcard';
 import { addCompletedFlashcards } from '../../store/actions/flashcardActions';
 import { removeCompletedFlashcards } from '../../store/actions/flashcardActions';
 import CreateMnemonic from '../flashcards/CreateMnemonic';
-import MnemonicInfo from '../decks/MnemonicInfo';
 class Flashcards extends Component {
 	// intern this.state -> this.setState for å sette den
 	// this.state.currentCard for å bruke
@@ -44,6 +42,14 @@ class Flashcards extends Component {
 		}
 
 		//window.location.reload();
+	};
+
+	addMnemonic = (e) => {
+		const { flashcards, match: { params: { id } } } = this.props;
+		let categoryfcs = flashcards.filter((val) => val.deckid === id);
+		for (let i = 0; i < categoryfcs.length; i++) {
+			this.props.addMnemonicUser(categoryfcs[i].id);
+		}
 	};
 
 	findIndexOfFcId = (categoryfcs, fcid) => {
@@ -212,12 +218,8 @@ class Flashcards extends Component {
 					<form className="col s12">
 						<div className="row">
 							<div className="input-field col s6">
-								<i className="material-icons prefix">mode_edit</i>
-								<textarea id="textarea1" className="materialize-textarea" />
-								<label htmlFor="textarea1">Make your own mnemonic</label>
-								<span className="helper-text" data-error="wrong" data-success="right">
-									{categoryfcs[currentCard].mnemonic}
-								</span>
+								<p>Mnemonic suggestion:</p>
+								{categoryfcs[currentCard].mnemonic}
 								<CreateMnemonic />
 							</div>
 						</div>
@@ -237,7 +239,8 @@ const mapStateToProps = (state) => {
 	return {
 		flashcards: state.firestore.ordered.flashcards, // gives an array of the flashcards.. flashcard property, we are accessing the flashcards from the state in the flashcardReducer. We are grabbing this and attatching it to the flashcard property inside the props of this component (flashcard: )
 		auth: state.firebase.auth,
-		users: state.firestore.ordered.users
+		users: state.firestore.ordered.users,
+		mnemonics: state.firestore.ordered.mnemonics
 	};
 };
 
@@ -245,5 +248,6 @@ export default compose(
 	connect(mapStateToProps, mapDispatchToProps),
 	firestoreConnect([ { collection: 'flashcards' } ]),
 	firestoreConnect([ { collection: 'decks' } ]),
-	firestoreConnect([ { collection: 'users' } ])
+	firestoreConnect([ { collection: 'users' } ]),
+	firestoreConnect([ { collection: 'mnemonics' } ])
 )(Flashcards);
