@@ -6,6 +6,9 @@ import { Redirect } from 'react-router-dom'
 import { addCompletedFlashcards } from '../../store/actions/flashcardActions'
 import { removeCompletedFlashcards } from '../../store/actions/flashcardActions'
 import ReactCardFlip from 'react-card-flip';
+import { updateUser } from '../../store/actions/userActions'
+import { updateusers } from '../../store/actions/userActions'
+import { loaduser } from '../../store/actions/userActions'
 import './photoflashcardcss.css';
 
 class PhotoFlashcards extends Component {
@@ -16,6 +19,14 @@ class PhotoFlashcards extends Component {
       bufferfc: [],
       isFlipped: false
     };
+  }
+
+  componentDidMount(){
+    this.props.firestore.setListener({collection: 'users'})
+  }
+
+  componentWillUnmount(){
+    this.props.firestore.unsetListener({collection: 'users'})
   }
 
   flipClick = (e) => {
@@ -35,65 +46,15 @@ class PhotoFlashcards extends Component {
     const { currentCard } = this.state;
 
     let categoryfcs = flashcards.filter(val => val.deckid === id);
-    // Legg til flashcard i DB
-    this.props.addCompletedFlashcards(categoryfcs[currentCard].id);
+    
+    this.props.updateUser(categoryfcs[currentCard].id);
 
     this.changeFc();
 
   }
 
-  removeFlashcards () {
-    const { flashcards, match: { params: { id } } } = this.props;
-
-    let categoryfcs = flashcards.filter(val => val.deckid === id);
-
-    for (let i = 0; i < categoryfcs.length; ++i) {
-      this.props.removeCompletedFlashcards(categoryfcs[i].id)
-    }
-
-  }
-
-  reloadWindow () {
-    window.location.reload();
-  }
-
-  restartDeck = (e) => {
-    const { flashcards, match: { params: { id } } } = this.props;
-    //const { flashcards, match: { params: { id } }, auth, users } = this.props;
-    //const { currentCard } = this.state;
-
-    let categoryfcs = flashcards.filter(val => val.deckid === id);
-    //let user = users.find(u => u.id === auth.uid);
-
-
-    //const fcslength = user.flashcardArray.length;
-    //console.log(fcslength);
-
-    for (let i = 0; i < categoryfcs.length; ++i) {
-      this.props.removeCompletedFlashcards(categoryfcs[i].id)
-
-      if(i === categoryfcs.length -1){
-        
-      }
-    }
-
-    console.log("...");
-
-
-   // const newlength = user.flashcardArray.length;
-
-   /*
-    if ( (fcslength - newlength) == categoryfcs.length) { 
-      window.reload(); 
-    }
-    */
-    
-
-    //console.log(fcslength);
-
-    //window.location.reload();
-  }
-
+ 
+/*
   editMnemonic = (e) => {
     const { flashcards, match: { params: { id } } } = this.props;
     const { currentCard } = this.state;
@@ -102,6 +63,7 @@ class PhotoFlashcards extends Component {
     // Legg til flashcard i DB
     //this.props.addCompletedFlashcards(categoryfcs[currentCard].id);
   }
+  */
 
 
   findIndexOfFcId = (categoryfcs, fcid) => {
@@ -123,6 +85,8 @@ class PhotoFlashcards extends Component {
     let categoryfcs = flashcards.filter(f => f.deckid === id);
     let user = users.find(u => u.id === auth.uid);
     const seenFc = user.flashcardArray ? user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id) : [];
+
+    this.props.loaduser();
 
     // If no more unseen flashcards, go back to frontpage
     if (seenFc.length === categoryfcs.length - 1) {
@@ -171,6 +135,10 @@ class PhotoFlashcards extends Component {
         }
       }
     }
+
+    console.log(user.flashcardArray);
+
+
     // set found current number
     this.setState({
       currentCard: currentNumber
@@ -250,18 +218,6 @@ class PhotoFlashcards extends Component {
       }
     }
 
-    let radicalarray = [];
-    /*
-    
-    if(flashcards && categoryfcs){
-      console.log(currentCard);
-      console.log(categoryfcs[currentCard].radicals.id);
-
-    }
-    */
-    //let rad = categoryfcs[categoryfcs].radicals;
-
-
     // Error handling
     if (!categoryfcs[currentCard]) return (<div>Not defined</div>);
 
@@ -302,7 +258,10 @@ class PhotoFlashcards extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     addCompletedFlashcards: (flashcard) => dispatch(addCompletedFlashcards(flashcard)),
-    removeCompletedFlashcards: (flashcard) => dispatch(removeCompletedFlashcards(flashcard))
+    //removeCompletedFlashcards: (flashcard) => dispatch(removeCompletedFlashcards(flashcard))
+    updateUser: (flashcard) => dispatch(updateUser(flashcard)),
+    updateusers: (flashcard) => dispatch(updateusers(flashcard)),
+    loaduser: () => dispatch(loaduser())
   }
 }
 const mapStateToProps = (state) => {
