@@ -11,16 +11,12 @@ import './Decks.css';
 
 class Frontpage extends Component {
 
-	
-    restartDeck = (cardsInDeck) => e => {
-			e.preventDefault();
-
-			for(let i = 0; i < cardsInDeck.length; ++i){
-					this.props.removeCompletedFlashcards(cardsInDeck[i].id);
-					console.log("removed ", cardsInDeck[i].id);
-			}
-		
-        
+  restartDeck = (cardsInDeck) => e => {
+		e.preventDefault();
+		for(let i = 0; i < cardsInDeck.length; ++i){
+				this.props.removeCompletedFlashcards(cardsInDeck[i].id);
+				console.log("removed ", cardsInDeck[i].id);
+		} 
 	}
 	
 	handleButton = (e) => {
@@ -32,77 +28,56 @@ class Frontpage extends Component {
 	render() {
 		const { decks, flashcards, auth, users } = this.props;
 
-		//console.log(flashcards);
-		//this.checkDeck();
-
 		let user;
 		if (users) {
 			user = users.find((u) => u.id === auth.uid);
 		}
 
-		//console.log(user.flashcardArray);
-
 		if (!auth.uid) return <Redirect to="/signin" />;
 
 		return (
-			            <div className="container">
-			                <div className="row test center-align">
-			                    {flashcards &&
-			                        user &&
-			                        decks &&
-			                        decks.map((deck) => {
-			                            let unfinisheddecks;
-			                            if (user.flashcardArray == null) {
-			                                unfinisheddecks = flashcards;
-			                            } else {
-			                                unfinisheddecks = flashcards.filter(
-			                                    (fcard) => fcard.deckid === deck.id && user.flashcardArray.indexOf(fcard.id) === -1
-			                                );
-			                            }
-			
-			                            if (unfinisheddecks.length > 0) {
-			                                return (
-			                                    <div key={deck.id} className="column col-sm-6">
-			                                        <div className="deck">
-			                                            <Link
-			                                                to={deck.type === 'Images' ? '/img/' + deck.id : '/' + deck.id}
-			                                                key={deck.id}
-			                                                className="a"
-			                                            >
-			                                                <DeckInfo deck={deck} />
-			                                            </Link>
-			                                        </div>
-			                                    </div>
-			                                );
-			                            } else {
-											let cardsInDeck = flashcards.filter((fcard) => fcard.deckid === deck.id);
-											
-			                                return (
-												
-			                                    <div key={deck.id} className="column col-sm-6">
-			                                        <div className="deck">
-			                                            <DeckInfo deck={deck} />
-			                                            <button onClick={this.restartDeck(cardsInDeck)}>Restart deck</button>
-													   {/* <button onClick={this.restartDeck(cardsInDeck)}>Start again</button>*/}
-			                                        </div>
-													
-			                                    </div>
-			                                );
-			                            }
-			                        })}
-			                </div>    
-			            </div>
-			        );
-			
-		/*
-		
-		*/
+			<div className="container">
+				<div className="row test center-align">
+					{flashcards && user && decks && decks.map((deck) => {
+						let unfinisheddecks;
+						if (user.flashcardArray == null) {
+							unfinisheddecks = flashcards;
+						} else {
+							unfinisheddecks = flashcards.filter(
+								(fcard) => fcard.deckid === deck.id && user.flashcardArray.indexOf(fcard.id) === -1);
+								}
+								if (unfinisheddecks.length > 0) {
+									return (
+										<div key={deck.id} className="column col s6">
+											<div className="deck">
+												<Link to={deck.type === 'Images' ? '/img/' + deck.id : '/' + deck.id} key={deck.id} className="a">
+												<DeckInfo deck={deck} />
+												</Link>
+											</div>
+										</div>
+									);
+									} else {
+										let cardsInDeck = flashcards.filter((fcard) => fcard.deckid === deck.id);
+										return (
+											<div key={deck.id} className="column col s6">
+												<div className="deck">
+													<DeckInfo deck={deck} />
+													<button onClick={this.restartDeck(cardsInDeck)}><i class="material-icons">replay</i>Restart deck</button>
+												</div>
+											</div>
+										);
+									}
+							})
+						}
+					</div>
+				</div>
+		);
 	}
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-	  removeCompletedFlashcards: (flashcard) => dispatch(removeCompletedFlashcards(flashcard))
+	  	removeCompletedFlashcards: (flashcard) => dispatch(removeCompletedFlashcards(flashcard))
     }
   }
 

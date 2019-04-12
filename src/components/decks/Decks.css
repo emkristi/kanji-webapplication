@@ -15,10 +15,9 @@ body {
     border-style: none;
     border-radius: 15px;
     padding: 40px;
-    margin-top: 20px;
+    margin-top: 5%;
     opacity: 0.8;
-    width: 350px;
-    height: 250px;
+    height: 240px;
 }
 
 .deck:hover {
