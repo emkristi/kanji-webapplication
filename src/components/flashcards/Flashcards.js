@@ -19,19 +19,9 @@ class Flashcards extends Component {
       currentCard: 0,
       bufferfc: [],
       fcArray: []
-      //users: this.props.users
     };
-
-    //this.props.loaduser();
   }
 
-/*
-  getData(){
-    setTimeout(() => {
-      console.log()
-    })
-  }
-*/
   componentDidMount(){
     this.props.firestore.setListener({collection: 'users'})
   }
@@ -40,12 +30,7 @@ class Flashcards extends Component {
     this.props.firestore.unsetListener({collection: 'users'})
   }
 
-
-
   handleHard = (e) => {
-
-    this.props.updateusers("gWiRBKD6I15oVO1oYlwp");
-
     this.changeFc();
   }
 
@@ -56,21 +41,10 @@ class Flashcards extends Component {
     let categoryfcs = flashcards.filter(val => val.deckid === id);
 
     // Legg til flashcard i DB
-    //this.props.addCompletedFlashcards(categoryfcs[currentCard].id);
-    
+    this.props.updateUser(categoryfcs[currentCard].id);
+
     this.changeFc();
   }
-
-  /*
-  restartDeck = (e) => {
-    const { flashcards, match: { params: { id } } } = this.props;
-    let categoryfcs = flashcards.filter(val => val.deckid === id);
-
-    for (let i = 0; i < categoryfcs.length; ++i) {
-      this.props.removeCompletedFlashcards(categoryfcs[i].id)
-    }
-  }
-  */
 
   findIndexOfFcId = (categoryfcs, fcid) => {
     let value = categoryfcs.find((val) => {
@@ -94,40 +68,7 @@ class Flashcards extends Component {
     // seenFc -> flashcards som allerede er gått gjennom
     const seenFc = user.flashcardArray ? user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id) : [];
 
-    //console.log("1", user);
-
-    //console.log(this.state.items);
-
-    //this.props.loaduser();
-
-    this.props.updateUser(categoryfcs[currentCard].id);
-
-    //console.log(categoryfcs[currentCard].id);
-    
-    //console.log("2", user)
-
     this.props.loaduser();
-
-    //console.log(loaduser);
-
-    //console.log("3", updatedUser);
-
-    console.log("4", user);
-
-
-    
-
-    
-    /*
-    for(let i = 0; i < seenFc.length; i++){
-      this.props.updateUser(seenFc[i]);
-    }
-    console.log("3", user);
-    */
-
-
-   
-    //localflashcardarray = seenFc;
 
     // If no more unseen flashcards, go back to frontpage
     if (seenFc.length === categoryfcs.length - 1) {
@@ -176,11 +117,9 @@ class Flashcards extends Component {
         }
       }
     }
-
-   
-    console.log(user);
-    console.log(seenFc);
-
+  
+    console.log(user.flashcardArray);
+ 
     this.setState({
       currentCard: currentNumber
     });
@@ -191,7 +130,6 @@ class Flashcards extends Component {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
     const { currentCard } = this.state;
 
-    //console.log(users);
     if (!auth.uid) return <Redirect to='/signin' />;
 
     // Only show flashcards in current category
@@ -203,11 +141,7 @@ class Flashcards extends Component {
     // Check if you've seen every flashcard
     let user;
     if (users) {
-      user = users.find(u => u.id === auth.uid);
-      //console.log(user);
-      //console.log("fcard array database nr2", user.flashcardArray);
-      //console.log("flashcards i decket", categoryfcs);
-      
+      user = users.find(u => u.id === auth.uid);    
       if (user.flashcardArray
         && user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id).length === categoryfcs.length) {
         return(
@@ -217,29 +151,18 @@ class Flashcards extends Component {
         );
         
       }
-
-
     }
 
     let radarray = [];
     
     if(categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards) {
       let rad = categoryfcs[currentCard].radicals;
-      //console.log(rad);
       radarray = rad.map(r => flashcards.find(f => f.id === r.id).kanji);
-
-     
-
-      //console.log(radarray);
-      //radlength = radarray.length;
     }
     
 
     // Error handling
     // if (!categoryfcs[currentCard]) return (<div>Not defined</div>);
-
-
-    //let rad;
 
     return (
       <div className="dashboard container">
@@ -277,8 +200,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     flashcards: state.firestore.ordered.flashcards, // gives an array of the flashcards.. flashcard property, we are accessing the flashcards from the state in the flashcardReducer. We are grabbing this and attatching it to the flashcard property inside the props of this component (flashcard: )
-    auth: state.firebase.auth /*,
-    users: state.firestore.ordered.users*/
+    auth: state.firebase.auth
   }
 }
 
