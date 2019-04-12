@@ -4,7 +4,7 @@ const Flashcard = ({ flashcard, flashcards }) => {
 
     return (
         <div className="flip-card">
-            <div className="flip-card-inner card-content grey-text text-darken-3" >
+            <div className="flip-card-inner" >
                 <div className="flip-card-front">
                     <span className="card-title"> {flashcard.kanji} </span>
                 </div>

@@ -8,7 +8,16 @@ body {
     padding: 5px;
     margin-left: auto;
     margin-right: auto;
-  }
+}
+
+.frontpage-content {
+  padding-top: 20px;
+  max-width: 850px;
+}
+
+.col {
+  min-width: 375px;
+}
 
 .deck {
     background: white;
@@ -24,46 +33,17 @@ body {
     opacity: 1.0;
 }
 
-/* Float four columns side by side */
-/*
-.column {
-  float: left;
-  width: 25%;
-  padding: 0 10px;
+.completed {
+  color: gray;
+  font-style: italic;
 }
-*/
 
-/* Remove extra left and right margins, due to padding */
-/*
-.row {
-  margin: 0 -5px;
-  margin-top:60px;
-  margin-left:20px;
-  margin-right: 20px;
-}
-*/
-
-/* Clear floats after the columns */
-/*
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-*/
-
-/* Responsive columns */
-/*
-@media screen and (max-width: 600px) {
-  .column {
-    width: 100%;
-    display: block;
-    margin-bottom: 20px;
-  }
-}
-*/
-
-a:link {
-    color: lightseagreen;
-}
+.not-completed {
   
+}
+
+/* */
+#link{
+  color: black;
+}
+

@@ -223,22 +223,22 @@ class PhotoFlashcards extends Component {
 
     return (
       <div className="card center">
-      <ReactCardFlip isFlipped={this.state.isFlipped} flipDirection="horizontal" >
+      <ReactCardFlip isFlipped={this.state.isFlipped} flipDirection="horizontal">
         
-        <div className="tester" key="front">
+        <div className="pfc-card" key="front">
           <div><img className="content" src={categoryfcs[currentCard].pictureUrl} alt="current kanji" width="200px" height="200px" /></div>
-          <br></br>
+
           <div className="row">
               
-              <button type="button" className="btn btn-primary btn-lg outline" onClick={this.handleFButton} id='but1' value={randomArray[0]}>{randomArray[0]}</button>
-              <button className="btn btn-primary btn-lg outline" onClick={this.handleFButton} id='but2' value={randomArray[1]}>{randomArray[1]}</button>
-              <button className="btn btn-primary btn-lg outline" onClick={this.handleFButton} id='but3' value={randomArray[2]}>{randomArray[2]}</button>
-              <button className="btn btn-primary btn-lg outline" onClick={this.handleFButton} id='but3' value={randomArray[3]}>{randomArray[3]}</button>  
+              <button className="pfc-btn" onClick={this.handleFButton} id='but1' value={randomArray[0]}>{randomArray[0]}</button>
+              <button className="pfc-btn" onClick={this.handleFButton} id='but2' value={randomArray[1]}>{randomArray[1]}</button>
+              <button className="pfc-btn" onClick={this.handleFButton} id='but3' value={randomArray[2]}>{randomArray[2]}</button>
+              <button className="pfc-btn" onClick={this.handleFButton} id='but3' value={randomArray[3]}>{randomArray[3]}</button>  
    
          </div>
         </div>
 
-        <div className="tester2" key="back">
+        <div className="pfc-card" key="back">
           <div>Kanji: {categoryfcs[currentCard].kanji}</div>
           <div>English: {categoryfcs[currentCard].eng}</div>
           <div className="pfbuttons">
@@ -267,8 +267,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     flashcards: state.firestore.ordered.flashcards, // gives an array of the flashcards.. flashcard property, we are accessing the flashcards from the state in the flashcardReducer. We are grabbing this and attatching it to the flashcard property inside the props of this component (flashcard: )
-    auth: state.firebase.auth/*,
-    users: state.firestore.ordered.users*/
+    auth: state.firebase.auth
   }
 }
 

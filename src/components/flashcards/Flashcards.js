@@ -165,10 +165,10 @@ class Flashcards extends Component {
     // if (!categoryfcs[currentCard]) return (<div>Not defined</div>);
 
     return (
-      <div className="dashboard container">
-        <div className="container">
+      <div className="">
+        <div className="">
           {(categoryfcs.length > 0) &&
-          <div className="container">
+          <div className="">
             <Flashcard flashcard={categoryfcs[currentCard]} flashcards={categoryfcs}   />
               <span className="card-title">
                 {categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards &&

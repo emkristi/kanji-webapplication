@@ -36,8 +36,7 @@ class Frontpage extends Component {
 		if (!auth.uid) return <Redirect to="/signin" />;
 
 		return (
-			<div className="container">
-				<div className="row test center-align">
+				<div className="row frontpage-content center-align">
 					{flashcards && user && decks && decks.map((deck) => {
 						let unfinisheddecks;
 						if (user.flashcardArray == null) {
@@ -48,9 +47,9 @@ class Frontpage extends Component {
 								}
 								if (unfinisheddecks.length > 0) {
 									return (
-										<div key={deck.id} className="column col s6">
-											<div className="deck">
-												<Link to={deck.type === 'Images' ? '/img/' + deck.id : '/' + deck.id} key={deck.id} className="a">
+										<div key={deck.id} className="col s6">
+											<div className="deck not-completed">
+												<Link to={deck.type === 'Images' ? '/img/' + deck.id : '/' + deck.id} key={deck.id} id="link">
 												<DeckInfo deck={deck} />
 												</Link>
 											</div>
@@ -59,10 +58,10 @@ class Frontpage extends Component {
 									} else {
 										let cardsInDeck = flashcards.filter((fcard) => fcard.deckid === deck.id);
 										return (
-											<div key={deck.id} className="column col s6">
-												<div className="deck">
+											<div key={deck.id} className="col s6">
+												<div className="deck completed">
 													<DeckInfo deck={deck} />
-													<button onClick={this.restartDeck(cardsInDeck)}><i class="material-icons">replay</i>Restart deck</button>
+													<a onClick={this.restartDeck(cardsInDeck)} class="btn-floating btn-medium waves-effect waves-light pink"><i class="material-icons">replay</i></a>
 												</div>
 											</div>
 										);
@@ -70,7 +69,6 @@ class Frontpage extends Component {
 							})
 						}
 					</div>
-				</div>
 		);
 	}
 }
