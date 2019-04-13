@@ -12,7 +12,10 @@ export const addCompletedFlashcards = (flashcardidd) => {
         const userId = getState().firebase.auth.uid;
         const flashcardId = flashcardidd;
 
+       
+
         firestore.collection('users').doc(userId).update({
+            // arrayUnion legger til elem. hvis ikke eksiterer fra før 
             flashcardArray: firestore.FieldValue.arrayUnion(flashcardId)
         }).then(() => {
             dispatch({ type: 'ADD_COMPLETED_FLASHCARDS', flashcardidd });

@@ -4,6 +4,9 @@ import { signIn } from '../../store/actions/authActions'
 import { Redirect } from 'react-router-dom'
 import firebase from 'firebase'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
+import '../../CSS/auth.css'
+import { Link } from 'react-router-dom';
+
 
 /*firebase.initializeApp({
     apiKey: 'AIzaSyCDQX_UAYLg44oOF40BGMT14Uk4prHJ5Hk',
@@ -62,18 +65,8 @@ class SignIn extends Component {
     if (auth.uid) return <Redirect to='/' /> 
 
     return (
-      <div className="container">
-          {this.state.isSignedIn ? (
-              <div>Signed in"</div>
-          ):(
-              <StyledFirebaseAuth
-              uiConfig={this.uiConfig}
-              firebaseAuth={firebase.auth()}
-              />
-          )
-        }
-        <form onSubmit={this.handleSubmit} className="white">
-            <h5 className="grey-text text-darken-3">Sign In</h5>
+      <div className="container col-sm-6">
+        <form onSubmit={this.handleSubmit}>
             <div className="input-field">
                 <label htmlFor="email">Email</label>
                 <input type="email" id="email" onChange={this.handleChange}/>
@@ -83,10 +76,24 @@ class SignIn extends Component {
                 <input type="password" id="password" onChange={this.handleChange}/>
             </div>
             <div className="input-field">
-                <button className="btn pink lighten-1 z-depth-0">Login</button>
+                <button className="btn pink lighten-1 z-depth-0 center">Login</button>
                 <div className="red-text center">
                     { authError ? <p>{authError}</p> : null}
                 </div>
+            </div>
+            <div className="fb-login-field">
+                {this.state.isSignedIn ? (
+                    <div>Signed in"</div>
+                    ):(
+                        <StyledFirebaseAuth
+                            uiConfig={this.uiConfig}
+                            firebaseAuth={firebase.auth()}
+                    />
+                    )
+                }
+            </div>
+            <div className="center">
+                <p>Dont have a user? Create one <Link to ='/signup'>here</Link> </p>
             </div>
         </form>
       </div>

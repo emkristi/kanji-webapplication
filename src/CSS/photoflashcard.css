@@ -1,0 +1,33 @@
+.card{
+    width: 300px;
+    height: 450px;
+    background-color: white;
+    border: none;
+}
+
+.cont{
+    background-color: lightcoral;
+    width: 40%;
+}
+
+.tester{
+    margin-top: 15%;
+}
+
+.pfc-btn{
+    color: black;
+    background-color: lightgray;
+    margin: 4px;
+    width: 100px;
+    height: 60px;
+    font-size: 30px;
+}
+
+.pfc-card{
+    width: 300px;
+    height: 450px;
+    background-color: green;
+    color: orange;
+    padding: 5px;
+    margin: 5px;
+}

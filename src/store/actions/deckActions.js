@@ -1,5 +1,5 @@
 export const createDeck = (deck) => {
-    return (dispatch, getState, {getFirebase, getFirestore}) => {
+    return (dispatch, getState, {getFirestore}) => {
         const firestore = getFirestore(); // reference to our firestore database
         //const profile = getState().firebase.profile;
         const userId = getState().firebase.auth.uid;
@@ -23,9 +23,11 @@ export const createDeck = (deck) => {
 };
 
 
+/*
 export const addDeckToUser = (deck) => {
     return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firestore = getFirestore();
         const deckId = getState().firestore.deck.id;
     }
 }
+*/

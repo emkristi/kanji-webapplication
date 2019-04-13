@@ -2,11 +2,14 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { firestoreConnect } from 'react-redux-firebase' // used to connect to firestore
 import { compose } from 'redux';
-import FlashcardInfo from '../flashcards/FlashcardInfo';
 import { Redirect } from 'react-router-dom'
 import { addCompletedFlashcards } from '../../store/actions/flashcardActions'
 import { removeCompletedFlashcards } from '../../store/actions/flashcardActions'
 import ReactCardFlip from 'react-card-flip';
+import { updateUser } from '../../store/actions/userActions'
+import { updateusers } from '../../store/actions/userActions'
+import { loaduser } from '../../store/actions/userActions'
+import '../../CSS/photoflashcard.css';
 
 class PhotoFlashcards extends Component {
   constructor(props) {
@@ -16,6 +19,14 @@ class PhotoFlashcards extends Component {
       bufferfc: [],
       isFlipped: false
     };
+  }
+
+  componentDidMount(){
+    this.props.firestore.setListener({collection: 'users'})
+  }
+
+  componentWillUnmount(){
+    this.props.firestore.unsetListener({collection: 'users'})
   }
 
   flipClick = (e) => {
@@ -28,73 +39,20 @@ class PhotoFlashcards extends Component {
     this.changeFc();
   }
 
-  
-
   handleEasy = (e) => {
     const { flashcards, match: { params: { id } } } = this.props;
     const { currentCard } = this.state;
 
     let categoryfcs = flashcards.filter(val => val.deckid === id);
-    // Legg til flashcard i DB
-    this.props.addCompletedFlashcards(categoryfcs[currentCard].id);
+    
+    this.props.updateUser(categoryfcs[currentCard].id);
 
     this.changeFc();
 
   }
 
-  removeFlashcards () {
-    const { flashcards, match: { params: { id } } } = this.props;
-
-    let categoryfcs = flashcards.filter(val => val.deckid === id);
-
-    for (let i = 0; i < categoryfcs.length; ++i) {
-      this.props.removeCompletedFlashcards(categoryfcs[i].id)
-    }
-
-  }
-
-  reloadWindow () {
-    window.location.reload();
-  }
-
-  restartDeck = (e) => {
-    //const { flashcards, match: { params: { id } } } = this.props;
-    const { flashcards, match: { params: { id } }, auth, users } = this.props;
-    const { currentCard } = this.state;
-
-    let categoryfcs = flashcards.filter(val => val.deckid === id);
-    let user = users.find(u => u.id === auth.uid);
-
-    
-
-    //const fcslength = user.flashcardArray.length;
-    //console.log(fcslength);
-
-    for (let i = 0; i < categoryfcs.length; ++i) {
-      this.props.removeCompletedFlashcards(categoryfcs[i].id)
-
-      if(i === categoryfcs.length -1){
-        console.log("heyo");
-      }
-    }
-
-    console.log("...");
-
-
-   // const newlength = user.flashcardArray.length;
-
-   /*
-    if ( (fcslength - newlength) == categoryfcs.length) { 
-      window.reload(); 
-    }
-    */
-    
-
-    //console.log(fcslength);
-
-    //window.location.reload();
-  }
-
+ 
+/*
   editMnemonic = (e) => {
     const { flashcards, match: { params: { id } } } = this.props;
     const { currentCard } = this.state;
@@ -103,6 +61,7 @@ class PhotoFlashcards extends Component {
     // Legg til flashcard i DB
     //this.props.addCompletedFlashcards(categoryfcs[currentCard].id);
   }
+  */
 
 
   findIndexOfFcId = (categoryfcs, fcid) => {
@@ -125,6 +84,8 @@ class PhotoFlashcards extends Component {
     let user = users.find(u => u.id === auth.uid);
     const seenFc = user.flashcardArray ? user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id) : [];
 
+    this.props.loaduser();
+
     // If no more unseen flashcards, go back to frontpage
     if (seenFc.length === categoryfcs.length - 1) {
       window.location.href = '/';
@@ -146,7 +107,7 @@ class PhotoFlashcards extends Component {
       while (temp) {
         currentNumber = (Math.round(Math.random() * (categoryfcs.length - 1)));
         // If this random flashcard is not seen before
-        if (!((user.flashcardArray && user.flashcardArray.includes(categoryfcs[currentNumber].id) || currentNumber === currentCard))) {
+        if (!(((user.flashcardArray && user.flashcardArray.includes(categoryfcs[currentNumber].id)) || (currentNumber === currentCard)))) {
           //Check if random flashcard's got radicals
           let fcradicals = categoryfcs[currentNumber].radicals;
           if (fcradicals.length > 0) {
@@ -172,6 +133,10 @@ class PhotoFlashcards extends Component {
         }
       }
     }
+
+    console.log(user.flashcardArray);
+
+
     // set found current number
     this.setState({
       currentCard: currentNumber
@@ -188,6 +153,10 @@ class PhotoFlashcards extends Component {
     if (e.target.value === categoryfcs[currentCard].kanji) {
       console.log("RIKTIG!");
       this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
+
+      return (<div>heyo!</div>);
+      // dersom denne if-en skjer bør knappen bli grønn eller noe slik
+
     }
   }
 
@@ -195,28 +164,29 @@ class PhotoFlashcards extends Component {
     const { flashcards, match: { params: { id } } } = this.props;
     const { currentCard } = this.state;
 
-    let categoryfcs = [];
+    let categoryfcs;
     var arr = [];
-    if(flashcards ){
+    if(flashcards){
       categoryfcs = flashcards.filter(val => val.deckid === id);
-      if(categoryfcs[currentCard]){
-        arr.push(categoryfcs[currentCard].kanji);
-
-        while (arr.length < 4) {
-          var r = (Math.round(Math.random() * (categoryfcs.length - 1)));
-    
-          if (!arr.includes(categoryfcs[r].kanji)) {
-            arr.push(categoryfcs[r].kanji);
-          }
-        }
-        arr.sort(function () {
-          return .5 - Math.random();
-        });
-    
-        return arr;
-      }
+      arr.push(categoryfcs[currentCard].kanji);
     }
+    
+    if(categoryfcs){
+      while (arr.length < 4) {
+        var r = (Math.round(Math.random() * (categoryfcs.length - 1)));
+  
+        if (!arr.includes(categoryfcs[r].kanji)) {
+          arr.push(categoryfcs[r].kanji);
+        }
+      }
+      arr.sort(function () {
+        return .5 - Math.random();
+      });
+  
+      return arr;
 
+    }
+    
     
   }
 
@@ -247,29 +217,30 @@ class PhotoFlashcards extends Component {
       }
     }
 
-
     // Error handling
     if (!categoryfcs[currentCard]) return (<div>Not defined</div>);
 
     return (
-      <div className="dashboard container">
-
+      <div className="card center">
       <ReactCardFlip isFlipped={this.state.isFlipped} flipDirection="horizontal">
-        <div className="tester" key="front">
+        
+        <div className="pfc-card" key="front">
           <div><img className="content" src={categoryfcs[currentCard].pictureUrl} alt="current kanji" width="200px" height="200px" /></div>
-          <br></br>
-          <button onClick={this.handleFButton} id='but1' value={randomArray[0]}>{randomArray[0]}</button>
-          <button onClick={this.handleFButton} id='but2' value={randomArray[1]}>{randomArray[1]}</button>
-          <button onClick={this.handleFButton} id='but3' value={randomArray[2]}>{randomArray[2]}</button>
-          <button onClick={this.handleFButton} id='but3' value={randomArray[3]}>{randomArray[3]}</button>
-          <br></br>
+
+          <div className="row">
+              
+              <button className="pfc-btn" onClick={this.handleFButton} id='but1' value={randomArray[0]}>{randomArray[0]}</button>
+              <button className="pfc-btn" onClick={this.handleFButton} id='but2' value={randomArray[1]}>{randomArray[1]}</button>
+              <button className="pfc-btn" onClick={this.handleFButton} id='but3' value={randomArray[2]}>{randomArray[2]}</button>
+              <button className="pfc-btn" onClick={this.handleFButton} id='but3' value={randomArray[3]}>{randomArray[3]}</button>  
+   
+         </div>
         </div>
 
-        <div className="tester2" key="back">
-          <div className="battons">
-          {(categoryfcs.length > 0) &&
-              <FlashcardInfo flashcard={categoryfcs[currentCard]} />
-            }
+        <div className="pfc-card" key="back">
+          <div>Kanji: {categoryfcs[currentCard].kanji}</div>
+          <div>English: {categoryfcs[currentCard].eng}</div>
+          <div className="pfbuttons">
             <br></br>
             <button onClick={this.handleHard} id="Hard">Hard</button>
             <button onClick={this.handleEasy} id="Easy">Easy</button>
@@ -286,26 +257,27 @@ class PhotoFlashcards extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     addCompletedFlashcards: (flashcard) => dispatch(addCompletedFlashcards(flashcard)),
-    removeCompletedFlashcards: (flashcard) => dispatch(removeCompletedFlashcards(flashcard))
+    //removeCompletedFlashcards: (flashcard) => dispatch(removeCompletedFlashcards(flashcard))
+    updateUser: (flashcard) => dispatch(updateUser(flashcard)),
+    updateusers: (flashcard) => dispatch(updateusers(flashcard)),
+    loaduser: () => dispatch(loaduser())
   }
 }
 const mapStateToProps = (state) => {
   return {
     flashcards: state.firestore.ordered.flashcards, // gives an array of the flashcards.. flashcard property, we are accessing the flashcards from the state in the flashcardReducer. We are grabbing this and attatching it to the flashcard property inside the props of this component (flashcard: )
-    auth: state.firebase.auth,
-    users: state.firestore.ordered.users
+    auth: state.firebase.auth
   }
 }
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   firestoreConnect([
-    { collection: 'flashcards' }
+    { collection: 'flashcards' },
+    { collection: 'decks' },
+    { collection: 'users'}
   ]),
-  firestoreConnect([
-    { collection: 'decks' }
-  ]),
-  firestoreConnect([
-    { collection: 'users' }
-  ])
+  connect((state, props) => ({ 
+    users: state.firestore.ordered.users
+  }))
 )(PhotoFlashcards)

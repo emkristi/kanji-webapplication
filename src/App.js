@@ -7,7 +7,8 @@ import CreateFlashcard from './components/flashcards/CreateFlashcard'
 import Frontpage from './components/decks/Frontpage'
 import CreateDeck from './components/decks/CreateDeck'
 import Flashcards from './components/flashcards/Flashcards'
-import PhotoFlashcards from './components/flashcards/PhotoFlashcards';
+import PhotoFlashcards from './components/flashcards/PhotoFlashcards'
+import Startpage from './components/startpage/Startpage'
 
 class App extends Component {
   render() {

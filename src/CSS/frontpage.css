@@ -1,0 +1,49 @@
+body {
+    background: rgb(255, 67, 130);
+}
+
+.center {
+    margin: auto;
+    width: 100%;
+    padding: 5px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.frontpage-content {
+  padding-top: 20px;
+  max-width: 850px;
+}
+
+.col {
+  min-width: 375px;
+}
+
+.deck {
+    background: white;
+    border-style: none;
+    border-radius: 15px;
+    padding: 40px;
+    margin-top: 5%;
+    opacity: 0.8;
+    height: 240px;
+}
+
+.deck:hover {
+    opacity: 1.0;
+}
+
+.completed {
+  color: gray;
+  font-style: italic;
+}
+
+.not-completed {
+  
+}
+
+/* */
+#link{
+  color: black;
+}
+

@@ -5,22 +5,33 @@ import { firestoreConnect } from 'react-redux-firebase' //used to connect to fir
 import { compose } from 'redux';
 import Flashcard from '../flashcards/Flashcard';
 import { addCompletedFlashcards } from '../../store/actions/flashcardActions'
-import { removeCompletedFlashcards } from '../../store/actions/flashcardActions'
+//import { removeCompletedFlashcards } from '../../store/actions/flashcardActions'
+import { updateUser } from '../../store/actions/userActions'
+import { updateusers } from '../../store/actions/userActions'
+import { loaduser } from '../../store/actions/userActions'
+import '../../CSS/flashcard.css';
+
 
 class Flashcards extends Component {
-  // intern this.state -> this.setState for å sette den
-  // this.state.currentCard for å bruke
   constructor(props) {
     super(props);
     this.state = {
       currentCard: 0,
-      bufferfc: []
+      bufferfc: [],
+      fcArray: []
     };
+  }
+
+  componentDidMount(){
+    this.props.firestore.setListener({collection: 'users'})
+  }
+
+  componentWillUnmount(){
+    this.props.firestore.unsetListener({collection: 'users'})
   }
 
   handleHard = (e) => {
     this.changeFc();
-
   }
 
   handleEasy = (e) => {
@@ -28,23 +39,11 @@ class Flashcards extends Component {
     const { currentCard } = this.state;
 
     let categoryfcs = flashcards.filter(val => val.deckid === id);
+
     // Legg til flashcard i DB
-    this.props.addCompletedFlashcards(categoryfcs[currentCard].id);
+    this.props.updateUser(categoryfcs[currentCard].id);
 
     this.changeFc();
-  }
-
-  restartDeck = (e) => {
-    const { flashcards, match: { params: { id } }, removeCompletedFlashcards } = this.props;
-    let categoryfcs = flashcards.filter(val => val.deckid === id);
-
-    const { currentCard } = this.state;
-
-    for (let i = 0; i < categoryfcs.length; ++i) {
-      removeCompletedFlashcards(categoryfcs[i].id);
-    }
-
-    //window.location.reload();
   }
 
   findIndexOfFcId = (categoryfcs, fcid) => {
@@ -61,18 +60,22 @@ class Flashcards extends Component {
 
   changeFc = (e) => {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
-    const { currentCard, bufferfc } = this.state;
+    const { currentCard, bufferfc, fcArray, localfcardarr} = this.state;
 
     let categoryfcs = flashcards.filter(f => f.deckid === id);
     let user = users.find(u => u.id === auth.uid);
+
+    // seenFc -> flashcards som allerede er gått gjennom
     const seenFc = user.flashcardArray ? user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id) : [];
+
+    this.props.loaduser();
 
     // If no more unseen flashcards, go back to frontpage
     if (seenFc.length === categoryfcs.length - 1) {
       window.location.href = '/';
       return;
     }
-
+    
     let currentNumber = 0;
     // If flashcards in buffer, show first element and remove element from buffer
     if (bufferfc.length > 0) {
@@ -114,7 +117,9 @@ class Flashcards extends Component {
         }
       }
     }
-    // set found current number
+  
+    console.log(user.flashcardArray);
+ 
     this.setState({
       currentCard: currentNumber
     });
@@ -131,49 +136,52 @@ class Flashcards extends Component {
     if (flashcards) {
       categoryfcs = flashcards.filter(f => f.deckid === id)
     }
+  
+    // Check if you've seen every flashcard
+    let user;
+    if (users) {
+      user = users.find(u => u.id === auth.uid);    
+      if (user.flashcardArray
+        && user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id).length === categoryfcs.length) {
+        return(
+          <div>
+            Du har vært gjennom alle i denne kategorien <button onClick={() => window.location.href = '/'}>Gå tilbake</button>
+          </div>
+        );
+        
+      }
+    }
 
-    /*
     let radarray = [];
+    
     if(categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards) {
       let rad = categoryfcs[currentCard].radicals;
       radarray = rad.map(r => flashcards.find(f => f.id === r.id).kanji);
     }
-    */
     
-
-    // Check if you've seen every flashcard
-    let user;
-    if (users) {
-      user = users.find(u => u.id === auth.uid);
-      //console.log(user)
-      if (user.flashcardArray
-        && user.flashcardArray.filter(f => this.findFlashcardById(f).deckid == id).length === categoryfcs.length) {
-        return (<div>
-          Du har vært gjennom alle i denne kategorien <button onClick={() => window.location.href = '/'}>Gå tilbake</button>
-          <button onClick={this.restartDeck} id="restartbutton">Start på nytt</button>
-        </div>);
-      }
-
-    }
 
     // Error handling
     if (!categoryfcs[currentCard]) return (<div>Not defined</div>);
 
- 
-      
-
     return (
-     <div className="dashboard container">
-        <div className="kanEng">
-          {(categoryfcs.length > 0) && 
-            <Flashcard flashcard={categoryfcs[currentCard]}/>
+      <div className="">
+        <div className="">
+          {(categoryfcs.length > 0) &&
+          <div className="">
+            <Flashcard flashcard={categoryfcs[currentCard]} flashcards={categoryfcs}   />
+              <span className="card-title">
+                {categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards &&
+                    <span> {radarray}</span>
+                }
+              </span>
+            </div>
           }
         </div>
+
         <div id="hardEasyKnapper">
           <button onClick={this.handleHard} className="waves-effect waves-light btn" id="Hard">Hard</button>
           <button onClick={this.handleEasy} className="waves-effect waves-light btn" id="Easy">Easy</button>
         </div>
-        <div id="test"><p></p></div>
       </div>
       
     )
@@ -182,28 +190,28 @@ class Flashcards extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     addCompletedFlashcards: (flashcard) => dispatch(addCompletedFlashcards(flashcard)),
-    removeCompletedFlashcards: (flashcard) => dispatch(removeCompletedFlashcards(flashcard))
+    //removeCompletedFlashcards: (flashcard) => dispatch(removeCompletedFlashcards(flashcard)),
+    updateUser: (flashcard) => dispatch(updateUser(flashcard)),
+    updateusers: (flashcard) => dispatch(updateusers(flashcard)),
+    loaduser: () => dispatch(loaduser())
 
   }
 }
 const mapStateToProps = (state) => {
   return {
     flashcards: state.firestore.ordered.flashcards, // gives an array of the flashcards.. flashcard property, we are accessing the flashcards from the state in the flashcardReducer. We are grabbing this and attatching it to the flashcard property inside the props of this component (flashcard: )
-    auth: state.firebase.auth,
-    users: state.firestore.ordered.users
+    auth: state.firebase.auth
   }
 }
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   firestoreConnect([
-    { collection: 'flashcards' }
+    { collection: 'flashcards' },
+    { collection: 'decks' },
+    { collection: 'users'}
   ]),
-  firestoreConnect([
-    { collection: 'decks' }
-  ]),
-  firestoreConnect([
-    { collection: 'users' }
-  ])
+  connect((state, props) => ({ 
+    users: state.firestore.ordered.users
+  }))
 )(Flashcards)
-

@@ -1,0 +1,83 @@
+    /* Do an horizontal flip when you move the mouse over the flip box container */
+  .flip-card.hov .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+  
+  /* Position the front and back side */
+  .flip-card-front, .flip-card-back {
+    border-radius: 15px;
+    border: lightgray;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+  }
+  
+  /* Style the front side (fallback if image is missing) */
+  .flip-card-front {
+    background-color: white;
+    color: rgb(26, 26, 26);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 100px;
+  }
+  
+  /* Style the back side */
+  .flip-card-back {
+    background-color: white;
+    color: rgb(26, 26, 26);
+    transform: rotateY(180deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+.flip-card {
+    width: 300px;
+    height: 400px;
+    margin: auto;
+    margin-top: 50px;
+  }
+  
+  .flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+  }
+  
+  .flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+  
+  .flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+  }
+  
+  .flip-card-front {
+    z-index: 2;
+  }
+  
+  .flip-card-back {
+    transform: rotateY(180deg);
+    z-index: 1;
+  }
+
+   
+  #hardEasyKnapper {
+    text-align: center;
+  }
+  
+  #hardEasyKnapper button {
+    margin-top: 25px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }

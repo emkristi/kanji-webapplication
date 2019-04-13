@@ -7,15 +7,8 @@ import { NavLink } from 'react-router-dom'
  * Method for showing links in navbar when the user is logged in
  */
 const SignedInLinks = (props) => {
-    
     return (
-        <ul className="right">
-            <li><NavLink to='/createdeck'>Add flashcard deck</NavLink></li>
-            <li><NavLink to='/' className="pink lighten-1">
-                {props.profile.initials}
-            </NavLink></li>
-            <li><a onClick={props.signOut}>Log Out</a></li>
-        </ul>
+        <a onClick={props.signOut}>Log Out</a>
     )
 }
 

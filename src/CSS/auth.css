@@ -1,0 +1,14 @@
+.container{
+    background-color: white;
+    opacity: 0.9;
+    border-radius: 15px;
+}
+
+form{
+    padding: 20px;
+    margin-top: 60px;
+}
+
+.card{
+    background-color: purple;
+}
