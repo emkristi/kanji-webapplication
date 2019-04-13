@@ -9,7 +9,7 @@ import { addCompletedFlashcards } from '../../store/actions/flashcardActions'
 import { updateUser } from '../../store/actions/userActions'
 import { updateusers } from '../../store/actions/userActions'
 import { loaduser } from '../../store/actions/userActions'
-import './flashcardcss.css';
+import '../../CSS/flashcard.css';
 
 
 class Flashcards extends Component {

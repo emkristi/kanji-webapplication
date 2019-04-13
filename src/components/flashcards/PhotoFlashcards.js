@@ -9,7 +9,7 @@ import ReactCardFlip from 'react-card-flip';
 import { updateUser } from '../../store/actions/userActions'
 import { updateusers } from '../../store/actions/userActions'
 import { loaduser } from '../../store/actions/userActions'
-import './photoflashcardcss.css';
+import '../../CSS/photoflashcard.css';
 
 class PhotoFlashcards extends Component {
   constructor(props) {
@@ -38,8 +38,6 @@ class PhotoFlashcards extends Component {
   handleHard = (e) => {
     this.changeFc();
   }
-
-  
 
   handleEasy = (e) => {
     const { flashcards, match: { params: { id } } } = this.props;
@@ -157,6 +155,7 @@ class PhotoFlashcards extends Component {
       this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
 
       return (<div>heyo!</div>);
+      // dersom denne if-en skjer bør knappen bli grønn eller noe slik
 
     }
   }

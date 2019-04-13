@@ -4,7 +4,7 @@ import { signIn } from '../../store/actions/authActions'
 import { Redirect } from 'react-router-dom'
 import firebase from 'firebase'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
-import './auth.css'
+import '../../CSS/auth.css'
 import { Link } from 'react-router-dom';
 
 

@@ -6,7 +6,7 @@ import DeckInfo from './DeckInfo';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import { removeCompletedFlashcards } from '../../store/actions/flashcardActions'
-import './Decks.css';
+import '../../CSS/frontpage.css';
 
 
 class Frontpage extends Component {
