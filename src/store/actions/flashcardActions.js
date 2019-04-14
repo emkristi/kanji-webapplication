@@ -45,6 +45,49 @@ export const removeCompletedFlashcards = (flashcardid) => {
 
 }
 
-export const updateMnemonic = (flashcardid) => {
-    
+export const updateMnemonic = (newMnemonic, fcId) => {
+    return (dispatch, getState, { getFirebase, getFirestore }) => {
+        const firestore = getFirestore(); 
+        const userId = getState().firebase.auth.uid;
+
+        firestore.collection('mnemonics').add({  
+            mnemonic: newMnemonic,
+            fcId: fcId,
+            userId: userId
+        }).then(() => { 
+            dispatch({type: 'ADD_MNEMONIC', newMnemonic});    
+            console.log("added mnemonic to db", newMnemonic);
+        }).catch((err) => {
+            dispatch({type: 'ADD_MNEMONIC_ERROR', err});    
+        })
+
+        /*
+        firestore.collection('users').doc(userId).update({
+            // arrayUnion legger til elem. hvis ikke eksiterer fra før 
+            mnemonicArr: firestore.FieldValue.arrayUnion( MNEMONIC ID )
+        }).then(() => {
+            dispatch({ type: 'ADD_MNEMONIC_ARR', flashcardidd });
+            console.log("added to users mnemonic array");
+        }).catch((err) => {
+            dispatch({ type: 'ADD_MNEMONIC_ARR_ERROR', err });
+        })
+        */ 
+    }
+}
+
+export const updateMnemonicArray = (mnemonic) => {
+    return (dispatch, getState, { getFirebase, getFirestore }) => {
+        const firestore = getFirestore(); 
+        const userId = getState().firebase.auth.uid;
+
+        firestore.collection('users').doc(userId).update({
+            // arrayUnion legger til elem. hvis ikke eksiterer fra før 
+            mnemonicArr: firestore.FieldValue.arrayUnion(mnemonic.id)
+        }).then(() => {
+            dispatch({ type: 'ADD_MNEMONIC_ARR', mnemonic });
+            console.log("added to users mnemonic array");
+        }).catch((err) => {
+            dispatch({ type: 'ADD_MNEMONIC_ARR_ERROR', err });
+        })
+    }
 }

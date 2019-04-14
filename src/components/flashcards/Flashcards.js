@@ -9,6 +9,8 @@ import { addCompletedFlashcards } from '../../store/actions/flashcardActions'
 import { updateUser } from '../../store/actions/userActions'
 import { updateusers } from '../../store/actions/userActions'
 import { loaduser } from '../../store/actions/userActions'
+import { updateMnemonic } from '../../store/actions/flashcardActions'
+import { updateMnemonicArray } from '../../store/actions/flashcardActions'
 import '../../CSS/flashcard.css';
 
 
@@ -18,7 +20,8 @@ class Flashcards extends Component {
     this.state = {
       currentCard: 0,
       bufferfc: [],
-      fcArray: []
+      fcArray: [],
+      mnemonic: ''
     };
   }
 
@@ -30,12 +33,31 @@ class Flashcards extends Component {
     this.props.firestore.unsetListener({collection: 'users'})
   }
 
+  handleMnemonicChange = (e) => {
+    e.preventDefault();
+    this.setState({
+      [e.target.id]: e.target.value
+    })
+  }
+
+  handleMnemonicSubmit = (e) => {
+    const { flashcards, match: { params: { id } } } = this.props;
+    const { mnemonics } = this.props;
+    const { currentCard } = this.state;
+
+    let categoryfcs = flashcards.filter(val => val.deckid === id);
+      e.preventDefault();
+      let mnem = this.state.mnemonic;
+      this.props.updateMnemonic(this.state.mnemonic, categoryfcs[currentCard].id);
+  }
+
   handleHard = (e) => {
     this.changeFc();
   }
 
   handleEasy = (e) => {
     const { flashcards, match: { params: { id } } } = this.props;
+    const { mnemonics } = this.props;
     const { currentCard } = this.state;
 
     let categoryfcs = flashcards.filter(val => val.deckid === id);
@@ -128,6 +150,7 @@ class Flashcards extends Component {
   render() {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
     const { currentCard } = this.state;
+    const { mnemonics } = this.props;
 
     if (!auth.uid) return <Redirect to='/signin' />;
 
@@ -149,6 +172,28 @@ class Flashcards extends Component {
           </div>
         );
         
+      }
+    }
+
+    let addedMnemonic;
+    if(mnemonics){
+      for(let i = 0; i < mnemonics.length; ++i){
+        if(mnemonics[i].fcId === categoryfcs[currentCard].id){
+          addedMnemonic = mnemonics[i];
+          this.props.updateMnemonicArray(addedMnemonic);
+        }
+      }
+    }
+        
+
+
+    let personalmnemonic;
+    if (users && mnemonics) {
+      user = users.find(u => u.id === auth.uid);
+      for(let i = 0; i < mnemonics.length; ++i){
+        if(user.mnemonicArr && (categoryfcs[currentCard].id === mnemonics[i].fcId) && (user.id === mnemonics[i].userId)){
+          personalmnemonic = mnemonics[i].mnemonic;
+        }
       }
     }
 
@@ -174,6 +219,23 @@ class Flashcards extends Component {
                     <span> {radarray}</span>
                 }
               </span>
+              <span className="card-title">
+                {
+                  <span> {personalmnemonic} </span>
+                }
+              </span>
+              <form onSubmit={this.handleMnemonicSubmit}>
+
+                <div className="input-field">
+                  <label htmlFor="mnemonic">Mnemonic:</label>
+                  <input type="text" id="mnemonic" onChange={this.handleMnemonicChange}/>
+                </div>
+
+                <div className="input-field">
+                  <button className="btn yellow lighten-1 z-depth-0">Add mnemonic</button>
+                </div>
+
+              </form>
             </div>
           }
         </div>
@@ -193,14 +255,16 @@ const mapDispatchToProps = (dispatch) => {
     //removeCompletedFlashcards: (flashcard) => dispatch(removeCompletedFlashcards(flashcard)),
     updateUser: (flashcard) => dispatch(updateUser(flashcard)),
     updateusers: (flashcard) => dispatch(updateusers(flashcard)),
-    loaduser: () => dispatch(loaduser())
-
+    loaduser: () => dispatch(loaduser()),
+    updateMnemonic: (mnemonic, fcId) => dispatch(updateMnemonic(mnemonic, fcId)),
+    updateMnemonicArray: (mnemonic) => dispatch(updateMnemonicArray(mnemonic))
   }
 }
 const mapStateToProps = (state) => {
   return {
     flashcards: state.firestore.ordered.flashcards, // gives an array of the flashcards.. flashcard property, we are accessing the flashcards from the state in the flashcardReducer. We are grabbing this and attatching it to the flashcard property inside the props of this component (flashcard: )
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    mnemonics: state.firestore.ordered.mnemonics
   }
 }
 
@@ -209,7 +273,8 @@ export default compose(
   firestoreConnect([
     { collection: 'flashcards' },
     { collection: 'decks' },
-    { collection: 'users'}
+    { collection: 'users'},
+    { collection: 'mnemonics'}
   ]),
   connect((state, props) => ({ 
     users: state.firestore.ordered.users
