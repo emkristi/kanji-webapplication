@@ -1,5 +1,7 @@
 import firebase from 'firebase/app'
-import 'firebase/firestore'
+import 'firebase/database'; 
+import 'firebase/storage';  
+//import 'firebase/firestore'
 import 'firebase/auth'
 //import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 

@@ -10,11 +10,11 @@ const Navbar = (props) => {
     const links = auth.uid ? <SignedInLinks profile={profile} /> : <SignedOutLinks />
     return (
         <div>
-            <nav className="transparent z-depth-0">
-                <div className="nav-wrapper">
-                    <a href="/" className="brand-logo left"><i className="material-icons">cloud</i>MEMJI</a>
+            <nav class="transparent z-depth-0">
+                <div class="nav-wrapper">
+                    <a href="/" class="brand-logo left"><i class="material-icons">cloud</i>MEMJI</a>
                     <ul class="right">
-                        <Dropdown trigger={<a className="brand-logo"><i className="material-icons md-36">menu</i></a>} options={{coverTrigger: false}}>                           
+                        <Dropdown trigger={<a class="brand-logo"><i class="material-icons md-36">menu</i></a>} options={{coverTrigger: false}}>                           
                             {links}
                         </Dropdown>
                     </ul>
