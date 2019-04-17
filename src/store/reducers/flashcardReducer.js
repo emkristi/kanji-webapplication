@@ -30,6 +30,12 @@ const flashcardReducer = (state = initState, action) => {
         case 'ADD_MNEMONIC_ERROR':
             console.log('add mnemnonic err')
             return state;
+        case 'UPDATE_MNEMONIC':
+            console.log('update mnemonic ok');
+            return state;
+        case 'UPDATE_MNEMONIC_ERROR':
+            console.log('update mnemnonic err')
+            return state;
         case 'ADD_MNEMONIC_ARR':
             console.log('add mnemonic to arr ok');
             return state;
