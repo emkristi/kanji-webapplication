@@ -51,14 +51,37 @@ class Flashcards extends Component {
 
     let user = users.find(u => u.id === auth.uid);
 
+    
+
     let gjeldendeFlashcard = categoryfcs[currentCard];
     let gjeldendeMnem = "";
+    let ingenMnemInArr = false;
     for(let i = 0; i < mnemonics.length; ++i){
-      if(gjeldendeFlashcard.id === mnemonics[i].fcId){
+      if(gjeldendeFlashcard.id === mnemonics[i].fcId && mnemonics[i].userId === user.id){
+        // finner gjeldende mnemonic hcis det er noen
         gjeldendeMnem = mnemonics[i];
-        this.props.replaceMnemonic(this.state.mnemonic, gjeldendeMnem, gjeldendeFlashcard.id);
+        console.log("gjeldende", gjeldendeMnem);
+        for(let j = 0; j < user.mnemonicArr.length; j++){
+          console.log(gjeldendeMnem.id, user.mnemonicArr[j]);
+          if(user.mnemonicArr[j] === gjeldendeMnem.id){
+            this.props.replaceMnemonic(this.state.mnemonic, gjeldendeMnem, gjeldendeFlashcard.id);
+          } 
+            //console.log("finnes ikke")
+            //ingenMnemInArr = true;
+            //console.log("hey");
+            //this.props.updateMnemonic(this.state.mnemonic, categoryfcs[currentCard].id)
+          
+        }
       } 
     }
+
+    /*
+    for(let j = 0; j < user.mnemonicArr.length; j++){
+      if(user.mnemonicArr[i] === gjeldendeMnem){
+        this.props.replaceMnemonic(this.state.mnemonic, gjeldendeMnem, gjeldendeFlashcard.id);
+      }
+    }
+    */
 
     if(gjeldendeMnem === ""){
       this.props.updateMnemonic(this.state.mnemonic, categoryfcs[currentCard].id)
@@ -213,42 +236,62 @@ class Flashcards extends Component {
     if (!categoryfcs[currentCard]) return (<div>Not defined</div>);
 
     return (
-      <div className="">
-        <div className="">
-          {(categoryfcs.length > 0) &&
-          <div className="">
-            <Flashcard flashcard={categoryfcs[currentCard]} flashcards={categoryfcs}   />
-              <span className="card-title">
-                {categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards &&
-                    <span> {radarray}</span>
-                }
-              </span>
-              <span className="card-title">
-                {
-                  <span> {personalmnemonic} </span>
-                }
-              </span>
-              <form onSubmit={this.handleMnemonicSubmit}>
+      <div className="container">
+        {(categoryfcs.length > 0) &&
+        <div className="flip-card">
+              <div className="flip-card-inner" >
+                  <div className="flip-card-front">
+                      <span className="card-title"> {categoryfcs[currentCard].kanji} </span>
 
-                <div className="input-field">
-                  <label htmlFor="mnemonic">Mnemonic:</label>
-                  <input type="text" id="mnemonic" onChange={this.handleMnemonicChange}/>
-                </div>
+                  </div>
+                  <div className="flip-card-back">
+                    <div className="card-content">
+                    
+                      <span className="card-title">Eng: {categoryfcs[currentCard].eng}</span>
+                      <br></br>
+                      <span className="card-title column">
+                        {categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards &&
+                            <span>Radicals: {radarray}</span>
+                        }
+              
+                      </span>
+                      <br></br>
+                      <span className="card-title">Mnemonic: {categoryfcs[currentCard].mnemonic}</span>
+                      <br></br>
+                     <span className="card-title">
+                      {<span>Personal mnemonic: {personalmnemonic} </span>}
+                      </span>
+                      <br></br>
+                      <span className="card-title"> test </span>
 
-                <div className="input-field">
-                  <button className="btn yellow lighten-1 z-depth-0">Add mnemonic</button>
-                </div>
+                      <form onSubmit={this.handleMnemonicSubmit}>
 
-              </form>
-            </div>
-          }
-        </div>
+<div className="input-field">
+  <label htmlFor="mnemonic">Mnemonic:</label>
+  <input type="text" id="mnemonic" onChange={this.handleMnemonicChange}/>
+</div>
 
+<div className="input-field">
+  <button className="btn yellow lighten-1 z-depth-0">Add mnemonic</button>
+</div>
+
+</form>
+                      
+                      </div>
+
+
+                  </div>
+              </div>
+          </div>
+        }
         <div id="hardEasyKnapper">
           <button onClick={this.handleHard} className="waves-effect waves-light btn" id="Hard">Hard</button>
           <button onClick={this.handleEasy} className="waves-effect waves-light btn" id="Easy">Easy</button>
         </div>
       </div>
+
+      
+        
       
     )
   }
