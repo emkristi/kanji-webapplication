@@ -10,7 +10,7 @@ import { updateUser } from '../../store/actions/userActions'
 import { updateusers } from '../../store/actions/userActions'
 import { loaduser } from '../../store/actions/userActions'
 import { updateMnemonic } from '../../store/actions/flashcardActions'
-import { updateMnemonicArray } from '../../store/actions/flashcardActions'
+import { replaceMnemonic } from '../../store/actions/flashcardActions'
 import '../../CSS/flashcard.css';
 
 
@@ -42,14 +42,29 @@ class Flashcards extends Component {
 
   handleMnemonicSubmit = (e) => {
     const { flashcards, match: { params: { id } } } = this.props;
-    const { mnemonics } = this.props;
+    const { mnemonics, users, auth } = this.props;
     const { currentCard } = this.state;
 
     let categoryfcs = flashcards.filter(val => val.deckid === id);
-      e.preventDefault();
-      let mnem = this.state.mnemonic;
-      this.props.updateMnemonic(this.state.mnemonic, categoryfcs[currentCard].id);
+    e.preventDefault();
+    let mnem = this.state.mnemonic;
+
+    let user = users.find(u => u.id === auth.uid);
+
+    let gjeldendeFlashcard = categoryfcs[currentCard];
+    let gjeldendeMnem = "";
+    for(let i = 0; i < mnemonics.length; ++i){
+      if(gjeldendeFlashcard.id === mnemonics[i].fcId){
+        gjeldendeMnem = mnemonics[i];
+        this.props.replaceMnemonic(this.state.mnemonic, gjeldendeMnem, gjeldendeFlashcard.id);
+      } 
+    }
+
+    if(gjeldendeMnem === ""){
+      this.props.updateMnemonic(this.state.mnemonic, categoryfcs[currentCard].id)
+    }
   }
+  
 
   handleHard = (e) => {
     this.changeFc();
@@ -175,18 +190,7 @@ class Flashcards extends Component {
       }
     }
 
-    let addedMnemonic;
-    if(mnemonics){
-      for(let i = 0; i < mnemonics.length; ++i){
-        if(mnemonics[i].fcId === categoryfcs[currentCard].id){
-          addedMnemonic = mnemonics[i];
-          this.props.updateMnemonicArray(addedMnemonic);
-        }
-      }
-    }
-        
-
-
+ 
     let personalmnemonic;
     if (users && mnemonics) {
       user = users.find(u => u.id === auth.uid);
@@ -256,8 +260,8 @@ const mapDispatchToProps = (dispatch) => {
     updateUser: (flashcard) => dispatch(updateUser(flashcard)),
     updateusers: (flashcard) => dispatch(updateusers(flashcard)),
     loaduser: () => dispatch(loaduser()),
+    replaceMnemonic: (newMnemonic, oldMnemonic, fcId) => dispatch(replaceMnemonic(newMnemonic, oldMnemonic, fcId)),
     updateMnemonic: (mnemonic, fcId) => dispatch(updateMnemonic(mnemonic, fcId)),
-    updateMnemonicArray: (mnemonic) => dispatch(updateMnemonicArray(mnemonic))
   }
 }
 const mapStateToProps = (state) => {

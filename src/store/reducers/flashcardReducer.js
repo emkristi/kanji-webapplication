@@ -24,11 +24,11 @@ const flashcardReducer = (state = initState, action) => {
         case 'ADD_COMPLETED_FLASHCARDS_ERROR':
             console.log('add complete flashcards error', action.err)
             return state;
-        case 'ADD_MNEMONIC':
-            console.log('add mnemonic ok');
+        case 'REPLACE_MNEMONIC':
+            console.log('replace mnemonic ok');
             return state;
-        case 'ADD_MNEMONIC_ERROR':
-            console.log('add mnemnonic err')
+        case 'REPLACE_MNEMONIC_ERROR':
+            console.log('replace mnemnonic err')
             return state;
         case 'UPDATE_MNEMONIC':
             console.log('update mnemonic ok');
