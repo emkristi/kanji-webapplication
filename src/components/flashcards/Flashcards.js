@@ -13,7 +13,6 @@ import { updateMnemonic } from '../../store/actions/flashcardActions'
 import { replaceMnemonic } from '../../store/actions/flashcardActions'
 import '../../CSS/flashcard.css';
 
-
 class Flashcards extends Component {
   constructor(props) {
     super(props);
@@ -240,36 +239,54 @@ class Flashcards extends Component {
         {(categoryfcs.length > 0) &&
         <div className="flip-card">
               <div className="flip-card-inner" >
-                  <div className="flip-card-front">
-                      <span className="card-title"> {categoryfcs[currentCard].kanji} </span>
+                  <div className="flip-card-front ">
+
+                  <div class="row">
+                    <div className="column">{categoryfcs[currentCard].kanji}</div>
+                    <div className="column">{categoryfcs[currentCard].kanji}</div>
+
+                  </div>
+                    
+
 
                   </div>
                   <div className="flip-card-back">
                     <div className="card-content">
-                    
-                      <span className="card-title">Eng: {categoryfcs[currentCard].eng}</span>
+
+                      <span className="text-top col s12"> {categoryfcs[currentCard].kanji} </span>
+                      <br></br>
+                      <p className=""> {categoryfcs[currentCard].eng} </p>
                       <br></br>
                       <span className="card-title column">
                         {categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards &&
-                            <span>Radicals: {radarray}</span>
+                            <span>radicals <br></br> {radarray}</span>
                         }
               
                       </span>
                       <br></br>
-                      <span className="card-title">Mnemonic: {categoryfcs[currentCard].mnemonic}</span>
-                      <br></br>
-                     <span className="card-title">
-                      {<span>Personal mnemonic: {personalmnemonic} </span>}
-                      </span>
-                      <br></br>
-                      <span className="card-title"> test </span>
+                      <div className="row">
+                        <div className="column"><span className="">mnemonic</span></div>
+                         <div className="column"><span className=""><i class="material-icons">edit</i></span></div>
+                      </div>
+                    
 
+                     <span className="card-title">
+                      {personalmnemonic &&
+                        <span>{personalmnemonic} </span>
+                      }
+                      </span>
+                      <span className="card-title">
+                        {!personalmnemonic && 
+                          <span>{categoryfcs[currentCard].mnemonic}</span>
+                        }
+            
+                      </span>
                       <form onSubmit={this.handleMnemonicSubmit}>
 
-<div className="input-field">
-  <label htmlFor="mnemonic">Mnemonic:</label>
-  <input type="text" id="mnemonic" onChange={this.handleMnemonicChange}/>
-</div>
+                      <div className="input-field">
+                        <label htmlFor="mnemonic">Mnemonic:</label>
+                        <input type="text" id="mnemonic" onChange={this.handleMnemonicChange}/>
+                      </div>
 
 <div className="input-field">
   <button className="btn yellow lighten-1 z-depth-0">Add mnemonic</button>

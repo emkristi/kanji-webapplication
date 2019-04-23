@@ -71,6 +71,7 @@ export const loaduser = () => {
 };
 */
 
+/*
 export const loaduser2 = () => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         const firestore = getFirestore(); // reference to our firestore database
@@ -87,16 +88,17 @@ export const loaduser2 = () => {
             //setState({users: doc.data()})
             //users: doc.data()
         });
-        /*.then(() => {
+        .then(() => {
             dispatch({ type: 'update_users', flashcardidd });
             console.log("updated users");
         }).catch((err) => {
             dispatch({ type: 'update_users_error', err });
             console.log("updated user error")
         })
-        */
+        
     }
 };
+*/
 
 
 export const loaduser = () => {
