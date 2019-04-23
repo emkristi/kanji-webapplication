@@ -20,7 +20,8 @@ class Flashcards extends Component {
       currentCard: 0,
       bufferfc: [],
       fcArray: [],
-      mnemonic: ''
+      mnemonic: '',
+      showMnemField: false
     };
   }
 
@@ -30,6 +31,10 @@ class Flashcards extends Component {
 
   componentWillUnmount(){
     this.props.firestore.unsetListener({collection: 'users'})
+  }
+
+  handleEditMnemClick = (e) => {
+    this.setState({showMnemField: true});
   }
 
   handleMnemonicChange = (e) => {
@@ -236,80 +241,89 @@ class Flashcards extends Component {
 
     return (
       <div className="container">
+        <div className="ww">
         {(categoryfcs.length > 0) &&
-        <div className="flip-card">
-              <div className="flip-card-inner" >
-                  <div className="flip-card-front ">
-
-                  <div class="row">
-                    <div className="column">{categoryfcs[currentCard].kanji}</div>
-                    <div className="column">{categoryfcs[currentCard].kanji}</div>
-
-                  </div>
-                    
-
-
-                  </div>
-                  <div className="flip-card-back">
-                    <div className="card-content">
-
-                      <span className="text-top col s12"> {categoryfcs[currentCard].kanji} </span>
-                      <br></br>
-                      <p className=""> {categoryfcs[currentCard].eng} </p>
-                      <br></br>
-                      <span className="card-title column">
-                        {categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards &&
-                            <span>radicals <br></br> {radarray}</span>
-                        }
-              
-                      </span>
-                      <br></br>
-                      <div className="row">
-                        <div className="column"><span className="">mnemonic</span></div>
-                         <div className="column"><span className=""><i class="material-icons">edit</i></span></div>
-                      </div>
-                    
-
-                     <span className="card-title">
-                      {personalmnemonic &&
-                        <span>{personalmnemonic} </span>
-                      }
-                      </span>
-                      <span className="card-title">
-                        {!personalmnemonic && 
-                          <span>{categoryfcs[currentCard].mnemonic}</span>
-                        }
-            
-                      </span>
-                      <form onSubmit={this.handleMnemonicSubmit}>
-
-                      <div className="input-field">
-                        <label htmlFor="mnemonic">Mnemonic:</label>
-                        <input type="text" id="mnemonic" onChange={this.handleMnemonicChange}/>
-                      </div>
-
-<div className="input-field">
-  <button className="btn yellow lighten-1 z-depth-0">Add mnemonic</button>
-</div>
-
-</form>
-                      
-                      </div>
-
-
-                  </div>
+          <div className="flip-card">
+            <div className="flip-card-inner" >
+              <div className="flip-card-front ">
+                <div class="row">
+                  <div className="column">{categoryfcs[currentCard].kanji}</div>
+                  <div className="column">{categoryfcs[currentCard].kanji}</div>
+                </div>
               </div>
+              
+              <div className="flip-card-back">
+                <div className="card-content">
+                  <span className="text-top col s12"> {categoryfcs[currentCard].kanji} </span>
+                    <br></br>
+                    <p className=""> {categoryfcs[currentCard].eng} </p>
+                    <br></br>
+                    <div class="left-align">
+                    <span className="">radicals</span>
+                    <br></br>
+                    <span className="card-title">
+                        {categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards &&
+                            <div>
+                              <span className="">radicals</span>
+                              <span>radicals <br></br> {radarray}</span>
+                            </div>
+                        }
+                      </span>
+                    <br></br>
+                    <span className="">mnemonic</span>
+                    <br></br>
+                    <span className="card-title">
+                      {personalmnemonic &&<span>{personalmnemonic}</span>}
+                    </span>
+                    
+                    <span className="card-title">
+                      {!personalmnemonic && <span>{categoryfcs[currentCard].mnemonic}</span> }
+                    </span>
+                  
+                    <div>
+                      <div onClick={this.handleEditMnemClick}><i class="material-icons">edit</i></div>
+                      { this.state.showMnemField ? 
+                        <form onSubmit={this.handleMnemonicSubmit}>
+                          <div class="col s12">
+                            
+                            <div class="input-field inline">
+                              <input type="text" id="mnemonic" onChange={this.handleMnemonicChange}/>
+                            </div>
+
+                            <div className="input-field inline">
+                              <button className="btn z-depth-0">Add</button>
+                            </div>
+
+                          </div>
+                        </form>
+                        : null
+                      }
+                    </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div className="row center" id="hardEasyKnapper">
+              
+                <button onClick={this.handleHard} className="hard-btn btn" id="Hard">Hard</button>
+
+              
+                <button onClick={this.handleEasy} className="easy-btn btn" id="Easy">Easy</button> 
+
+             
+          </div>
           </div>
         }
-        <div id="hardEasyKnapper">
-          <button onClick={this.handleHard} className="waves-effect waves-light btn" id="Hard">Hard</button>
-          <button onClick={this.handleEasy} className="waves-effect waves-light btn" id="Easy">Easy</button>
-        </div>
-      </div>
-
-      
         
+
+      </div>
       
+
+        
+
+      </div>
+     
+        
     )
   }
 }
@@ -321,7 +335,7 @@ const mapDispatchToProps = (dispatch) => {
     updateusers: (flashcard) => dispatch(updateusers(flashcard)),
     loaduser: () => dispatch(loaduser()),
     replaceMnemonic: (newMnemonic, oldMnemonic, fcId) => dispatch(replaceMnemonic(newMnemonic, oldMnemonic, fcId)),
-    updateMnemonic: (mnemonic, fcId) => dispatch(updateMnemonic(mnemonic, fcId)),
+    updateMnemonic: (mnemonic, fcId) => dispatch(updateMnemonic(mnemonic, fcId))
   }
 }
 const mapStateToProps = (state) => {

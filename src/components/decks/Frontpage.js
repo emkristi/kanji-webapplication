@@ -47,7 +47,7 @@ class Frontpage extends Component {
 								}
 								if (unfinisheddecks.length > 0) {
 									return (
-										<div key={deck.id} className="col s6">
+										<div key={deck.id} className="col s12 m6 l6">
 											<div className="deck not-completed">
 												<Link to={deck.type === 'Images' ? '/img/' + deck.id : '/' + deck.id} key={deck.id} id="link">
 												<DeckInfo deck={deck} />
