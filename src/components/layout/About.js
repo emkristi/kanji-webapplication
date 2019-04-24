@@ -8,7 +8,7 @@ class About extends Component {
 				<div class="col s4">
 					<div className="card">
 						<div className="card-image waves-effect waves-block waves-light">
-							<img class="activator" src="img/about.gif" />
+							<img class="activator" src="img/about.gif" alt="stroke order" />
 						</div>
 						<div className="card-content">
 							<span className="card-title activator grey-text text-darken-4">Sources in application</span>
@@ -29,7 +29,8 @@ class About extends Component {
 				<div class="col s4">
 					<div className="card">
 						<div className="card-image waves-effect waves-block waves-light">
-							<img class="activator" src="memji logo!!" /> <p>logo (+ bilder??) inn her:-)</p>
+							<img class="activator" src="memji logo!!" alt="Memji logo" />{' '}
+							<p>logo (+ bilder??) inn her:-)</p>
 						</div>
 						<div className="card-content">
 							<span className="card-title activator grey-text text-darken-4">

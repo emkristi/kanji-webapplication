@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { signOut } from '../../store/actions/authActions';
-import { NavLink } from 'react-router-dom';
 
 /**
  * Method for showing links in navbar when the user is logged in

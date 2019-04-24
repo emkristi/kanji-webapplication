@@ -24,6 +24,7 @@ class App extends Component {
 						<Route path="/createflashcard" component={CreateFlashcard} />
 						<Route path="/createdeck" component={CreateDeck} />
 						<Route path="/about" component={About} />
+						<Route path="/startpage" component={Startpage} />
 						<Route exact path="/:id" component={Flashcards} />
 						<Route exact path="/img/:id" component={PhotoFlashcards} />
 					</Switch>
