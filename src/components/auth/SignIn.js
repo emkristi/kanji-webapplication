@@ -65,7 +65,7 @@ class SignIn extends Component {
 
     return (
       <div className="auth-container center">
-        <form onSubmit={this.handleSubmit}>
+        <form className="auth-content" onSubmit={this.handleSubmit}>
             <div className="input-field">
                 <label htmlFor="email">Email</label>
                 <input type="email" id="email" required onChange={this.handleChange}/>

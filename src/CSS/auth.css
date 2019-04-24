@@ -3,10 +3,11 @@
     opacity: 0.9;
     border-radius: 15px;
     max-width: 500px;
-    align-self: center;
+    align-self: center;    
 }
 
-form{
-    padding: 20px;
-    margin-top: 20px;
+
+
+.auth-content{
+    padding: 40px;
 }

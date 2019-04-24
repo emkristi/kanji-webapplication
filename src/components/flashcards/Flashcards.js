@@ -90,6 +90,9 @@ class Flashcards extends Component {
     if(gjeldendeMnem === ""){
       this.props.updateMnemonic(this.state.mnemonic, categoryfcs[currentCard].id)
     }
+
+    this.setState({showMnemField: false});
+
   }
   
 
@@ -206,6 +209,8 @@ class Flashcards extends Component {
     let user;
     if (users) {
       user = users.find(u => u.id === auth.uid);    
+
+      /*
       if (user.flashcardArray
         && user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id).length === categoryfcs.length) {
         return(
@@ -215,6 +220,7 @@ class Flashcards extends Component {
         );
         
       }
+      */
     }
 
  
@@ -241,44 +247,56 @@ class Flashcards extends Component {
 
     return (
       <div className="container">
-        <div className="ww">
         {(categoryfcs.length > 0) &&
           <div className="flip-card">
             <div className="flip-card-inner" >
-              <div className="flip-card-front ">
-                <div class="row">
-                  <div className="column">{categoryfcs[currentCard].kanji}</div>
-                  <div className="column">{categoryfcs[currentCard].kanji}</div>
-                </div>
+              <div className="flip-card-front valign-wrapper">
+                <div className="card-content">
+                  <span className=""> {categoryfcs[currentCard].kanji} </span>
+                </div>          
               </div>
               
               <div className="flip-card-back">
                 <div className="card-content">
-                  <span className="text-top col s12"> {categoryfcs[currentCard].kanji} </span>
+                  <span className="back-kan"> {categoryfcs[currentCard].kanji} </span>
                     <br></br>
-                    <p className=""> {categoryfcs[currentCard].eng} </p>
+                    <span className="back-eng"> {categoryfcs[currentCard].eng} </span>
+                    <br></br>
                     <br></br>
                     <div class="left-align">
-                    <span className="">radicals</span>
+                    <span className="back-h">radicals</span>
                     <br></br>
                     <span className="card-title">
                         {categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards &&
-                            <div>
-                              <span className="">radicals</span>
-                              <span>radicals <br></br> {radarray}</span>
-                            </div>
+                          <ol>
+                            {radarray}
+                          </ol>
+                            
                         }
                       </span>
+
+                      
                     <br></br>
-                    <span className="">mnemonic</span>
-                    <br></br>
-                    <span className="card-title">
-                      {personalmnemonic &&<span>{personalmnemonic}</span>}
-                    </span>
+                    <div class="row">
+                      <div class="col s10 back-h left-align">mnemonic</div>
+                      <div class="col s2 right-align"><i class="material-icons">edit</i></div>
+                    </div>
+                    <div class="row">
+                      <div className="col">
+                        <span className="card-title">
+                          {personalmnemonic &&<span>{personalmnemonic}</span>}
+                        </span>
+                      
+                        <span className="card-title">
+                         {!personalmnemonic && <span>{categoryfcs[currentCard].mnemonic}</span> }
+                        </span>
+                      </div>
                     
-                    <span className="card-title">
-                      {!personalmnemonic && <span>{categoryfcs[currentCard].mnemonic}</span> }
-                    </span>
+
+                    </div>
+            
+                    
+                    
                   
                     <div>
                       <div onClick={this.handleEditMnemClick}><i class="material-icons">edit</i></div>
@@ -303,23 +321,35 @@ class Flashcards extends Component {
                   </div>
                 </div>
             </div>
-            <div className="row center" id="hardEasyKnapper">
-              
-                <button onClick={this.handleHard} className="hard-btn btn" id="Hard">Hard</button>
-
-              
-                <button onClick={this.handleEasy} className="easy-btn btn" id="Easy">Easy</button> 
-
-             
+            
           </div>
-          </div>
+          
         }
-        
+        <div className="row center" id="hardEasyKnapper">
+            <button onClick={this.handleHard} className="hard-btn btn" id="Hard">Hard</button>
+         
+            <button onClick={this.handleEasy} className="easy-btn btn" id="Easy">Easy</button> 
+        </div>
+              
 
-      </div>
-      
+        <div class="row test-row">
+                      <div class="col s10 back-h left-align">mnemonic</div>
+                      <div class="col s2 right-align"><i class="material-icons">edit</i></div>
+                    </div>
+                    <div class="row ">
+                      <div className="col">
+                        <span className="card-title">
+                          {personalmnemonic &&<span>{personalmnemonic}</span>}
+                        </span>
+                      
+                        <span className="card-title">
+                         {!personalmnemonic && <span>{categoryfcs[currentCard].mnemonic}</span> }
+                        </span>
+                      </div>
+                    
 
-        
+                    </div>
+  
 
       </div>
      

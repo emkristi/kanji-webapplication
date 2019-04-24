@@ -1,45 +1,34 @@
-    /* Do an horizontal flip when you move the mouse over the flip box container */
-  .flip-card.hov .flip-card-inner {
-    transform: rotateY(180deg);
-  }
-  
+
   /* Position the front and back side */
   .flip-card-front, .flip-card-back {
     border-radius: 15px;
     border: lightgray;
     background-color: white;
-    /*position: absolute;*/
-    display: flex;
-    
+    position: absolute;
+    width: 100%;
+    height: 100%;  
     backface-visibility: hidden;
+    z-index: 2;
   }
-  
-  /* Style the front side (fallback if image is missing) */
-  /*
-  .flip-card-front {
-    
-    color: rgb(26, 26, 26);
-    display: flex;
+
+  .flip-card-front{
     justify-content: center;
-    align-items: center;
-    font-size: 100px;
+    font-size: 1200%;
   }
-  */
   
   /* Style the back side */
   .flip-card-back {
     transform: rotateY(180deg);
     justify-content: center;
-    /*align-items: center;*/
-    /*font-size: 20px;*/
-    /*font-weight: bold;*/
+    z-index: 1;
+    padding: 20px;
   }
 
-.flip-card {
-    width: 300px;
-    height: 400px;
+  .flip-card {
+    width: 340px;
+    height: 450px;
     margin: auto;
-    margin-top: 50px;
+    margin-top: 40px;
   }
   
   .flip-card-inner {
@@ -55,75 +44,62 @@
     transform: rotateY(180deg);
   }
   
-  .flip-card-front, .flip-card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-  }
-  
-  .flip-card-front {
-    z-index: 2;
-  }
-  
-  .flip-card-back {
-    transform: rotateY(180deg);
-    z-index: 1;
-  }
-
    
   #hardEasyKnapper {
     justify-content: center;
     align-items: center;
     text-align: center;
-    
-    width: 300px;
+    width: 340px;
   }
  
+  .back-h{
+    font-style: italic;
+  }
 
-  .hard-btn{
+  .back-kan{
+    font-size: 500%;
+  }
+
+  .back-eng{
+    font-size: 300%;
+  }
+
+  .hard-btn, .easy-btn{
     border-radius: 7px;
     border: lightgray;
     margin-top: 4%;
-    margin-right: 3%;
     width: 47%;
-
     background-color: white;
     color: black;
     box-shadow: none;
+  }
+
+  .hard-btn{
+    margin-right: 3%;
 
   }
 
   .easy-btn{
-    border-radius: 7px;
-    width: 47%;
-    margin-top: 4%;
     margin-left: 3%;
-    background-color: white;
-    color: rgb(87, 221, 53);
-    box-shadow: none;
-    font-style: oblique;
-
   }
 
-  .text-top{
-    color: pink;
-    font-size: 50px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-
-  
-.hmm{
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  width: 300px;
+ 
+  .hmm{
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
     height: 400px;
     margin: auto;
     margin-top: 50px;
-}
-  
+  }
 
-.ww{
-  width: 50%;
-}
+  .row, .col{
+    padding: 0px !important;
+    margin: 0px !important;
+  }
+
+  .test-row{
+    margin: -5px;
+  }
+  

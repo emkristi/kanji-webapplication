@@ -36,7 +36,8 @@ class Frontpage extends Component {
 		if (!auth.uid) return <Redirect to="/signin" />;
 
 		return (
-				<div className="row frontpage-content center-align">
+			<div className="frontpage-content center-align">
+				<div className="row">
 					{flashcards && user && decks && decks.map((deck) => {
 						let unfinisheddecks;
 						if (user.flashcardArray == null) {
@@ -68,6 +69,7 @@ class Frontpage extends Component {
 									}
 							})
 						}
+					</div>
 					</div>
 		);
 	}
