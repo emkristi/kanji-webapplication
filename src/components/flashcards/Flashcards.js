@@ -279,7 +279,7 @@ class Flashcards extends Component {
                     <br></br>
                     <div class="row">
                       <div class="col s10 back-h left-align">mnemonic</div>
-                      <div class="col s2 right-align"><i class="material-icons">edit</i></div>
+                      <div class="col s2 back-h right-align"><i onClick={this.handleEditMnemClick} class="material-icons">edit</i></div>
                     </div>
                     <div class="row">
                       <div className="col">
@@ -299,13 +299,12 @@ class Flashcards extends Component {
                     
                   
                     <div>
-                      <div onClick={this.handleEditMnemClick}><i class="material-icons">edit</i></div>
                       { this.state.showMnemField ? 
                         <form onSubmit={this.handleMnemonicSubmit}>
                           <div class="col s12">
                             
                             <div class="input-field inline">
-                              <input type="text" id="mnemonic" onChange={this.handleMnemonicChange}/>
+                              <input placeholder="Write new mnemonic" type="text" id="mnemonic" onChange={this.handleMnemonicChange}/>
                             </div>
 
                             <div className="input-field inline">
@@ -332,23 +331,6 @@ class Flashcards extends Component {
         </div>
               
 
-        <div class="row test-row">
-                      <div class="col s10 back-h left-align">mnemonic</div>
-                      <div class="col s2 right-align"><i class="material-icons">edit</i></div>
-                    </div>
-                    <div class="row ">
-                      <div className="col">
-                        <span className="card-title">
-                          {personalmnemonic &&<span>{personalmnemonic}</span>}
-                        </span>
-                      
-                        <span className="card-title">
-                         {!personalmnemonic && <span>{categoryfcs[currentCard].mnemonic}</span> }
-                        </span>
-                      </div>
-                    
-
-                    </div>
   
 
       </div>
