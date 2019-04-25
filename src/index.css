@@ -1,195 +1,43 @@
 /* CSS THAT APPLIES FOR THE ENTIRE WEB APPLICATION */
 body {
-  /*background: rgb(248,	205,	70);*/
-  background: rgb(143,	167,	248	);
-  /*background: rgb(99,	106,	246		);*/
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	/*background: rgb(248,	205,	70);*/
+	background: rgb(143, 167, 248);
+	/*background: rgb(99,	106,	246		);*/
+	margin: 0;
+	padding: 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+		"Droid Sans", "Helvetica Neue", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 /* Materialize icon sizing */
-.material-icons.md-18 { font-size: 18px; }
-.material-icons.md-24 { font-size: 24px; }
-.material-icons.md-36 { font-size: 36px; }
-.material-icons.md-48 { font-size: 48px; }
+.material-icons.md-18 {
+	font-size: 18px;
+}
+.material-icons.md-24 {
+	font-size: 24px;
+}
+.material-icons.md-36 {
+	font-size: 36px;
+}
+.material-icons.md-48 {
+	font-size: 48px;
+}
 
 /* NAVBAR */
 nav ul a:hover {
-  background-color: rgba(0, 0, 0, 0) !important;
+	background-color: rgba(0, 0, 0, 0) !important;
 }
 
 .dropdown-content {
-  background-color: white;
-  color: blue;
+	background-color: white;
+	color: blue;
 }
-
-/*
-#flashcard{
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  margin: auto;
-  width: 400px;
-  height: 500px;
-  margin-top: 100px;
-  text-align: center;
-}
-*/
-
-/*
-.button{
-  padding: 20px;
-  margin-top: 2px;
-}
-*/
-
-/*
-.scene {
-  width: 200px;
-  height: 260px;
-  margin: 40px 0;
-  perspective: 600px;
-}
-*/
-
-/*
-.card {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-  transform-style: preserve-3d;
-  transform-origin: center right;
-  transition: transform 1s;
-}
-*/
-
-/*
-.card.is-flipped {
-  transform: translateX(-100%) rotateY(-180deg);
-}
-
-.card__face {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  line-height: 260px;
-  color: pink;
-  text-align: center;
-  font-weight: bold;
-  font-size: 40px;
-  backface-visibility: hidden;
-}
-
-
-.card__face--back {
-  transform: rotateY(180deg);
-}
-
-* {
-  box-sizing: border-box;
-}
-*/
-
-
-/* Float four columns side by side */
-/*
-.column {
-  float: left;
-  width: 25%;
-  padding: 0 10px;
-}
-*/
-
-/* Remove extra left and right margins, due to padding */
-/*
-.row {
-  margin: 0 -5px;
-  margin-top:60px;
-  margin-left:20px;
-  margin-right: 20px;
-}
-*/
-
-/* Clear floats after the columns */
-/*
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-*/
-
-/* Responsive columns */
-/*
-@media screen and (max-width: 600px) {
-  .column {
-    width: 100%;
-    display: block;
-    margin-bottom: 20px;
-  }
-}
-*/
-
-
-
-/* Style the counter cards */
-/*
-.deck {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  padding: 16px;
-  text-align: center;
-  background-color: #f1f1f1;
-  border-style: solid;
-}
-*/
-
-
-/* SLUTT HER */
-/*
-.card-container {
-  cursor: pointer;
-  height: 150px;
-  perspective: 600;
-  position: relative;
-  width: 150px;
-}
-.card {
-  height: 100%;
-  position: absolute;
-  transform-style: preserve-3d;
-  transition: all 1s ease-in-out;
-  width: 100%;
-}
-.card:hover {
-  transform: rotateY(180deg);
-}
-.card .side {
-  backface-visibility: hidden;
-  border-radius: 6px;
-  height: 100%;
-  position: absolute;
-  overflow: hidden;
-  width: 100%;
-}
-.card .back {
-  background: #eaeaed;
-  color: #0087cc;
-  line-height: 150px;
-  text-align: center;
-  transform: rotateY(180deg);
-}
-*/
 
 
 
