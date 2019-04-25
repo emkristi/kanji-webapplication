@@ -1,5 +1,3 @@
-import { FirebaseAuth } from 'react-firebaseui';
-
 // action creator
 
 /**
