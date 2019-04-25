@@ -9,8 +9,9 @@ import { addCompletedFlashcards } from '../../store/actions/flashcardActions'
 import { updateUser } from '../../store/actions/userActions'
 import { updateusers } from '../../store/actions/userActions'
 import { loaduser } from '../../store/actions/userActions'
+import { updateMnemonic } from '../../store/actions/flashcardActions'
+import { replaceMnemonic } from '../../store/actions/flashcardActions'
 import '../../CSS/flashcard.css';
-
 
 class Flashcards extends Component {
   constructor(props) {
@@ -18,7 +19,9 @@ class Flashcards extends Component {
     this.state = {
       currentCard: 0,
       bufferfc: [],
-      fcArray: []
+      fcArray: [],
+      mnemonic: '',
+      showMnemField: false
     };
   }
 
@@ -30,19 +33,81 @@ class Flashcards extends Component {
     this.props.firestore.unsetListener({collection: 'users'})
   }
 
+  handleEditMnemClick = (e) => {
+    this.setState({showMnemField: true});
+  }
+
+  handleMnemonicChange = (e) => {
+    e.preventDefault();
+    this.setState({
+      [e.target.id]: e.target.value
+    })
+  }
+
+  handleMnemonicSubmit = (e) => {
+    const { flashcards, match: { params: { id } } } = this.props;
+    const { mnemonics, users, auth } = this.props;
+    const { currentCard } = this.state;
+
+    let categoryfcs = flashcards.filter(val => val.deckid === id);
+    e.preventDefault();
+    let mnem = this.state.mnemonic;
+
+    let user = users.find(u => u.id === auth.uid);
+
+    
+
+    let gjeldendeFlashcard = categoryfcs[currentCard];
+    let gjeldendeMnem = "";
+    let ingenMnemInArr = false;
+    for(let i = 0; i < mnemonics.length; ++i){
+      if(gjeldendeFlashcard.id === mnemonics[i].fcId && mnemonics[i].userId === user.id){
+        // finner gjeldende mnemonic hcis det er noen
+        gjeldendeMnem = mnemonics[i];
+        console.log("gjeldende", gjeldendeMnem);
+        for(let j = 0; j < user.mnemonicArr.length; j++){
+          console.log(gjeldendeMnem.id, user.mnemonicArr[j]);
+          if(user.mnemonicArr[j] === gjeldendeMnem.id){
+            this.props.replaceMnemonic(this.state.mnemonic, gjeldendeMnem, gjeldendeFlashcard.id);
+          } 
+            //console.log("finnes ikke")
+            //ingenMnemInArr = true;
+            //console.log("hey");
+            //this.props.updateMnemonic(this.state.mnemonic, categoryfcs[currentCard].id)
+          
+        }
+      } 
+    }
+
+    /*
+    for(let j = 0; j < user.mnemonicArr.length; j++){
+      if(user.mnemonicArr[i] === gjeldendeMnem){
+        this.props.replaceMnemonic(this.state.mnemonic, gjeldendeMnem, gjeldendeFlashcard.id);
+      }
+    }
+    */
+
+    if(gjeldendeMnem === ""){
+      this.props.updateMnemonic(this.state.mnemonic, categoryfcs[currentCard].id)
+    }
+
+    this.setState({showMnemField: false});
+
+  }
+  
+
   handleHard = (e) => {
     this.changeFc();
   }
 
   handleEasy = (e) => {
     const { flashcards, match: { params: { id } } } = this.props;
+    const { mnemonics } = this.props;
     const { currentCard } = this.state;
 
     let categoryfcs = flashcards.filter(val => val.deckid === id);
-
     // Legg til flashcard i DB
     this.props.updateUser(categoryfcs[currentCard].id);
-
     this.changeFc();
   }
 
@@ -128,6 +193,7 @@ class Flashcards extends Component {
   render() {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
     const { currentCard } = this.state;
+    const { mnemonics } = this.props;
 
     if (!auth.uid) return <Redirect to='/signin' />;
 
@@ -141,6 +207,8 @@ class Flashcards extends Component {
     let user;
     if (users) {
       user = users.find(u => u.id === auth.uid);    
+
+      /*
       if (user.flashcardArray
         && user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id).length === categoryfcs.length) {
         return(
@@ -149,6 +217,18 @@ class Flashcards extends Component {
           </div>
         );
         
+      }
+      */
+    }
+
+ 
+    let personalmnemonic;
+    if (users && mnemonics) {
+      user = users.find(u => u.id === auth.uid);
+      for(let i = 0; i < mnemonics.length; ++i){
+        if(user.mnemonicArr && (categoryfcs[currentCard].id === mnemonics[i].fcId) && (user.id === mnemonics[i].userId)){
+          personalmnemonic = mnemonics[i].mnemonic;
+        }
       }
     }
 
@@ -164,26 +244,96 @@ class Flashcards extends Component {
     if (!categoryfcs[currentCard]) return (<div>Not defined</div>);
 
     return (
-      <div className="">
-        <div className="">
-          {(categoryfcs.length > 0) &&
-          <div className="">
-            <Flashcard flashcard={categoryfcs[currentCard]} flashcards={categoryfcs}   />
-              <span className="card-title">
-                {categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards &&
-                    <span> {radarray}</span>
-                }
-              </span>
-            </div>
-          }
-        </div>
+      <div className="container">
+        {(categoryfcs.length > 0) &&
+          <div className="flip-card">
+            <div className="flip-card-inner" >
+              <div className="flip-card-front valign-wrapper">
+                <div className="card-content">
+                  <span className=""> {categoryfcs[currentCard].kanji} </span>
+                </div>          
+              </div>
+              
+              <div className="flip-card-back">
+                <div className="card-content">
+                  <span className="back-kan"> {categoryfcs[currentCard].kanji} </span>
+                    <br></br>
+                    <span className="back-eng"> {categoryfcs[currentCard].eng} </span>
+                    <br></br>
+                    <br></br>
+                    <div class="left-align">
+                    <span className="back-h">radicals</span>
+                    <br></br>
+                    <span className="card-title">
+                        {categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards &&
+                          <ol>
+                            {radarray}
+                          </ol>
+                            
+                        }
+                      </span>
 
-        <div id="hardEasyKnapper">
-          <button onClick={this.handleHard} className="waves-effect waves-light btn" id="Hard">Hard</button>
-          <button onClick={this.handleEasy} className="waves-effect waves-light btn" id="Easy">Easy</button>
+                      
+                    <br></br>
+                    <div class="row">
+                      <div class="col s10 back-h left-align">mnemonic</div>
+                      <div class="col s2 back-h right-align"><i onClick={this.handleEditMnemClick} class="material-icons">edit</i></div>
+                    </div>
+                    <div class="row">
+                      <div className="col">
+                        <span className="card-title">
+                          {personalmnemonic &&<span>{personalmnemonic}</span>}
+                        </span>
+                      
+                        <span className="card-title">
+                         {!personalmnemonic && <span>{categoryfcs[currentCard].mnemonic}</span> }
+                        </span>
+                      </div>
+                    
+
+                    </div>
+            
+                    
+                    
+                  
+                    <div>
+                      { this.state.showMnemField ? 
+                        <form onSubmit={this.handleMnemonicSubmit}>
+                          <div class="col s12">
+                            
+                            <div class="input-field inline">
+                              <input placeholder="Write new mnemonic" type="text" id="mnemonic" onChange={this.handleMnemonicChange}/>
+                            </div>
+
+                            <div className="input-field inline">
+                              <button className="btn z-depth-0">Add</button>
+                            </div>
+
+                          </div>
+                        </form>
+                        : null
+                      }
+                    </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            
+          </div>
+          
+        }
+        <div className="row center" id="hardEasyKnapper">
+            <button onClick={this.handleHard} className="hard-btn btn" id="Hard">Hard</button>
+         
+            <button onClick={this.handleEasy} className="easy-btn btn" id="Easy">Easy</button> 
         </div>
+              
+
+  
+
       </div>
-      
+     
+        
     )
   }
 }
@@ -193,14 +343,16 @@ const mapDispatchToProps = (dispatch) => {
     //removeCompletedFlashcards: (flashcard) => dispatch(removeCompletedFlashcards(flashcard)),
     updateUser: (flashcard) => dispatch(updateUser(flashcard)),
     updateusers: (flashcard) => dispatch(updateusers(flashcard)),
-    loaduser: () => dispatch(loaduser())
-
+    loaduser: () => dispatch(loaduser()),
+    replaceMnemonic: (newMnemonic, oldMnemonic, fcId) => dispatch(replaceMnemonic(newMnemonic, oldMnemonic, fcId)),
+    updateMnemonic: (mnemonic, fcId) => dispatch(updateMnemonic(mnemonic, fcId))
   }
 }
 const mapStateToProps = (state) => {
   return {
     flashcards: state.firestore.ordered.flashcards, // gives an array of the flashcards.. flashcard property, we are accessing the flashcards from the state in the flashcardReducer. We are grabbing this and attatching it to the flashcard property inside the props of this component (flashcard: )
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    mnemonics: state.firestore.ordered.mnemonics
   }
 }
 
@@ -209,7 +361,8 @@ export default compose(
   firestoreConnect([
     { collection: 'flashcards' },
     { collection: 'decks' },
-    { collection: 'users'}
+    { collection: 'users'},
+    { collection: 'mnemonics'}
   ]),
   connect((state, props) => ({ 
     users: state.firestore.ordered.users

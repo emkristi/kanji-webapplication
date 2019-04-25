@@ -36,7 +36,8 @@ class Frontpage extends Component {
 		if (!auth.uid) return <Redirect to="/signin" />;
 
 		return (
-				<div className="row frontpage-content center-align">
+			<div className="frontpage-content center-align">
+				<div className="row">
 					{flashcards && user && decks && decks.map((deck) => {
 						let unfinisheddecks;
 						if (user.flashcardArray == null) {
@@ -47,7 +48,7 @@ class Frontpage extends Component {
 								}
 								if (unfinisheddecks.length > 0) {
 									return (
-										<div key={deck.id} className="col s6">
+										<div key={deck.id} className="col s12 m6 l6">
 											<div className="deck not-completed">
 												<Link to={deck.type === 'Images' ? '/img/' + deck.id : '/' + deck.id} key={deck.id} id="link">
 												<DeckInfo deck={deck} />
@@ -68,6 +69,7 @@ class Frontpage extends Component {
 									}
 							})
 						}
+					</div>
 					</div>
 		);
 	}

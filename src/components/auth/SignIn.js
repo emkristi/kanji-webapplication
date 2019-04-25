@@ -7,14 +7,8 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import '../../CSS/auth.css'
 import { Link } from 'react-router-dom';
 
-
-/*firebase.initializeApp({
-    apiKey: 'AIzaSyCDQX_UAYLg44oOF40BGMT14Uk4prHJ5Hk',
-    authDomain: 'kanjiapp-8f121.firebaseapp.com'
-})
-*/
 class SignIn extends Component {
-    // initial state
+    _isMounted = false;
     state = {
         email: '',
         password: '',
@@ -31,11 +25,16 @@ class SignIn extends Component {
             signInSuccess: () => false
         }
     }
-    componentDidMount = () =>{
-        firebase.auth().onAuthStateChanged(user => {
+    componentDidMount = () => {
+        var unsubscribe = firebase.auth().onAuthStateChanged(user => {
             this.setState({isSignedIn:!!user})
         })
+        unsubscribe();
     }
+
+    
+    
+
     /**
      * Function that fires when a user changes an input field
      */
@@ -66,14 +65,14 @@ class SignIn extends Component {
 
     return (
       <div className="auth-container center">
-        <form onSubmit={this.handleSubmit}>
+        <form className="auth-content" onSubmit={this.handleSubmit}>
             <div className="input-field">
                 <label htmlFor="email">Email</label>
-                <input type="email" id="email" onChange={this.handleChange}/>
+                <input type="email" id="email" required onChange={this.handleChange}/>
             </div>
             <div className="input-field">
                 <label htmlFor="password">Password</label>
-                <input type="password" id="password" onChange={this.handleChange}/>
+                <input type="password" id="password" required onChange={this.handleChange}/>
             </div>
             <div className="input-field">
                 <button className="btn pink lighten-1 z-depth-0 center">Login</button>

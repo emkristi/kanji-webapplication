@@ -4,14 +4,9 @@
     margin-top: 5%;
 }
 
-.cont{
-    background-color: lightcoral;
-    width: 40%;
-}
-
 .pfc-btn{
     color: black;
-    background-color: lightgray;
+    background-color: rgb(146,	168,	242	);
     margin: 4px;
     width: 100px;
     height: 60px;
