@@ -1,40 +1,45 @@
-
 export const updateUser = (flashcardId) => {
-    return (dispatch, getState, { getFirebase, getFirestore }) => {
-        const firestore = getFirestore(); // reference to our firestore database
-        const userId = getState().firebase.auth.uid;
+	return (dispatch, getState, { getFirebase, getFirestore }) => {
+		const firestore = getFirestore(); // reference to our firestore database
+		const userId = getState().firebase.auth.uid;
 
-        firestore.collection('users').doc(userId).onSnapshot(function(doc){
-        })
-        firestore.collection('users').doc(userId).update({
-            flashcardArray: firestore.FieldValue.arrayUnion(flashcardId)
-        }).then(() => {
-            dispatch({ type: 'UPDATE_USER', flashcardId });
-        }).catch((err) => {
-            dispatch({ type: 'UPDATE_USER_ERROR', err });
-        })
-    }
+		firestore.collection('users').doc(userId).onSnapshot(function(doc) {});
+		firestore
+			.collection('users')
+			.doc(userId)
+			.update({
+				flashcardArray: firestore.FieldValue.arrayUnion(flashcardId)
+			})
+			.then(() => {
+				dispatch({ type: 'UPDATE_USER', flashcardId });
+			})
+			.catch((err) => {
+				dispatch({ type: 'UPDATE_USER_ERROR', err });
+			});
+	};
 };
-
 
 export const updateusers = (flashcardidd) => {
+	return (dispatch, getState, { getFirebase, getFirestore }) => {
+		const firestore = getFirestore(); // reference to our firestore database
+		const userId = getState().firebase.auth.uid;
+		const flashcardId = flashcardidd;
 
-    return (dispatch, getState, { getFirebase, getFirestore }) => {
-        const firestore = getFirestore(); // reference to our firestore database
-        const userId = getState().firebase.auth.uid;
-        const flashcardId = flashcardidd;
-
-        firestore.collection('users').doc(userId).update({
-            // arrayUnion legger til elem. hvis ikke eksiterer fra før 
-            flashcardArray: firestore.FieldValue.arrayUnion(flashcardId)
-        }).then(() => {
-            dispatch({ type: 'update_users', flashcardidd });
-        }).catch((err) => {
-            dispatch({ type: 'update_users_error', err });
-        })
-    }
+		firestore
+			.collection('users')
+			.doc(userId)
+			.update({
+				// arrayUnion legger til elem. hvis ikke eksiterer fra før
+				flashcardArray: firestore.FieldValue.arrayUnion(flashcardId)
+			})
+			.then(() => {
+				dispatch({ type: 'update_users', flashcardidd });
+			})
+			.catch((err) => {
+				dispatch({ type: 'update_users_error', err });
+			});
+	};
 };
-
 
 /*
 export const loaduser = () => {
@@ -95,21 +100,19 @@ export const loaduser2 = () => {
 };
 */
 
-
 export const loaduser = () => {
-    return (dispatch, getState, { getFirebase, getFirestore }) => {
-        const firestore = getFirestore(); // reference to our firestore database
-        const userId = getState().firebase.auth.uid;
+	return (dispatch, getState, { getFirebase, getFirestore }) => {
+		const firestore = getFirestore(); // reference to our firestore database
+		const userId = getState().firebase.auth.uid;
 
-        firestore.collection('users').get().then((snapshot) => {
-            snapshot.docs.forEach(doc => {
-                let users = doc.data();
+		firestore.collection('users').get().then((snapshot) => {
+			snapshot.docs.forEach((doc) => {
+				let users = doc.data();
 
-                //items = JSON.stringify(items);
-                //this.setState({ users : users})
-                //this.setState({ items : items })
-            });
-        });
-
-    }
-}
+				//items = JSON.stringify(items);
+				//this.setState({ users : users})
+				//this.setState({ items : items })
+			});
+		});
+	};
+};
