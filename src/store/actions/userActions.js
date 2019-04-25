@@ -5,14 +5,11 @@ export const updateUser = (flashcardId) => {
         const userId = getState().firebase.auth.uid;
 
         firestore.collection('users').doc(userId).onSnapshot(function(doc){
-            console.log("Current data: ", doc.data());
         })
-
         firestore.collection('users').doc(userId).update({
             flashcardArray: firestore.FieldValue.arrayUnion(flashcardId)
         }).then(() => {
             dispatch({ type: 'UPDATE_USER', flashcardId });
-            console.log("user updated");
         }).catch((err) => {
             dispatch({ type: 'UPDATE_USER_ERROR', err });
         })
@@ -32,10 +29,8 @@ export const updateusers = (flashcardidd) => {
             flashcardArray: firestore.FieldValue.arrayUnion(flashcardId)
         }).then(() => {
             dispatch({ type: 'update_users', flashcardidd });
-            console.log("updated users");
         }).catch((err) => {
             dispatch({ type: 'update_users_error', err });
-            console.log("updated user error")
         })
     }
 };
@@ -109,7 +104,6 @@ export const loaduser = () => {
         firestore.collection('users').get().then((snapshot) => {
             snapshot.docs.forEach(doc => {
                 let users = doc.data();
-                console.log(users);
 
                 //items = JSON.stringify(items);
                 //this.setState({ users : users})

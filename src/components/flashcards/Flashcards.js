@@ -106,10 +106,8 @@ class Flashcards extends Component {
     const { currentCard } = this.state;
 
     let categoryfcs = flashcards.filter(val => val.deckid === id);
-
     // Legg til flashcard i DB
     this.props.updateUser(categoryfcs[currentCard].id);
-
     this.changeFc();
   }
 

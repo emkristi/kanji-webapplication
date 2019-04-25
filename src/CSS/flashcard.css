@@ -83,17 +83,6 @@
     margin-left: 3%;
   }
 
- 
-  .hmm{
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    width: 300px;
-    height: 400px;
-    margin: auto;
-    margin-top: 50px;
-  }
-
   .row, .col{
     padding: 0px !important;
     margin: 0px !important;

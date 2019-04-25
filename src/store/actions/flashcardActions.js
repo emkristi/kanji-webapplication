@@ -17,7 +17,6 @@ export const addCompletedFlashcards = (flashcardidd) => {
             flashcardArray: firestore.FieldValue.arrayUnion(flashcardId)
         }).then(() => {
             dispatch({ type: 'ADD_COMPLETED_FLASHCARDS', flashcardidd });
-            console.log("flashcard added to user");
         }).catch((err) => {
             dispatch({ type: 'ADD_COMPLETED_FLASHCARDS_ERROR', err });
         })
@@ -35,7 +34,6 @@ export const removeCompletedFlashcards = (flashcardid) => {
             flashcardArray: firestore.FieldValue.arrayRemove(fid)
         }).then(() => {
             dispatch({ type: 'REMOVE_COMPLETED_FLASHCARDS', flashcardid });
-            console.log("flashcards removed from user");
         }).catch((err) => {
             dispatch({ type: 'REMOVE_COMPLETED_FLASHCARDS_ERROR', err });
         })
@@ -64,7 +62,6 @@ export const updateMnemonic = (newMnemonic, fcId) => {
             userId: userId
         }).then(() => { 
             dispatch({type: 'ADD_MNEMONIC', newMnemonic});    
-            console.log("added mnemonic to db", newMnemonic);
         }).catch((err) => {
             dispatch({type: 'ADD_MNEMONIC_ERROR', err});    
         });
@@ -74,7 +71,6 @@ export const updateMnemonic = (newMnemonic, fcId) => {
             mnemonicArr: firestore.FieldValue.arrayUnion(mnemref.id)
         }).then(() => {
             dispatch({ type: 'ADD_MNEMONIC_ARR' });
-            console.log("added to users mnemonic array");
         }).catch((err) => {
             dispatch({ type: 'ADD_MNEMONIC_ARR_ERROR', err });
         })
@@ -95,7 +91,6 @@ export const replaceMnemonic = (newMnemonic, oldMnemonic, fcId) => {
             userId: userId
         }).then(() => { 
             dispatch({type: 'REPLACE_MNEMONIC', newMnemonic});    
-            console.log("replace mnemonic to db", newMnemonic);
         }).catch((err) => {
             dispatch({type: 'REPLACE_MNEMONIC_ERROR', err});    
         })
@@ -112,7 +107,6 @@ export const updateMnemonicArray = (mnemonic) => {
             mnemonicArr: firestore.FieldValue.arrayUnion(mnemonic.id)
         }).then(() => {
             dispatch({ type: 'ADD_MNEMONIC_ARR', mnemonic });
-            console.log("added to users mnemonic array");
         }).catch((err) => {
             dispatch({ type: 'ADD_MNEMONIC_ARR_ERROR', err });
         })
