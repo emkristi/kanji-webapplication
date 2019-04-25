@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { signIn } from '../../store/actions/authActions'
-import { Redirect } from 'react-router-dom'
-import firebase from 'firebase'
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
-import '../../CSS/auth.css'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { signIn } from '../../store/actions/authActions';
+import { Redirect } from 'react-router-dom';
+import firebase from 'firebase/app'; //forsøk på å løse warning. Fjerne /app hvis noe ødelegges her
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import '../../CSS/auth.css';
 import { Link } from 'react-router-dom';
 
 class SignIn extends Component {
@@ -38,30 +38,30 @@ class SignIn extends Component {
     /**
      * Function that fires when a user changes an input field
      */
-    handleChange = (e) => {
-        // setState updates the state
-        this.setState({
-            [e.target.id]: e.target.value   // target to get the target element, and id to get wither the password or email id, depending on which the user types into. e.target.value -> so that we can update the state with the value with what the user has written into the input field, and the state changes
-        })
-    }
+	handleChange = (e) => {
+		// setState updates the state
+		this.setState({
+			[e.target.id]: e.target.value // target to get the target element, and id to get wither the password or email id, depending on which the user types into. e.target.value -> so that we can update the state with the value with what the user has written into the input field, and the state changes
+		});
+	};
 
-    /*responseFacebook = response =>{
+	/*responseFacebook = response =>{
         console.log("respons", response);
     }*/
-    componentClicked = (e) =>{
-        console.log("clicked");
-    }
-    /**
+	componentClicked = (e) => {
+		console.log('clicked');
+	};
+	/**
      * Function for when a user submits the form
      */
-    handleSubmit = (e) => {
-        e.preventDefault(); // prevents the default action of the form being submitted and the page being refreshed when button is clicked or enter is pressed
-        this.props.signIn(this.state)
-    }
+	handleSubmit = (e) => {
+		e.preventDefault(); // prevents the default action of the form being submitted and the page being refreshed when button is clicked or enter is pressed
+		this.props.signIn(this.state);
+	};
 
-  render() {
-    const {authError, auth} = this.props;
-    if (auth.uid) return <Redirect to='/' /> 
+	render() {
+		const { authError, auth } = this.props;
+		if (auth.uid) return <Redirect to="/" />;
 
     return (
       <div className="auth-container center">
@@ -101,16 +101,16 @@ class SignIn extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return {
-        authError: state.auth.authError,
-        auth: state.firebase.auth
-    }
-}
+	return {
+		authError: state.auth.authError,
+		auth: state.firebase.auth
+	};
+};
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        signIn: (creds) => dispatch(signIn(creds))
-    }
-}
+	return {
+		signIn: (creds) => dispatch(signIn(creds))
+	};
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn)
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
