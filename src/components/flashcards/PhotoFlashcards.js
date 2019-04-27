@@ -284,7 +284,7 @@ class PhotoFlashcards extends Component {
       <div className="container center">
       <ReactCardFlip isFlipped={this.state.isFlipped} flipDirection="horizontal">
         <div className="pfc-card" key="front">
-          <div><img className="content" src={categoryfcs[currentCard].pictureUrl} alt="current kanji" width="200px" height="200px" /></div>
+          <div><img className="content" src={categoryfcs[currentCard].pictureUrl} alt="current kanji" width="500rem" height="400rem" /></div>
             <div className="row">
                 <button className="pfc-btn" onClick={this.handleFButton} id='but1' value={randomArray[0]}>{randomArray[0]}</button>
                 <button className="pfc-btn" onClick={this.handleFButton} id='but2' value={randomArray[1]}>{randomArray[1]}</button>

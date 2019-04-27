@@ -8,7 +8,11 @@ import { NavLink } from 'react-router-dom'
  */
 const SignedInLinks = (props) => {
     return (
-        <a onClick={props.signOut}>Log Out</a>
+        <ul className="left">
+            <li><NavLink to='/about'>About</NavLink></li>
+            <li><a onClick={props.signOut}>Log Out</a></li>
+        </ul>
+        
     )
 }
 

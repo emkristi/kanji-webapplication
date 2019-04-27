@@ -12,7 +12,8 @@ const Navbar = (props) => {
         <div>
             <nav class="transparent z-depth-0">
                 <div class="nav-wrapper">
-                    <a href="/" class="brand-logo left"><i class="material-icons">cloud</i>MEMJI</a>
+                <img class="navlogo" src="img/LOGOLITENNY.jpg" width="70px" alt="logo" />
+                    {/*<a href="/" class="brand-logo left"><i class="material-icons">cloud</i>MEMJI</a>*/}
                     <ul class="right">
                         <Dropdown trigger={<a class="brand-logo"><i class="material-icons md-36">menu</i></a>} options={{coverTrigger: false}}>                           
                             {links}

@@ -33,6 +33,14 @@ nav ul a:hover {
   color: blue;
 }
 
+.startpage-img{
+  margin: auto;
+  width: 50rem;
+}
+
+.navlogo{
+  margin: 10px;
+}
 /*
 #flashcard{
   display: flex;

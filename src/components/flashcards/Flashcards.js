@@ -52,10 +52,7 @@ class Flashcards extends Component {
     let categoryfcs = flashcards.filter(val => val.deckid === id);
     e.preventDefault();
     let mnem = this.state.mnemonic;
-
     let user = users.find(u => u.id === auth.uid);
-
-    
 
     let gjeldendeFlashcard = categoryfcs[currentCard];
     let gjeldendeMnem = "";
@@ -70,34 +67,44 @@ class Flashcards extends Component {
           if(user.mnemonicArr[j] === gjeldendeMnem.id){
             this.props.replaceMnemonic(this.state.mnemonic, gjeldendeMnem, gjeldendeFlashcard.id);
           } 
-            //console.log("finnes ikke")
-            //ingenMnemInArr = true;
-            //console.log("hey");
-            //this.props.updateMnemonic(this.state.mnemonic, categoryfcs[currentCard].id)
-          
         }
       } 
     }
-
-    /*
-    for(let j = 0; j < user.mnemonicArr.length; j++){
-      if(user.mnemonicArr[i] === gjeldendeMnem){
-        this.props.replaceMnemonic(this.state.mnemonic, gjeldendeMnem, gjeldendeFlashcard.id);
-      }
-    }
-    */
 
     if(gjeldendeMnem === ""){
       this.props.updateMnemonic(this.state.mnemonic, categoryfcs[currentCard].id)
     }
 
     this.setState({showMnemField: false});
-
   }
   
 
   handleHard = (e) => {
-    this.changeFc();
+    const { flashcards, match: { params: { id } }, auth, users } = this.props;
+    const { currentCard, bufferfc, fcArray, localfcardarr} = this.state;
+
+    let categoryfcs = flashcards.filter(f => f.deckid === id);
+    let user = users.find(u => u.id === auth.uid);
+
+    // seenFc -> flashcards som allerede er gått gjennom
+    const seenFc = user.flashcardArray ? user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id) : [];
+
+    if (!(seenFc.length === categoryfcs.length - 1)) {
+      this.changeFc();
+
+      let lastFc = categoryfcs.filter(elem => !seenFc.includes(elem.id));
+
+      if(lastFc){
+        this.changeFc();
+      }
+      
+      //window.location.href = '/';
+      return;
+    }else if(seenFc.length === categoryfcs.length - 1){
+      //this.changeFc();
+      console.log("siste kort, hard trykt");
+    }
+    //this.changeFc();
   }
 
   handleEasy = (e) => {
@@ -135,11 +142,21 @@ class Flashcards extends Component {
 
     this.props.loaduser();
 
+    console.log(seenFc);
+    console.log(categoryfcs);
+
     // If no more unseen flashcards, go back to frontpage
     if (seenFc.length === categoryfcs.length - 1) {
+      let lastFc = categoryfcs.filter(elem => !seenFc.includes(elem.id));
+
+      if(lastFc){
+        this.props.addCompletedFlashcards(lastFc[0].id);
+      }
+      
       window.location.href = '/';
       return;
     }
+
     
     let currentNumber = 0;
     // If flashcards in buffer, show first element and remove element from buffer
@@ -183,7 +200,7 @@ class Flashcards extends Component {
       }
     }
   
-    console.log(user.flashcardArray);
+    //console.log(user.flashcardArray);
  
     this.setState({
       currentCard: currentNumber
