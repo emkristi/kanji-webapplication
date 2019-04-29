@@ -30,6 +30,12 @@
     margin: auto;
     margin-top: 40px;
   }
+
+  .mnemdiv{
+    max-height: 5rem;
+    overflow: scroll;
+    background-color: #fcfcfc;
+  }
   
   .flip-card-inner {
     position: relative;
@@ -61,7 +67,7 @@
   }
 
   .back-eng{
-    font-size: 300%;
+    font-size: 200%;
   }
 
   .hard-btn, .easy-btn{
@@ -84,7 +90,7 @@
   }
 
   .row, .col{
-
+    margin-bottom: 0px;
   }
 
   .test-row{

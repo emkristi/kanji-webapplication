@@ -61,9 +61,9 @@ class Flashcards extends Component {
       if(gjeldendeFlashcard.id === mnemonics[i].fcId && mnemonics[i].userId === user.id){
         // finner gjeldende mnemonic hcis det er noen
         gjeldendeMnem = mnemonics[i];
-        console.log("gjeldende", gjeldendeMnem);
+        //console.log("gjeldende", gjeldendeMnem);
         for(let j = 0; j < user.mnemonicArr.length; j++){
-          console.log(gjeldendeMnem.id, user.mnemonicArr[j]);
+          //console.log(gjeldendeMnem.id, user.mnemonicArr[j]);
           if(user.mnemonicArr[j] === gjeldendeMnem.id){
             this.props.replaceMnemonic(this.state.mnemonic, gjeldendeMnem, gjeldendeFlashcard.id);
           } 
@@ -91,7 +91,6 @@ class Flashcards extends Component {
 
     if (!(seenFc.length === categoryfcs.length - 1)) {
       this.changeFc();
-
       let lastFc = categoryfcs.filter(elem => !seenFc.includes(elem.id));
 
       if(lastFc){
@@ -110,13 +109,43 @@ class Flashcards extends Component {
 
   handleEasy = (e) => {
     const { flashcards, match: { params: { id } } } = this.props;
-    const { mnemonics } = this.props;
+    const { mnemonics, auth, users } = this.props;
     const { currentCard } = this.state;
 
     let categoryfcs = flashcards.filter(val => val.deckid === id);
+    let user = users.find(u => u.id === auth.uid);
+
+    // seenFc -> flashcards som allerede er gått gjennom
+    const seenFc = user.flashcardArray ? user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id) : [];
     // Legg til flashcard i DB
-    this.props.updateUser(categoryfcs[currentCard].id);
-    this.changeFc();
+    //this.props.updateUser(categoryfcs[currentCard].id);
+    //this.changeFc();
+
+    if (!(seenFc.length === categoryfcs.length - 1)) {
+      this.changeFc();
+      let lastFc = categoryfcs.filter(elem => !seenFc.includes(elem.id));
+      
+      if(lastFc){
+        this.props.updateUser(categoryfcs[currentCard].id);
+        this.changeFc();
+      }
+      
+      //window.location.href = '/';
+      return;
+    }else if(seenFc.length === categoryfcs.length - 1){
+      //this.changeFc();
+      console.log("siste easy, hard trykt");
+
+        let lastFc = categoryfcs.filter(elem => !seenFc.includes(elem.id));
+  
+        if(lastFc){
+          this.props.addCompletedFlashcards(lastFc[0].id);
+        }
+        
+        window.location.href = '/';
+        return;
+      
+    }
 
     //this.setState({showMnemField: false});
   }
@@ -145,21 +174,11 @@ class Flashcards extends Component {
 
     this.props.loaduser();
 
-    console.log(seenFc);
-    console.log(categoryfcs);
+    //console.log(seenFc);
+    //console.log(categoryfcs);
 
     // If no more unseen flashcards, go back to frontpage
-    if (seenFc.length === categoryfcs.length - 1) {
-      let lastFc = categoryfcs.filter(elem => !seenFc.includes(elem.id));
-
-      if(lastFc){
-        this.props.addCompletedFlashcards(lastFc[0].id);
-      }
-      
-      window.location.href = '/';
-      return;
-    }
-
+   
     
     let currentNumber = 0;
     // If flashcards in buffer, show first element and remove element from buffer
@@ -283,25 +302,41 @@ class Flashcards extends Component {
                     <br></br>
                     <br></br>
                     <div class="left-align">
-                    <span className="back-h">radicals</span>
-                    <br></br>
-                    <span className="card-title">
+                    <div class="row">
+                      <div class="col s8 back-h left-align back-h">radicals</div>
+                      {categoryfcs[currentCard].strokeOrderUrl && (
+                      <div class="col s4 back-h left-align back-h">stroke order
+                        
+                        <img
+                          className="strokePicture"
+                          src={categoryfcs[currentCard].strokeOrderUrl}
+                          alt="stroke order"
+                          width="100px"
+                          height="100px"
+                        />
+                      
+                      </div>
+                      )}
+                      <div class="col s12">
                         {categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards &&
-                          <ol>
-                            {radarray}
-                          </ol>
+                            <p>{
+                                radarray.map(radical => {
+                                  return(
+                                      <span>{radical } {" "} </span>
+                                  )
+                                })
+                              }</p>
                             
                         }
-                      </span>
-
-                      
-                    <br></br>
+                      </div>
+                    </div>
+                    
                     <div class="row">
                       <div class="col s10 back-h left-align">mnemonic</div>
                       <div class="col s2 back-h right-align"><i onClick={this.handleEditMnemClick} class="material-icons">edit</i></div>
                     </div>
                     <div class="row">
-                      <div className="col">
+                      <div className="col mnemdiv">
                         <span className="card-title">
                           {personalmnemonic &&<span>{personalmnemonic}</span>}
                         </span>
@@ -310,24 +345,18 @@ class Flashcards extends Component {
                          {!personalmnemonic && <span>{categoryfcs[currentCard].mnemonic}</span> }
                         </span>
                       </div>
-                    
-
                     </div>
-            
-                    
-                    
-                  
                     <div>
                       { this.state.showMnemField ? 
                         <form onSubmit={this.handleMnemonicSubmit}>
-                          <div class="col s12">
+                          <div class="row center">
                             
-                            <div class="input-field inline">
+                            <div class="col s10 input-field inline">
                               <input placeholder="Write new mnemonic" type="text" id="mnemonic" onChange={this.handleMnemonicChange}/>
                             </div>
 
-                            <div className="input-field inline">
-                              <button className="btn z-depth-0">Add</button>
+                            <div className="col s2 input-field inline right-align">
+                              <i onClick={this.handleMnemonicSubmit} class="material-icons">add_circle</i>
                             </div>
 
                           </div>
@@ -345,7 +374,6 @@ class Flashcards extends Component {
         }
         <div className="row center" id="hardEasyKnapper">
             <button onClick={this.handleHard} className="hard-btn btn" id="Hard">Hard</button>
-         
             <button onClick={this.handleEasy} className="easy-btn btn" id="Easy">Easy</button> 
         </div>
               
