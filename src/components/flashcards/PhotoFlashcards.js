@@ -276,9 +276,9 @@ class PhotoFlashcards extends Component {
     if (!categoryfcs[currentCard]) return (<div>Not defined</div>);
 
     return (
-      <div className="container center">
+      <div className="container">
       <ReactCardFlip isFlipped={this.state.isFlipped} flipDirection="horizontal">
-        <div className="pfc-card" key="front">
+        <div className="pfc-card center" key="front">
           <div><img className="content" src={categoryfcs[currentCard].pictureUrl} alt="current kanji" width="500rem" height="400rem" /></div>
             <div className="row">
                 <button className="pfc-btn" onClick={this.handleFButton} id='but1' value={randomArray[0]}>{randomArray[0]}</button>
@@ -289,44 +289,62 @@ class PhotoFlashcards extends Component {
         </div>
 
         <div className="pfc-card" key="back">
-          <div>{categoryfcs[currentCard].kanji}</div>
-          <div>{categoryfcs[currentCard].eng}</div>
-          
-
-          <span className="">mnemonic</span>
+          <div className="center">
+          <span className="back-kan"> {categoryfcs[currentCard].kanji} </span>
           <br></br>
-          <span className="card-title">
-            {personalmnemonic &&<span>{personalmnemonic}</span>}
-          </span>
-                    
-          <span className="card-title">
-            {!personalmnemonic && <span>{categoryfcs[currentCard].mnemonic}</span> }
-          </span>
+          <span className="back-eng"> {categoryfcs[currentCard].eng} </span>
+          <br></br>
+          </div>
+          <br></br>
+        
+          <br></br>
+          <div class="row">
+            <div class="col s10 back-h left-align">mnemonic</div>
+          </div>
           
-          <div>
-            <div onClick={this.handleEditMnemClick}><i class="material-icons">edit</i></div>
-              { this.state.showMnemField ? 
-                <form onSubmit={this.handleMnemonicSubmit}>
-                  <div class="col s12">
-                    <div class="input-field inline">
-                      <input type="text" id="mnemonic" onChange={this.handleMnemonicChange}/>
-                    </div>
-                    <div className="input-field inline">
-                      <button className="btn z-depth-0">Add</button>
-                    </div>
-                  </div>
-                </form>: null
-              }
+          <div class="row">
+            <div className="col mnemdiv">
+              <span className="card-title">
+                {personalmnemonic &&<span>{personalmnemonic}</span>}
+              </span>
+                      
+              <span className="card-title">
+                {!personalmnemonic && <span>{categoryfcs[currentCard].mnemonic}</span> }
+              </span>
             </div>
-            <div className="pfbuttons">
-            <button onClick={this.handleHard} id="Hard">Hard</button>
-            <button onClick={this.handleEasy} id="Easy">Easy</button>
+          </div>
+
+          <div class="row">
+          <form onSubmit={this.handleMnemonicSubmit}>
+                <div class="row center">
+                  
+                  <div class="col s10 input-field inline">
+                    <input placeholder="Write new mnemonic" type="text" id="mnemonic" onChange={this.handleMnemonicChange}/>
+                  </div>
+
+                  <div className="col s2 input-field inline right-align">
+                    <i onClick={this.handleMnemonicSubmit} class="material-icons">add_circle</i>
+                  </div>
+
+                </div>
+              </form>
+          </div>
+
+          <div>
+            
+          </div>
+
+
+          
+          
+          
+          <div className="center back-buttons">
+            <button className="btn back-btn" onClick={this.handleHard} id="Hard">Hard</button>
+            <button className="btn back-btn" onClick={this.handleEasy} id="Easy">Easy</button>
           </div>
         </div>
             
       </ReactCardFlip>
-          
-      
       </div>
     )
   }

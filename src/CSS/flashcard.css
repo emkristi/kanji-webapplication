@@ -63,11 +63,11 @@
   }
 
   .back-kan{
-    font-size: 500%;
+    font-size: 5rem;
   }
 
   .back-eng{
-    font-size: 200%;
+    font-size: 3rem;
   }
 
   .hard-btn, .easy-btn{
@@ -78,6 +78,10 @@
     background-color: white;
     color: black;
     box-shadow: none;
+  }
+
+  .back-buttons{
+    
   }
 
   .hard-btn{
