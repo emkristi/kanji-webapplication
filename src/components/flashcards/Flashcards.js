@@ -105,6 +105,7 @@ class Flashcards extends Component {
       console.log("siste kort, hard trykt");
     }
     //this.changeFc();
+    //this.setState({showMnemField: false});
   }
 
   handleEasy = (e) => {
@@ -116,6 +117,8 @@ class Flashcards extends Component {
     // Legg til flashcard i DB
     this.props.updateUser(categoryfcs[currentCard].id);
     this.changeFc();
+
+    //this.setState({showMnemField: false});
   }
 
   findIndexOfFcId = (categoryfcs, fcid) => {
@@ -203,7 +206,8 @@ class Flashcards extends Component {
     //console.log(user.flashcardArray);
  
     this.setState({
-      currentCard: currentNumber
+      currentCard: currentNumber,
+      showMnemField: false
     });
   }
 

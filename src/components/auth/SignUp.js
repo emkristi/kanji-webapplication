@@ -3,6 +3,8 @@ import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { signUp } from '../../store/actions/authActions'
 import '../../CSS/auth.css'
+import { Link } from 'react-router-dom';
+
 
 
 class SignUp extends Component {
@@ -35,6 +37,8 @@ class SignUp extends Component {
     if (auth.uid) return <Redirect to='/' />  
 
     return (
+    <div className="test-container">
+        <div className="row" margin="30px">
       <div className="auth-container center">
         <form onSubmit={this.handleSubmit}>
             <h5 className="grey-text text-darken-3">Sign Up</h5>
@@ -55,13 +59,19 @@ class SignUp extends Component {
                 <input type="text" id="lastName" onChange={this.handleChange}/>
             </div>
             <div className="input-field">
-                <button className="btn pink lighten-1 z-depth-0">Sign up</button>
+                <button className="btn">Sign up</button>
                 <div className="red-text center">
                     {authError ? <p>{ authError }</p> : null }
                 </div>
             
             </div>
+
+            <div className="center">
+                <p>Already have a user? Click <Link to ='/signin'>here</Link> to sign in</p>
+            </div>
         </form>
+      </div>
+      </div>
       </div>
     )
   }

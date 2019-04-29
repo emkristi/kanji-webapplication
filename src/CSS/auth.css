@@ -1,13 +1,27 @@
-.auth-container{
-    background-color: white;
-    opacity: 0.9;
-    border-radius: 15px;
-    max-width: 500px;
-    align-self: center;    
+.test-container{
+    
+
 }
 
+.auth-container{
+    border-radius: 15px;
+    min-width: 20rem;
+    max-height: 30rem;
+    min-height: 38rem;
+    max-width: 30rem;
+    position:absolute; /*it can be fixed too*/
 
+    left:0; right:0;
+    top:0; bottom:0;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    padding: 2rem;
+    background-color: white;
+    
+}
 
-.auth-content{
-    padding: 40px;
+.btn{
+    background-color: rgb(100,	106	,246	)
 }
