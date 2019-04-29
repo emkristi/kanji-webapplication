@@ -194,15 +194,13 @@ class PhotoFlashcards extends Component {
     console.log(buttonId);
 
     if (e.target.value === categoryfcs[currentCard].kanji) {
-      console.log("RIKTIG!");
       this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
-
-      document.getElementById(buttonId).style.backgroundColor = "green";
-      return (<div>heyo!</div>);
+      document.getElementById(buttonId).style.backgroundColor = "rgb(121,	196,	154)";
+    
       // dersom denne if-en skjer bør knappen bli grønn eller noe slik
 
     } else if (e.target.value !== categoryfcs[currentCard].kanji){
-      document.getElementById(buttonId).style.backgroundColor = "red";
+      document.getElementById(buttonId).style.backgroundColor = "rgb(200,	67,	81)";
     }
 
     
