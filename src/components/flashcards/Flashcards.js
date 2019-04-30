@@ -301,11 +301,47 @@ class Flashcards extends Component {
                     <span className="back-eng"> {categoryfcs[currentCard].eng} </span>
                     <br></br>
                     <br></br>
-                    <div class="left-align">
-                    <div class="row">
-                      <div class="col s8 back-h left-align back-h">radicals</div>
-                      {categoryfcs[currentCard].strokeOrderUrl && (
-                      <div class="col s4 back-h left-align back-h">stroke order
+                      <div class="row">
+                        {!categoryfcs[currentCard].strokeOrderUrl && (
+                          <div>
+                          <div class="col s12 left-align">
+                            <div className="back-h">
+                              radicals
+                            </div>
+                          </div>
+                          <div class="col s12 left-align">
+                            {categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards &&
+                                    <p>{
+                                        radarray.map(radical => {
+                                          return(
+                                              <span>{radical } {" "} </span>
+                                          )
+                                        })
+                                      }</p>
+                                }
+                          </div>
+                          </div>
+                        )}
+
+                        {categoryfcs[currentCard].strokeOrderUrl && (
+                          <div>
+                            <div class="col s8 left-align">
+                              <div className="back-h">
+                                radicals
+                              </div>
+                            <div className="left-align">
+                              {categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards &&
+                                  <p>{
+                                      radarray.map(radical => {
+                                        return(
+                                            <span>{radical } {" "} </span>
+                                        )
+                                      })
+                                    }</p>
+                              }
+                            </div>
+                          </div>
+                          <div class="col s4 back-h right-align back-h">stroke order
                         
                         <img
                           className="strokePicture"
@@ -316,25 +352,18 @@ class Flashcards extends Component {
                         />
                       
                       </div>
-                      )}
-                      <div class="col s12">
-                        {categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards &&
-                            <p>{
-                                radarray.map(radical => {
-                                  return(
-                                      <span>{radical } {" "} </span>
-                                  )
-                                })
-                              }</p>
-                            
-                        }
                       </div>
-                    </div>
-                    
+                        )}
+
+                      
+                      </div>
+
+
                     <div class="row">
                       <div class="col s10 back-h left-align">mnemonic</div>
-                      <div class="col s2 back-h right-align"><i onClick={this.handleEditMnemClick} class="material-icons">edit</i></div>
+                      <div class="col s2 back-h right-align editmnembut"><i onClick={this.handleEditMnemClick} class="material-icons">edit</i></div>
                     </div>
+
                     <div class="row">
                       <div className="col mnemdiv">
                         <span className="card-title">
@@ -346,6 +375,7 @@ class Flashcards extends Component {
                         </span>
                       </div>
                     </div>
+
                     <div>
                       { this.state.showMnemField ? 
                         <form onSubmit={this.handleMnemonicSubmit}>
@@ -356,7 +386,7 @@ class Flashcards extends Component {
                             </div>
 
                             <div className="col s2 input-field inline right-align">
-                              <i onClick={this.handleMnemonicSubmit} class="material-icons">add_circle</i>
+                              <i onClick={this.handleMnemonicSubmit} class="material-icons addmnembut">add_circle</i>
                             </div>
 
                           </div>
@@ -369,7 +399,7 @@ class Flashcards extends Component {
                 </div>
             </div>
             
-          </div>
+          
           
         }
         <div className="row center" id="hardEasyKnapper">

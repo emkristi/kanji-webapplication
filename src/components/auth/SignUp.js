@@ -39,9 +39,12 @@ class SignUp extends Component {
     return (
     <div className="test-container">
         <div className="row" margin="30px">
+
       <div className="auth-container center">
+      <div className="auth-title">Sign Up</div>
+
         <form onSubmit={this.handleSubmit}>
-            <h5 className="grey-text text-darken-3">Sign Up</h5>
+            <div className="auth-input">
             <div className="input-field">
                 <label htmlFor="email">Email</label>
                 <input type="email" id="email" onChange={this.handleChange}/>
@@ -58,6 +61,7 @@ class SignUp extends Component {
                 <label htmlFor="lastName">Last Name</label>
                 <input type="text" id="lastName" onChange={this.handleChange}/>
             </div>
+            </div>
             <div className="input-field">
                 <button className="btn">Sign up</button>
                 <div className="red-text center">
@@ -66,7 +70,7 @@ class SignUp extends Component {
             
             </div>
 
-            <div className="center">
+            <div className="auth-link">
                 <p>Already have a user? Click <Link to ='/signin'>here</Link> to sign in</p>
             </div>
         </form>

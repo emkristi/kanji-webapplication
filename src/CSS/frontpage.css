@@ -7,11 +7,13 @@
 
 .frontpage-content {
   /*padding-top: 25px;*/
-  max-width: 55rem;
+  max-width: 52rem;
+  min-width: 20rem;
   padding: 5px;
   color:black;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 2rem;
 
 }
 
@@ -20,9 +22,9 @@
     border-style: none;
     border-radius: 15px;
     padding: 40px;
-    margin-top: 1.5rem;
     opacity: 0.9;
-    height: 240px;
+    margin-bottom: 1.5rem;
+    height: 20rem;
 }
 
 /*
@@ -35,6 +37,7 @@
   color: black;
   opacity: 0.5;
   font-style: italic;
+  width: 100%;
   /*background-color: lightgray;*/
 }
 

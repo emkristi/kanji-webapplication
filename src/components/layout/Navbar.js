@@ -12,7 +12,7 @@ const Navbar = (props) => {
         <div>
             <nav class="transparent z-depth-0">
                 <div class="nav-wrapper">
-                <Link to="/"><img class="navlogo" src="img/LOGOLITENNY.jpg" width="70px" alt="logo" /></Link>
+                <Link to="/"><img class="navlogo" src="img/LOGOLITENNY.jpg" width="60rem" alt="logo" /></Link>
                 
                     {/*<a href="/" class="brand-logo left"><i class="material-icons">cloud</i>MEMJI</a>*/}
                     <ul class="right">

@@ -3,25 +3,55 @@
 
 }
 
+.auth-input{
+    margin-bottom: 3rem;
+}
+
 .auth-container{
     border-radius: 15px;
     min-width: 20rem;
     max-height: 30rem;
     min-height: 38rem;
-    max-width: 30rem;
+    max-width: 38rem;
     position:absolute; /*it can be fixed too*/
-
     left:0; right:0;
     top:0; bottom:0;
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-left: 1rem;
-    margin-right: 1rem;
+    margin: auto;
     padding: 2rem;
-    background-color: white;
-    
+    background-color: white;   
+
+}
+
+.auth-text{
+    font-size: 1.1rem;
+    color: grey;
+    font-weight: bold;
+    margin: 1.5rem;
+}
+
+.fb-login-field{
 }
 
 .btn{
-    background-color: rgb(100,	106	,246	)
+    background-color: rgb(143,	167,	248	);
+}
+
+.btn:hover{
+    background-color: rgb(100,	106	,246	);
+}
+
+.auth-title{
+    font-size: 3rem;
+    color: #777777;
+}
+
+.auth-link{
+    justify-content: center;
+    position: absolute;
+    bottom:0;
+    height: 5rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+   
 }
