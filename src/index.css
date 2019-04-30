@@ -225,3 +225,10 @@ nav ul a:hover {
   background-color: white;
   
 }
+/* START PAGE TEXT */
+.s-text{
+  color: white;
+  font-size: 1.1rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: bold;
+}

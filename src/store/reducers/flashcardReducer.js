@@ -10,14 +10,19 @@ const initState = {
 }
 
 /**
- *
  * Here we handle the actions from flashcardActions.js
  * 
  * @param {*} state 
  * @param {*} action taken in from CreateFlashcard
  */
 const flashcardReducer = (state = initState, action) => {
-    switch (action.type) {  // checking the action type. 
+    switch (action.type) {
+        case 'CREATE_FLASHCARD':
+            console.log('fc added', action.flashcard)
+            return state;
+        case 'CREATE_FLASHCARD':
+            console.log('error adding fc', action.flashcard)
+            return state;
         case 'ADD_COMPLETED_FLASHCARDS':
             console.log('added completed flashcards', action.flashcard)
             return state;
@@ -42,14 +47,6 @@ const flashcardReducer = (state = initState, action) => {
         case 'ADD_MNEMONIC_ARR_ERROR':
             console.log('add mnemnonic to arr err')
             return state;
-            /*
-        case 'REMOVE_COMPLETED_FLASHCARDS':
-            console.log('removed completed flashcards', action.flashcard)
-            return state;
-        case 'REMOVE_COMPLETED_FLASHCARDS_ERROR':
-            console.log('remove completed flashcards error', action.err)
-            return state;
-            */
         default:
             return state;
     }

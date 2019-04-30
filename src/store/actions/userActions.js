@@ -1,5 +1,5 @@
 export const updateUser = (flashcardId) => {
-	return (dispatch, getState, { getFirebase, getFirestore }) => {
+	return (dispatch, getState, { getFirestore }) => {
 		const firestore = getFirestore(); // reference to our firestore database
 		const userId = getState().firebase.auth.uid;
 
@@ -20,7 +20,7 @@ export const updateUser = (flashcardId) => {
 };
 
 export const updateusers = (flashcardidd) => {
-	return (dispatch, getState, { getFirebase, getFirestore }) => {
+	return (dispatch, getState, { getFirestore }) => {
 		const firestore = getFirestore(); // reference to our firestore database
 		const userId = getState().firebase.auth.uid;
 		const flashcardId = flashcardidd;
@@ -101,7 +101,7 @@ export const loaduser2 = () => {
 */
 
 export const loaduser = () => {
-	return (dispatch, getState, { getFirebase, getFirestore }) => {
+	return (dispatch, getState, { getFirestore }) => {
 		const firestore = getFirestore(); // reference to our firestore database
 		const userId = getState().firebase.auth.uid;
 

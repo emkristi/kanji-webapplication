@@ -34,8 +34,9 @@
 */
 
 .completed {
-  color: black;
-  opacity: 0.5;
+  color: rgb(73,	84,	121	);
+  /*opacity: 0.5;*/
+  background-color: rgb(200,	211,	248);
   font-style: italic;
   width: 100%;
   /*background-color: lightgray;*/

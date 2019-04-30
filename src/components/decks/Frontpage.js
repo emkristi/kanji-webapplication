@@ -62,7 +62,7 @@ class Frontpage extends Component {
 											<div key={deck.id} className="col s12 m6 l6">
 												<div className="deck completed">
 													<DeckInfo deck={deck} />
-													<a onClick={this.restartDeck(cardsInDeck)} class="btn-floating btn-medium waves-effect waves-light"><i class="material-icons">replay</i></a>
+													<a onClick={this.restartDeck(cardsInDeck)} class="btn-floating btn-medium waves-effect waves-light deckbtn"><i class="material-icons">replay</i></a>
 												</div>
 											</div>
 										);
