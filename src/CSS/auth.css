@@ -1,13 +1,57 @@
-.auth-container{
-    background-color: white;
-    opacity: 0.9;
-    border-radius: 15px;
-    max-width: 500px;
-    align-self: center;    
+.test-container{
+    
+
 }
 
+.auth-input{
+    margin-bottom: 3rem;
+}
 
+.auth-container{
+    border-radius: 15px;
+    min-width: 20rem;
+    max-height: 30rem;
+    min-height: 38rem;
+    max-width: 38rem;
+    position:absolute; /*it can be fixed too*/
+    left:0; right:0;
+    top:0; bottom:0;
+    margin: auto;
+    padding: 2rem;
+    background-color: white;   
 
-.auth-content{
-    padding: 40px;
+}
+
+.auth-text{
+    font-size: 1.1rem;
+    color: grey;
+    font-weight: bold;
+    margin: 1.5rem;
+}
+
+.fb-login-field{
+}
+
+.btn{
+    background-color: rgb(143,	167,	248	);
+}
+
+.btn:hover{
+    background-color: rgb(100,	106	,246	);
+}
+
+.auth-title{
+    font-size: 3rem;
+    color: #777777;
+}
+
+.auth-link{
+    justify-content: center;
+    position: absolute;
+    bottom:0;
+    height: 5rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+   
 }

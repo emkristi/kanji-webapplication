@@ -64,22 +64,27 @@ class SignIn extends Component {
 		if (auth.uid) return <Redirect to="/" />;
 
     return (
-      <div className="auth-container center">
-        <form className="auth-content" onSubmit={this.handleSubmit}>
-            <div className="input-field">
-                <label htmlFor="email">Email</label>
-                <input type="email" id="email" required onChange={this.handleChange}/>
-            </div>
+      <div className="auth-container">
+        <div className="row center">
+            <div className="auth-title">Sign In</div>
+            <form className="auth-content center" onSubmit={this.handleSubmit}>
+                <div className="auth-input">
+                <div className="input-field">
+                    <label htmlFor="email">Email</label>
+                    <input type="email" id="email" required onChange={this.handleChange}/>
+                </div>
             <div className="input-field">
                 <label htmlFor="password">Password</label>
                 <input type="password" id="password" required onChange={this.handleChange}/>
             </div>
+            </div>
             <div className="input-field">
-                <button className="btn pink lighten-1 z-depth-0 center">Login</button>
+                <button className="btn"><i class="material-icons">arrow_forward</i><span>Sign in</span></button>
                 <div className="red-text center">
                     { authError ? <p>{authError}</p> : null}
                 </div>
             </div>
+            <div className="auth-text">OR</div>
             <div className="fb-login-field">
                 {this.state.isSignedIn ? (
                     <div>Signed in"</div>
@@ -91,10 +96,11 @@ class SignIn extends Component {
                     )
                 }
             </div>
-            <div className="center">
+            <div className="auth-link">
                 <p>Dont have a user? Create one <Link to ='/signup'>here</Link> </p>
             </div>
         </form>
+        </div>
       </div>
     )
   }

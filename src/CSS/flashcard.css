@@ -25,10 +25,16 @@
   }
 
   .flip-card {
-    width: 340px;
-    height: 450px;
+    width: 25rem;
+    height: 35rem;
     margin: auto;
-    margin-top: 40px;
+    margin-top: 2rem;
+  }
+
+  .mnemdiv{
+    max-height: 5rem;
+    overflow: scroll;
+    text-align: left;
   }
   
   .flip-card-inner {
@@ -44,6 +50,13 @@
     transform: rotateY(180deg);
   }
   
+  .editmnembut:hover{
+    cursor: pointer;
+  }
+
+  .addmnembut:hover{
+    cursor: pointer;
+  }
    
   #hardEasyKnapper {
     justify-content: center;
@@ -57,11 +70,11 @@
   }
 
   .back-kan{
-    font-size: 500%;
+    font-size: 5rem;
   }
 
   .back-eng{
-    font-size: 300%;
+    font-size: 3rem;
   }
 
   .hard-btn, .easy-btn{
@@ -74,6 +87,10 @@
     box-shadow: none;
   }
 
+  .back-buttons{
+    
+  }
+
   .hard-btn{
     margin-right: 3%;
 
@@ -84,8 +101,7 @@
   }
 
   .row, .col{
-    padding: 0px !important;
-    margin: 0px !important;
+    margin-bottom: 0px;
   }
 
   .test-row{

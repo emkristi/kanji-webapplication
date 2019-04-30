@@ -59,10 +59,10 @@ class Frontpage extends Component {
 									} else {
 										let cardsInDeck = flashcards.filter((fcard) => fcard.deckid === deck.id);
 										return (
-											<div key={deck.id} className="col s6">
+											<div key={deck.id} className="col s12 m6 l6">
 												<div className="deck completed">
 													<DeckInfo deck={deck} />
-													<a onClick={this.restartDeck(cardsInDeck)} class="btn-floating btn-medium waves-effect waves-light pink"><i class="material-icons">replay</i></a>
+													<a onClick={this.restartDeck(cardsInDeck)} class="btn-floating btn-medium waves-effect waves-light"><i class="material-icons">replay</i></a>
 												</div>
 											</div>
 										);
