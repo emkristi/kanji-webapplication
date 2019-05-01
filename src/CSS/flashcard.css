@@ -58,12 +58,7 @@
     cursor: pointer;
   }
    
-  #hardEasyKnapper {
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    width: 25rem;
-  }
+  
  
   .back-h{
     font-style: italic;
@@ -103,32 +98,75 @@
   .test-row{
     margin: -5px;
   }
+
   
-  /* Extra small devices (phones, 600px and down) */
-  @media only screen and (max-width: 600px) {
-    .flip-card-front {
-      
+  /* Extra extra small devices (phones, 600px and down) */
+  @media only screen and (max-width: 350px) {
+    .flip-card {
+      min-width: 15rem;
+      max-width: 20rem;
+      height: 30rem;
+      margin: auto;
+      margin-top: 2rem;
     }
 
-    .flip-card {
-      width: 20rem;
-      height: 35rem;
-      margin-top: 2rem;
-      margin-left: 1rem;
-      margin-right: 1rem;
+    #hardEasyKnapper {
+      margin: auto;
+      min-width: 15rem;
+      max-width: 20rem;
     }
+    
   }
 
-  /* Small devices (portrait tablets and large phones, 600px and up) */
-  @media only screen and (min-width: 600px) {
-    .flip-card-front {
-      background: green;
+  
+  @media only screen and (min-width: 350px) and (max-width: 400px) {
+    .flip-card {
+      max-width: 24rem;
+      height: 35rem;
+      margin: auto;
+      margin-top: 2rem;
     }
 
+    #hardEasyKnapper {
+      margin: auto;
+      max-width: 24rem;
+    }
+    
+  }
+  
+
+  /* Small devices (portrait tablets and large phones, 600px and up) */
+  @media only screen and (min-width: 350px) {
     .flip-card {
       width: 25rem;
       height: 35rem;
       margin: auto;
       margin-top: 2rem;
     }
+
+    #hardEasyKnapper {
+      margin: auto;
+      width: 25rem;
+    }
   }
+
+
+   /* Small devices (portrait tablets and large phones, 600px and up) */
+   /*
+   @media only screen and (min-height: 700px) {
+    .flip-card {
+      min-width: 40rem;
+      max-width: 90rem;
+      min-height: 50rem;
+      max-height: 100rem;
+      margin: auto;
+      margin-top: 2rem;
+    }
+
+    #hardEasyKnapper {
+      margin: auto;
+      width: 25rem;
+    }
+  }
+
+  */

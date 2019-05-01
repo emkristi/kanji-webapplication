@@ -284,7 +284,9 @@ class Flashcards extends Component {
     if (!categoryfcs[currentCard]) return (<div>Not defined</div>);
 
     return (
-      <div className="container">
+      <div className="flashcard-content">
+        <div className="row">
+          <div className="col s12">
         {(categoryfcs.length > 0) &&
           <div className="flip-card">
             <div className="flip-card-inner" >
@@ -396,7 +398,9 @@ class Flashcards extends Component {
                     </div>
                     </div>
                   </div>
+
                 </div>
+                
             </div>
             
           
@@ -409,7 +413,8 @@ class Flashcards extends Component {
               
 
   
-
+        </div>
+        </div>
       </div>
      
         
