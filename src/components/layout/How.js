@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import '../../CSS/info.css';
+import { Link } from 'react-router-dom';
+
 
 
 class How extends Component {
@@ -31,6 +33,13 @@ class How extends Component {
                                 </div>
                             </div>
                             
+                            <div className="row">
+                                <div className="col s12 m12 l12 center">
+                             
+
+                                    <Link to="/">Click here to start</Link>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

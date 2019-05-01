@@ -30,6 +30,8 @@ class SignUp extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.signUp(this.state)
+        this.props.history.push('/howto');
+
     }
 
   render() {
@@ -37,7 +39,7 @@ class SignUp extends Component {
     if (auth.uid) return <Redirect to='/' />  
 
     return (
-    <div className="test-container">
+    <div>
         <div className="row" margin="30px">
 
       <div className="auth-container center">
