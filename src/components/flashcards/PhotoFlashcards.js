@@ -276,16 +276,21 @@ class PhotoFlashcards extends Component {
     if (!categoryfcs[currentCard]) return (<div>Not defined</div>);
 
     return (
-      <div className="container">
+      <div className="pf-content">
+        <div className="row">
+        <div className="col s12">
       <ReactCardFlip isFlipped={this.state.isFlipped} flipDirection="horizontal">
         <div className="pfc-card center" key="front">
           <div><img className="content" src={categoryfcs[currentCard].pictureUrl} alt="current kanji" width="400rem" height="300rem" /></div>
             <div className="row">
-                <button className="pfc-btn" onClick={this.handleFButton} id='but1' value={randomArray[0]}>{randomArray[0]}</button>
-                <button className="pfc-btn" onClick={this.handleFButton} id='but2' value={randomArray[1]}>{randomArray[1]}</button>
-                <button className="pfc-btn" onClick={this.handleFButton} id='but3' value={randomArray[2]}>{randomArray[2]}</button>
-                <button className="pfc-btn" onClick={this.handleFButton} id='but4' value={randomArray[3]}>{randomArray[3]}</button>  
-          </div>
+              <button className="pfc-btn" onClick={this.handleFButton} id='but1' value={randomArray[0]}>{randomArray[0]}</button>
+              <button className="pfc-btn" onClick={this.handleFButton} id='but2' value={randomArray[1]}>{randomArray[1]}</button>
+                
+            </div>
+            <div className="row">
+              <button className="pfc-btn" onClick={this.handleFButton} id='but3' value={randomArray[2]}>{randomArray[2]}</button>
+              <button className="pfc-btn" onClick={this.handleFButton} id='but4' value={randomArray[3]}>{randomArray[3]}</button>  
+            </div>
         </div>
 
         <div className="pfc-card" key="back">
@@ -341,6 +346,8 @@ class PhotoFlashcards extends Component {
         </div>
             
       </ReactCardFlip>
+      </div>
+      </div>
       </div>
     )
   }

@@ -1,16 +1,12 @@
-.container{
-  margin-top: 2.2rem;
-  background: none;
-}
-
 .pfc-btn{
     color: black;
     background-color: #ffffff;
     border-radius: 5px;
     border-color: white;
     margin: 1rem;
-    width: 9rem;
-    height: 6rem;
+    min-width: 7.5rem;
+    max-width: 9rem;
+    max-height: 6rem;
     font-size: 4rem;
 }
 
@@ -22,7 +18,8 @@
 
 .pfc-card{
     padding: 1rem;
-    width: 29rem;
+    min-width: 20rem;
+    max-width: 25rem;
     height: 38rem;
     background-color: white;
     margin: auto;
@@ -63,4 +60,15 @@ img {
   overflow: scroll;
   text-align: left;
   width: 100%;
+}
+
+
+@media only screen and (min-width: 300px) and (max-width: 350px) {
+  img {
+    margin-top: 1rem;
+    max-width: 19rem;
+    height: auto;
+  }
+  
+  
 }
