@@ -1,46 +1,54 @@
 import React, { Component } from 'react';
+import '../../CSS/info.css';
+
 
 class About extends Component {
 	render() {
 		return (
-			<div className="row">
-				<h4 className="card-title activator grey-text text-darken-4">About the Memji application</h4>
-				<div class="col s4">
-					<div className="card">
-						<div className="card-image waves-effect waves-block waves-light">
-							<img class="activator" src="img/about.gif" alt="stroke order" />
-						</div>
-						<div className="card-content">
-							<span className="card-title activator grey-text text-darken-4">Sources in application</span>
+			<div className="info-content">
+                <div className="row">
+                    <div className="col s12">
+                        <div className="info">
+                            <h4 className="center-align">Sources and credits</h4>
+							<br></br>
+								<div className="row">
+									<div className="col s12 m6 l6">
+										<h5>Logo</h5>
+										The Memji Logo is made by Kine Mentzoni.
+									</div>
+									<div className="col s12 m6 l6  center-align">
+										<img class="activator logoimg" src="img/LOGO-STOR.png" alt="Memji logo" />{' '}
+									</div>
+								</div>
+								<br></br>
+								<div className="row">
+									<div className="col s12 m6 l6">
+										<h5>Photoflashcards</h5>
+										All images in the Photoflashcard deck called Fruit is drawn by Kine Mentzoni.
+									</div>
 
-							<p>
-								In the application we have used stroke order gifs from wikipedia to animate how to draw
-								the different kanji.
-							</p>
-							<p>
-								<a href="https://en.wikipedia.org/wiki/List_of_kanji_by_concept#Numbers,_counting,_sequence">
-									Click here to get to the source
-								</a>
-							</p>
-						</div>
-					</div>
-				</div>
-
-				<div class="col s4">
-					<div className="card">
-						<div className="card-image waves-effect waves-block waves-light">
-							<img class="activator" src="memji logo!!" alt="Memji logo" />{' '}
-							<p>logo (+ bilder??) inn her:-)</p>
-						</div>
-						<div className="card-content">
-							<span className="card-title activator grey-text text-darken-4">
-								Memji logo and pictures in deck
-							</span>
-							<p> The memji logo and the pictures in the deck (deckname) are made by Kine Kristiansen</p>
-						</div>
-					</div>
-				</div>
-			</div>
+									<div className="col s12 m6 l6 center-align">
+										<img class="activator fruitimg" src="img/pear.jpg" alt="Pear drawing" />{' '}
+									</div>
+								</div>
+								<br></br>
+								<div className="row">
+									<div className="col s12 m6 l6">
+										<h5>Stroke order</h5>
+										Some flashcards in the application has stroke orders. A stroke order shows how to draw the Kanji. The gifs used in the application are made by ....
+										<a href="https://en.wikipedia.org/wiki/List_of_kanji_by_concept#Numbers,_counting,_sequence">
+											Click here to get to the source
+										</a>
+									</div>
+									
+									<div className="col s12 m6 l6 center-align">
+										<img class="activator strokeorderimg" src="img/About-penstroke.png" alt="Stroke order" />{' '}
+									</div>
+								</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 		);
 	}
 }

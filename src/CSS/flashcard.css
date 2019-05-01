@@ -24,12 +24,7 @@
     padding: 20px;
   }
 
-  .flip-card {
-    width: 25rem;
-    height: 35rem;
-    margin: auto;
-    margin-top: 2rem;
-  }
+  
 
   .mnemdiv{
     max-height: 5rem;
@@ -92,13 +87,9 @@
     box-shadow: none;
   }
 
-  .back-buttons{
-    
-  }
 
   .hard-btn{
     margin-right: 3%;
-
   }
 
   .easy-btn{
@@ -113,3 +104,31 @@
     margin: -5px;
   }
   
+  /* Extra small devices (phones, 600px and down) */
+  @media only screen and (max-width: 600px) {
+    .flip-card-front {
+      
+    }
+
+    .flip-card {
+      width: 20rem;
+      height: 35rem;
+      margin-top: 2rem;
+      margin-left: 1rem;
+      margin-right: 1rem;
+    }
+  }
+
+  /* Small devices (portrait tablets and large phones, 600px and up) */
+  @media only screen and (min-width: 600px) {
+    .flip-card-front {
+      background: green;
+    }
+
+    .flip-card {
+      width: 25rem;
+      height: 35rem;
+      margin: auto;
+      margin-top: 2rem;
+    }
+  }

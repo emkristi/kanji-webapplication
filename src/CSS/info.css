@@ -1,0 +1,45 @@
+.info-content{
+    max-width: 52rem;
+  min-width: 20rem;
+  padding: 5px;
+  color:black;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2rem;
+}
+
+.info {
+    background: white;
+    border-style: none;
+    border-radius: 15px;
+    padding: 40px;
+    opacity: 0.9;
+    margin-bottom: 1.5rem;
+    height: auto;
+
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .strokeorderimg{
+        border-radius: 15px;
+        max-width: 16rem;
+    }
+    
+    .fruitimg, .logoimg{
+        min-width: 15rem;
+        max-width: 16rem;
+    }
+  }
+
+  /* Small devices (portrait tablets and large phones, 600px and up) */
+  @media only screen and (min-width: 600px) {
+    .strokeorderimg{
+        border-radius: 15px;
+        max-width: 20rem;
+    }
+    
+    .fruitimg, .logoimg{
+        max-width: 21rem;
+    }
+  }

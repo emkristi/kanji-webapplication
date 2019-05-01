@@ -10,6 +10,7 @@ import Flashcards from './components/flashcards/Flashcards'
 import PhotoFlashcards from './components/flashcards/PhotoFlashcards'
 import Startpage from './components/startpage/Startpage'
 import About from './components/layout/About'
+import How from './components/layout/How'
 
 class App extends Component {
   render() {
@@ -19,6 +20,7 @@ class App extends Component {
           <Navbar />
           <Switch>
             <Route exact path='/' component={Frontpage} />
+            <Route path='/howto' component={How} />
             <Route path='/start' component={Startpage} />
             <Route path='/signin' component={SignIn} />
             <Route path='/signup' component={SignUp} />
