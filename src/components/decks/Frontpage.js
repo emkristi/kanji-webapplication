@@ -50,9 +50,11 @@ class Frontpage extends Component {
 									return (
 										<div key={deck.id} className="col s12 m6 l6">
 											<div className="deck not-completed">
-												<Link to={deck.type === 'Images' ? '/img/' + deck.id : '/' + deck.id} key={deck.id} id="link">
-												<DeckInfo deck={deck} />
-												</Link>
+												<div className="deck-content">
+													<Link to={deck.type === 'Images' ? '/img/' + deck.id : '/' + deck.id} key={deck.id} id="link">
+														<DeckInfo deck={deck} />
+													</Link>
+												</div>
 											</div>
 										</div>
 									);
@@ -61,8 +63,10 @@ class Frontpage extends Component {
 										return (
 											<div key={deck.id} className="col s12 m6 l6">
 												<div className="deck completed">
-													<DeckInfo deck={deck} />
-													<a onClick={this.restartDeck(cardsInDeck)} class="btn-floating btn-medium waves-effect waves-light deckbtn"><i class="material-icons">replay</i></a>
+													<div className="deck-conten-comp">
+														<DeckInfo className="col s12" deck={deck} />
+														<a onClick={this.restartDeck(cardsInDeck)} class="btn-floating btn-large waves-effect waves-light deckbtn"><i class="material-icons">replay</i></a>
+													</div>
 												</div>
 											</div>
 										);

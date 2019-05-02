@@ -11,7 +11,9 @@ const SignedInLinks = (props) => {
         <ul className="left">
             <li><NavLink to='/howto'>How does it work</NavLink></li>
             <li><NavLink to='/about'>About</NavLink></li>
-            <li><NavLink to='/start' onClick={props.signOut}>Log out</NavLink></li>
+            <li>
+                <a onClick={props.signOut} href="/howto">Log Out</a>
+            </li>
         </ul>
         
     )

@@ -36,7 +36,11 @@ nav ul a:hover {
 
 .dropdown-content {
 	background-color: white;
-	color: blue;
+	color: blue !important;
+}
+
+.dropdown-content:link {
+  color:blue;
 }
 
 .startpage-img{

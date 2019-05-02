@@ -18,13 +18,21 @@
 }
 
 .deck {
-    background: white;
-    border-style: none;
-    border-radius: 15px;
-    padding: 40px;
-    opacity: 0.9;
-    margin-bottom: 1.5rem;
-    height: 20rem;
+  background: white;
+  border-style: none;    
+  border-radius: 15px;
+  padding: 0.6rem;
+  opacity: 0.9;
+  margin-bottom: 1.5rem;
+  height: 17rem;
+}
+
+.deck-content{
+  margin-top: 3rem;
+}
+
+.deck-content-comp{
+  margin-top: 1rem;
 }
 
 /*
