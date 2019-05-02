@@ -28,6 +28,7 @@ class Frontpage extends Component {
 			user = users.find((u) => u.id === auth.uid);
 		}
 
+		//NB gjør om til /start med må bruke href ellers kommer navbar med??
 		if (!auth.uid) return <Redirect to="/signin" />;
 
 		return (
@@ -48,7 +49,10 @@ class Frontpage extends Component {
 												<div className="deck-content">
 													<Link to={deck.type === 'Images' ? '/img/' + deck.id : '/' + deck.id} key={deck.id} id="link">
 														<DeckInfo deck={deck} />
+														
 													</Link>
+													<p className="decktypetxt">{deck.type}</p>
+
 												</div>
 											</div>
 										</div>
@@ -58,9 +62,10 @@ class Frontpage extends Component {
 										return (
 											<div key={deck.id} className="col s12 m6 l6">
 												<div className="deck completed">
-													<div className="deck-conten-comp">
+													<div className="deck-content-comp">
 														<DeckInfo className="col s12" deck={deck} />
-														<a onClick={this.restartDeck(cardsInDeck)} class="btn-floating btn-large waves-effect waves-light deckbtn"><i class="material-icons">replay</i></a>
+														<p className="decktypetxt">{deck.type}</p>
+														<a onClick={this.restartDeck(cardsInDeck)} class="btn-floating btn-large waves-effect deck-btn"><i class="material-icons">replay</i></a>
 													</div>
 												</div>
 											</div>

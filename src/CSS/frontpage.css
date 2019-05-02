@@ -25,14 +25,16 @@
   opacity: 0.9;
   margin-bottom: 1.5rem;
   height: 17rem;
+  text-transform: lowercase;
+  
 }
 
 .deck-content{
-  margin-top: 3rem;
+  margin-top: 5rem;
 }
 
 .deck-content-comp{
-  margin-top: 1rem;
+  margin-top: 3rem;
 }
 
 /*
@@ -42,7 +44,7 @@
 */
 
 .completed {
-  color: rgb(73,	84,	121	);
+  color: rgba(73,	84,	121	,0.8);
   /*opacity: 0.5;*/
   background-color: rgb(200,	211,	248);
   font-style: italic;
@@ -56,6 +58,23 @@
 
 /* */
 #link{
-  color: black;
+  color: rgb(100,	106	,246	);
 }
+
+.deck-btn{
+  background-color: rgb(100,	106	,246	);
+}
+
+.deck-btn:hover{
+  background-color: rgb(143,	167,	248	);
+
+
+}
+
+.decktypetxt{
+  font-weight: bold;
+  text-transform: uppercase;
+  color: rgb(73,	84,	121);
+}
+
 
