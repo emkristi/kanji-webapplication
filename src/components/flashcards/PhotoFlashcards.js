@@ -273,7 +273,7 @@ class PhotoFlashcards extends Component {
     }
 
     // Error handling
-    if (!categoryfcs[currentCard]) return (<div>Not defined</div>);
+    if (!categoryfcs[currentCard]) return (<div></div>);
 
     return (
       <div className="pf-content">
@@ -316,28 +316,27 @@ class PhotoFlashcards extends Component {
               <span className="card-title">
                 {!personalmnemonic && <span>{categoryfcs[currentCard].mnemonic}</span> }
               </span>
-            </div>
-          </div>
 
-          <div class="row">
-          <form onSubmit={this.handleMnemonicSubmit}>
-                <div class="row center">
+              <form onSubmit={this.handleMnemonicSubmit}>
+                <div class="row center pneminput">
                   
                   <div class="col s10 input-field inline">
                     <input placeholder="Write new mnemonic" type="text" id="mnemonic" onChange={this.handleMnemonicChange}/>
                   </div>
 
-                  <div className="col s2 input-field inline right-align">
+                  <div className="col s2 input-field inline right-align ">
                     <i onClick={this.handleMnemonicSubmit} class="material-icons">add_circle</i>
                   </div>
 
                 </div>
-              </form>
-          </div>
+            </form>
+            </div>
 
-          <div>
             
           </div>
+
+
+         
           
           <div className="center back-buttons">
             <button className="btn back-btn" onClick={this.handleHard} id="Hard">Hard</button>

@@ -9,14 +9,17 @@
 }
 
 .info {
-    background: white;
+    background: rgba(255, 255, 255, 0.9);
     border-style: none;
     border-radius: 15px;
     padding: 40px;
-    opacity: 0.9;
     margin-bottom: 1.5rem;
     height: auto;
 
+}
+
+.fcimg{
+    max-width: 10rem;
 }
 
 /* Extra small devices (phones, 600px and down) */

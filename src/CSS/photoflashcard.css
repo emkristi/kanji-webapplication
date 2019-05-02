@@ -56,11 +56,21 @@ img {
 }
 
 .pmnemdiv{
-  max-height: 8rem;
+  max-height: 5rem;
   overflow: scroll;
   text-align: left;
   width: 100%;
 }
+
+.pmneminput{
+  margin-left: 1rem;
+  margin-right: auto !important;
+}
+
+.pmnemdiv::-webkit-scrollbar { 
+  display: none; 
+}
+
 
 
 @media only screen and (min-width: 300px) and (max-width: 350px) {

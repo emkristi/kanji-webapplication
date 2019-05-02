@@ -24,7 +24,7 @@ class About extends Component {
 								<div className="row">
 									<div className="col s12 m6 l6">
 										<h5>Photoflashcards</h5>
-										All images in the Photoflashcard deck called Fruit is drawn by Kine Mentzoni.
+										All images in the Photoflashcard Deck called Fruit are illustrated by Kine Mentzoni.
 									</div>
 
 									<div className="col s12 m6 l6 center-align">

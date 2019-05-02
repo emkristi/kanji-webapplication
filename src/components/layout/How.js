@@ -11,32 +11,64 @@ class How extends Component {
                 <div className="row">
                     <div className="col s12">
                         <div className="info">
-                            <h4 className="center-align">How does it work</h4>
+                            <h4 className="center-align">How to use Memji</h4>
+                            <br></br>
 
                             <div className="row">
 								<div className="col s12 m6 l6">
-									<h5>Flashcards - Kanji to english</h5>
+									<h5 className="">FLASHCARDS - KANJI TO ENGLISH</h5>
+                                    On the front of the flashcards is a kanji. When hovering (on desktop) or clicking (mobile) the card it will flip and you can see the translation and other information. 
 								</div>
 								<div className="col s12 m6 l6  center-align">
-									<img class="activator logoimg" src="img/LOGO-STOR.png" alt="Memji logo" />{' '}
+                                    <div className="row">
+                                        <div className="col s6 m6 l6">
+                                            <img class="fcimg" src="img/fcfront.png" alt="Memji logo" />{' '}
+                                        </div>
+                                        <div className="col s6 m6 l6">
+                                            <img class="fcimg" src="img/fcback.png" alt="Memji logo" />{' '}
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+							</div>
+
+                            <div className="row">
+								<div className="col s12 m6 l6">
+									<h5 className="">BUTTONS</h5>
+                                    If you click the easy button the flashcard wont appear again until deck is restarted. By clicking hard button the flashcard will reappear randomly in the deck until the easy button is clicked.
+								</div>
+								<div className="col s12 m6 l6  center-align">
+									<img class="activator logoimg" src="img/buttons.png" alt="Memji logo" />{' '}
 								</div>
 							</div>
 
                             <br></br>
                             <div className="row">
-                                <div className="col s12 m6 l6">
-                                    <h5>Photoflashcards</h5>
-                                </div>
+                            <div className="col s12 m6 l6">
+									<h5 className="">MNEMONICS</h5>
+                                    Each flashcard has a mnemonic suggestion. By clicking the pen icon you can make your own personal mnemonic. 
+								</div>
+								<div className="col s12 m6 l6  center-align">
+									<img class="activator logoimg" src="img/mnembut.png" alt="Memji logo" />{' '}
+								</div>
+                            </div>
 
-                                <div className="col s12 m6 l6 center-align">
-                                    <img class="activator logoimg" src="img/LOGO-STOR.png" alt="Memji logo" />{' '}
-                                </div>
+                            <br></br>
+                            <div className="row">
+                            <div className="col s12 m6 l6">
+									<h5 className="">PHOTOFLASHCARDS</h5>
+                                    For photoflashcards an image will appear along with four different Kanji. Click a kanji. If correct kanji, the flashcard will flip around where you will see the easy and hard buttons along with clientInformation. 
+								</div>
+								<div className="col s12 m6 l6  center-align">
+									<img class="activator logoimg" src="" alt="Memji logo" />{' '}
+								</div>
                             </div>
                             
                             <div className="row">
                                 <div className="col s12 m12 l12 center">
-                             
-
+                                    <br></br>
                                     <Link to="/">Click here to start</Link>
                                 </div>
                             </div>

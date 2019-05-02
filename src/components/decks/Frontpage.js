@@ -18,12 +18,7 @@ class Frontpage extends Component {
 				console.log("removed ", cardsInDeck[i].id);
 		} 
 	}
-	
-	handleButton = (e) => {
-		e.preventDefault();
-		this.props.removeCompletedFlashcards("A8XHuB8TfzeLc2osKtjc");
-		console.log("hey");
-	}
+
 
 	render() {
 		const { decks, flashcards, auth, users } = this.props;

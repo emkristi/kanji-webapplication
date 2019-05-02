@@ -13,16 +13,19 @@ class Startpage extends Component {
           <div className="col s12">
             <div className="s-content">
               <div classname="row">
-                <div className="col s12 m6 l6 center-align">
-                  <div className="s-text">Learn Kanji with flashcards! Memji focuses on learning Kanji by learning the radicals that kanjis are built up from before the kanji itself.</div>
-                  <br></br>
-                  <button className="btn">Sign up</button>
-                  <button className="btn">Sign in</button>
-
-                </div>
-                <div className="col s12 m6 l6 center-align">
+              <div className="col s12 m6 l5">
                   <img src="img/LOGO-STOR.jpg" alt="logo" />
                 </div>
+
+
+                <div className="col s12 m6 l7 ">
+                  <div className="s-title">Learn Kanji with flashcards</div>
+                  <div className="s-text">Memji focuses on learning Kanji by learning the radicals that kanjis are built up of.</div>
+                  <br></br>
+                  <a href="/signup"><button className="btn startpage-btn">Sign up</button></a>
+                  <a href="/signin"><button className="btn startpage-btn">Sign in</button></a>
+                </div>
+                
               </div>
             </div>
           </div>

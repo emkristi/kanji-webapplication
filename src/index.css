@@ -1,6 +1,5 @@
 /* CSS THAT APPLIES FOR THE ENTIRE WEB APPLICATION */
 body {
-  /*background: rgb(248,	205,	70);*/
   background: rgb(143,	167,	248	);
   /*background: rgb(99,	106,	246		);*/
   padding: 0;
@@ -56,18 +55,27 @@ nav ul a:hover {
 /* START PAGE TEXT */
 .s-text{
   color: white;
-  margin-top: 4rem;
   font-size: 1.1rem;
+  margin-top: 0.5rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: bold;
+}
+
+.s-title{
+  color: white;
+  margin-top: 4rem;
+  font-size: 2.5rem;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-weight: bold;
 }
 
 .startpage{
-  width: 100rem;
-  height: 200rem;
+  width: 10rem;
+  height: 20rem;
 }
 
 .s-content{
+  width: 70rem;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -75,6 +83,17 @@ nav ul a:hover {
   transform: translate(-50%, -50%);
 }
 
-.tester{
-  width: 300rem;
+.startpage-btn{
+  margin: 1rem;
+  /*
+  background-color: white !important;
+  color: rgb(99,	106,	246		);*/
+
+  
+  color: white !important;
+  background-color: rgb(99,	106,	246) !important;
+
+  font-weight: bold;
+  height: 3rem;
+  border-radius: 150px;
 }
