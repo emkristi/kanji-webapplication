@@ -31,11 +31,7 @@ class PhotoFlashcards extends Component {
     this.props.firestore.unsetListener({collection: 'users'})
   }
 
-  flipClick = (e) => {
-    e.preventDefault();
-    this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
-    console.log("flappy floppy?");
-  }
+  
 
   handleHard = (e) => {
     this.changeFc();
@@ -81,9 +77,7 @@ class PhotoFlashcards extends Component {
     for(let i = 0; i < mnemonics.length; ++i){
       if(gjeldendeFlashcard.id === mnemonics[i].fcId && mnemonics[i].userId === user.id){
         gjeldendeMnem = mnemonics[i];
-        console.log("gjeldende", gjeldendeMnem);
         for(let j = 0; j < user.mnemonicArr.length; j++){
-          console.log(gjeldendeMnem.id, user.mnemonicArr[j]);
           if(user.mnemonicArr[j] === gjeldendeMnem.id){
             this.props.replaceMnemonic(this.state.mnemonic, gjeldendeMnem, gjeldendeFlashcard.id);
           } 
@@ -167,7 +161,6 @@ class PhotoFlashcards extends Component {
       }
     }
 
-    console.log(user.flashcardArray);
 
 
     // set found current number
@@ -191,8 +184,6 @@ class PhotoFlashcards extends Component {
     let categoryfcs = flashcards.filter(val => val.deckid === id);
 
     var buttonId = e.target.id;
-    console.log(buttonId);
-
     if (e.target.value === categoryfcs[currentCard].kanji) {
       this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
       document.getElementById(buttonId).style.backgroundColor = "rgb(121,	196,	154)";
@@ -240,8 +231,7 @@ class PhotoFlashcards extends Component {
 
 
     var randomArray = this.randomKanjiArray();
-    // console.log("r", randomArray);
-
+    
     if (!auth.uid) return <Redirect to='/signin' />;
 
     // Only show flashcards in current category
@@ -254,12 +244,14 @@ class PhotoFlashcards extends Component {
     let user;
     if (users) {
       user = users.find(u => u.id === auth.uid);
+      /*
       if (user.flashcardArray
         && user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id).length === categoryfcs.length) {
         return (<div>Du har vært gjennom alle i denne kategorien <button onClick={() => window.location.href = '/'}>Gå tilbake</button>
           <button onClick={this.restartDeck} id="restartbutton">Start på nytt</button>
         </div>);
       }
+      */
     }
 
     let personalmnemonic;
@@ -303,19 +295,23 @@ class PhotoFlashcards extends Component {
           <br></br>
         
           <br></br>
-          <div class="row">
-            <div class="col s10 back-h left-align">mnemonic</div>
-          </div>
+         
           
           <div class="row">
+
             <div className="col pmnemdiv">
-              <span className="card-title">
-                {personalmnemonic &&<span>{personalmnemonic}</span>}
-              </span>
-                      
-              <span className="card-title">
-                {!personalmnemonic && <span>{categoryfcs[currentCard].mnemonic}</span> }
-              </span>
+            <div class="row">
+            <div class="col s10 back-h left-align">mnemonic</div>
+          </div>
+              <div className="pmnemtext">
+                <span className="card-title">
+                  {personalmnemonic &&<span>{personalmnemonic}</span>}
+                </span>
+                        
+                <span className="card-title">
+                  {!personalmnemonic && <span>{categoryfcs[currentCard].mnemonic}</span> }
+                </span>
+              </div>
 
               <form onSubmit={this.handleMnemonicSubmit}>
                 <div class="row center pneminput">

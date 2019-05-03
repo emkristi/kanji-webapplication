@@ -15,7 +15,6 @@ class Frontpage extends Component {
 		e.preventDefault();
 		for(let i = 0; i < cardsInDeck.length; ++i){
 				this.props.removeCompletedFlashcards(cardsInDeck[i].id);
-				console.log("removed ", cardsInDeck[i].id);
 		} 
 	}
 

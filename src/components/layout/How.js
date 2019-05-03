@@ -46,12 +46,23 @@ class How extends Component {
 
                             <br></br>
                             <div className="row">
-                            <div className="col s12 m6 l6">
+                                <div className="col s12 m6 l6">
 									<h5 className="">MNEMONICS</h5>
                                     Each flashcard has a mnemonic suggestion. By clicking the pen icon you can make your own personal mnemonic. 
 								</div>
 								<div className="col s12 m6 l6  center-align">
 									<img class="activator logoimg" src="img/mnembut.png" alt="Memji logo" />{' '}
+								</div>
+                            </div>
+
+                            <br></br>
+                            <div className="row">
+                                <div className="col s12 m6 l6">
+									<h5 className="">STROKE ORDER</h5>
+                                    Some flashcards has gifs of the kanjis strokeorder on the back of the flashcards. This shows how the kanji is drawn.
+								</div>
+								<div className="col s12 m6 l6  center-align">
+									<img class="logoimg" src="img/strokeimg.png" alt="Memji logo" />{' '}
 								</div>
                             </div>
 

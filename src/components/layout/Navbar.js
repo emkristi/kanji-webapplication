@@ -8,8 +8,6 @@ import { signOut } from '../../store/actions/authActions';
 
 const Navbar = (props) => {
     const { auth, profile } = props;
-    const links = auth.uid ? <SignedInLinks profile={profile} /> : <SignedOutLinks />
-    console.log(window.location.pathname);
 
     return (
         <div>
@@ -17,7 +15,7 @@ const Navbar = (props) => {
             <div>
             <nav class="transparent z-depth-0">
                 <div class="nav-wrapper">
-                    <Link to="/"><img class="navlogo" src="img/LOGOLITENNY.jpg" width="60rem" alt="logo" /></Link>
+                    <a href="/"><img class="navlogo" src="img/LOGOLITENNY.jpg" width="60rem" alt="logo" /></a>
                     <ul class="right">
                         {(auth.uid) &&
                             <Dropdown trigger={<a class="brand-logo"><i class="material-icons md-36">menu</i></a>} options={{coverTrigger: false}}>

@@ -96,15 +96,9 @@ class Flashcards extends Component {
       if(lastFc){
         this.changeFc();
       }
-      
-      //window.location.href = '/';
       return;
     }else if(seenFc.length === categoryfcs.length - 1){
-      //this.changeFc();
-      console.log("siste kort, hard trykt");
     }
-    //this.changeFc();
-    //this.setState({showMnemField: false});
   }
 
   handleEasy = (e) => {
@@ -117,9 +111,7 @@ class Flashcards extends Component {
 
     // seenFc -> flashcards som allerede er gått gjennom
     const seenFc = user.flashcardArray ? user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id) : [];
-    // Legg til flashcard i DB
-    //this.props.updateUser(categoryfcs[currentCard].id);
-    //this.changeFc();
+  
 
     if (!(seenFc.length === categoryfcs.length - 1)) {
       this.changeFc();
@@ -281,7 +273,7 @@ class Flashcards extends Component {
     
 
     // Error handling
-    if (!categoryfcs[currentCard]) return (<div>Not defined</div>);
+    if (!categoryfcs[currentCard]) return (<div></div>);
 
     return (
       <div className="flashcard-content">
@@ -320,8 +312,17 @@ class Flashcards extends Component {
                                           )
                                         })
                                       }</p>
-                                }
+                              }
+
+                              {!(categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards) &&
+                                    <p><span>
+                                      {categoryfcs[currentCard].kanji}
+                                    </span></p>
+                              }
                           </div>
+
+
+
                           </div>
                         )}
 
@@ -331,22 +332,28 @@ class Flashcards extends Component {
                               <div className="back-h">
                                 radicals
                               </div>
-                            <div className="left-align">
+                            <div className="left-align ">
                               {categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards &&
                                   <p>{
                                       radarray.map(radical => {
                                         return(
-                                            <span>{radical } {" "} </span>
+                                            <span key={radical}>{radical } {" "} </span>
                                         )
                                       })
                                     }</p>
+                              }
+
+                              {!(categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards) &&
+                                    <p><span>
+                                      {categoryfcs[currentCard].kanji}
+                                    </span></p>
                               }
                             </div>
                           </div>
                           <div class="col s4 back-h right-align back-h">stroke order
                         
                         <img
-                          className="strokePicture"
+                          className="stroke-picture"
                           src={categoryfcs[currentCard].strokeOrderUrl}
                           alt="stroke order"
                           width="100px"
