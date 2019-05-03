@@ -126,3 +126,11 @@ nav ul a:hover {
     transform: translate(-50%, -50%);
   }
 }
+
+.navbarlinks{
+  color: black !important;
+}
+
+.dropdown-content{
+  width: 10rem !important;
+}

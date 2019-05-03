@@ -94,10 +94,13 @@ class How extends Component {
                                 </div>
                             </div>
 
+                            <br></br>
+                            <br></br>
                             <div className="row">
                                 <div className="col s12 m12 l12 center startlink">
+                                    <button className="btn"><Link to="/" id="beginlink">Start</Link></button>
                                     <br></br>
-                                    <Link to="/">Click here to begin!</Link>
+                                    
                                 </div>
                             </div>
 

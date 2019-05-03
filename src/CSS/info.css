@@ -22,14 +22,10 @@
     max-width: 10rem;
 }
 
-.startlink{
-    font-size: 2rem;
-    font-weight: bold;
-    color: black !important;
-}
 
-#link{
-    color: rgb(100,	106	,246	);
+#beginlink{
+    color: white;
+    font-size: 2rem;
 }
 
 /* Extra small devices (phones, 600px and down) */

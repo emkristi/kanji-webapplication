@@ -19,18 +19,18 @@ const Navbar = (props) => {
                     <ul class="right">
                         {(auth.uid) &&
                             <Dropdown trigger={<a class="brand-logo"><i class="material-icons md-36">menu</i></a>} options={{coverTrigger: false}}>
-                                <a href='/howto'>How to play</a>
-                                <a href='/about'>Credits</a>
-                                <a href='/start' onClick={props.signOut}>Log out</a>
+                                <a className="navbarlinks" href='/howto'>How to play</a>
+                                <a className="navbarlinks" href='/about'>Credits</a>
+                                <a className="navbarlinks" href='/start' onClick={props.signOut}>Log out</a>
                             </Dropdown>
                         }
 
                         {(!auth.uid) &&
                             <Dropdown trigger={<a class="brand-logo"><i class="material-icons md-36">menu</i></a>} options={{coverTrigger: false}}>
-                                <a href='/signup'>Sign up</a>
-                                <a href='/signin'>Sign in</a>
-                                <a href='/howto'>How to play</a>
-                                <a href='/about'>Credits</a>
+                                <a className="navbarlinks" href='/signup'>Sign up</a>
+                                <a className="navbarlinks" href='/signin'>Sign in</a>
+                                <a className="navbarlinks" href='/howto'>How to play</a>
+                                <a className="navbarlinks" href='/about'>Credits</a>
                             </Dropdown>
                         }
                     </ul>
