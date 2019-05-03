@@ -1,31 +1,31 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-//import SignedInLinks from './SignedInLinks';
-//import SignedOutLinks from './SignedOutLinks';
+import SignedInLinks from './SignedInLinks';
+import SignedOutLinks from './SignedOutLinks';
 import { connect } from 'react-redux';
-import { Dropdown } from 'react-materialize';
+import { Dropdown, Button, Divider } from 'react-materialize';
 import { signOut } from '../../store/actions/authActions';
 
 const Navbar = (props) => {
-	const { auth } = props;
-	//const links = auth.uid ? <SignedInLinks profile={profile} /> : <SignedOutLinks />;
+	const { auth, profile } = props;
+	const links = auth.uid ? <SignedInLinks profile={profile} /> : <SignedOutLinks />;
 	console.log(window.location.pathname);
 
 	return (
 		<div>
 			{!(window.location.pathname === '/start') && (
 				<div>
-					<nav className="transparent z-depth-0">
-						<div className="nav-wrapper">
+					<nav class="transparent z-depth-0">
+						<div class="nav-wrapper">
 							<Link to="/">
-								<img className="navlogo" src="img/LOGOLITENNY.jpg" width="60rem" alt="logo" />
+								<img class="navlogo" src="img/LOGOLITENNY.jpg" width="60rem" alt="logo" />
 							</Link>
-							<ul className="right">
+							<ul class="right">
 								{auth.uid && (
 									<Dropdown
 										trigger={
-											<a className="brand-logo">
-												<i className="material-icons md-36">menu</i>
+											<a class="brand-logo">
+												<i class="material-icons md-36">menu</i>
 											</a>
 										}
 										options={{ coverTrigger: false }}
@@ -41,8 +41,8 @@ const Navbar = (props) => {
 								{!auth.uid && (
 									<Dropdown
 										trigger={
-											<a className="brand-logo">
-												<i className="material-icons md-36">menu</i>
+											<a class="brand-logo">
+												<i class="material-icons md-36">menu</i>
 											</a>
 										}
 										options={{ coverTrigger: false }}
