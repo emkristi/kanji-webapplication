@@ -5,20 +5,17 @@ import { compose } from 'redux';
 import DeckInfo from './DeckInfo';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
-import { removeCompletedFlashcards } from '../../store/actions/flashcardActions'
+import { removeCompletedFlashcards } from '../../store/actions/flashcardActions';
 import '../../CSS/frontpage.css';
 
-
 class Frontpage extends Component {
-
-  restartDeck = (cardsInDeck) => e => {
+	restartDeck = (cardsInDeck) => (e) => {
 		e.preventDefault();
-		for(let i = 0; i < cardsInDeck.length; ++i){
-				this.props.removeCompletedFlashcards(cardsInDeck[i].id);
-				console.log("removed ", cardsInDeck[i].id);
-		} 
-	}
-
+		for (let i = 0; i < cardsInDeck.length; ++i) {
+			this.props.removeCompletedFlashcards(cardsInDeck[i].id);
+			console.log('removed ', cardsInDeck[i].id);
+		}
+	};
 
 	render() {
 		const { decks, flashcards, auth, users } = this.props;
@@ -34,56 +31,66 @@ class Frontpage extends Component {
 		return (
 			<div className="frontpage-content center-align">
 				<div className="row">
-					{flashcards && user && decks && decks.map((deck) => {
-						let unfinisheddecks;
-						if (user.flashcardArray == null) {
-							unfinisheddecks = flashcards;
-						} else {
-							unfinisheddecks = flashcards.filter(
-								(fcard) => fcard.deckid === deck.id && user.flashcardArray.indexOf(fcard.id) === -1);
-								}
-								if (unfinisheddecks.length > 0) {
-									return (
-										<div key={deck.id} className="col s12 m6 l6">
-											<div className="deck not-completed">
-												<div className="deck-content">
-													<Link to={deck.type === 'Images' ? '/img/' + deck.id : '/' + deck.id} key={deck.id} id="link">
-														<DeckInfo deck={deck} />
-														
-													</Link>
-													<p className="decktypetxt">{deck.type}</p>
-
-												</div>
+					{flashcards &&
+						user &&
+						decks &&
+						decks.map((deck) => {
+							let unfinisheddecks;
+							if (user.flashcardArray == null) {
+								unfinisheddecks = flashcards;
+							} else {
+								unfinisheddecks = flashcards.filter(
+									(fcard) => fcard.deckid === deck.id && user.flashcardArray.indexOf(fcard.id) === -1
+								);
+							}
+							if (unfinisheddecks.length > 0) {
+								return (
+									<div key={deck.id} className="col s12 m6 l6">
+										<div className="deck not-completed">
+											<div className="deck-content">
+												<Link
+													to={deck.type === 'Images' ? '/img/' + deck.id : '/' + deck.id}
+													key={deck.id}
+													id="link"
+												>
+													<DeckInfo deck={deck} />
+												</Link>
+												<p className="decktypetxt">{deck.type}</p>
 											</div>
 										</div>
-									);
-									} else {
-										let cardsInDeck = flashcards.filter((fcard) => fcard.deckid === deck.id);
-										return (
-											<div key={deck.id} className="col s12 m6 l6">
-												<div className="deck completed">
-													<div className="deck-content-comp">
-														<DeckInfo className="col s12" deck={deck} />
-														<p className="decktypetxt">{deck.type}</p>
-														<a onClick={this.restartDeck(cardsInDeck)} class="btn-floating btn-large waves-effect deck-btn"><i class="material-icons">replay</i></a>
-													</div>
-												</div>
+									</div>
+								);
+							} else {
+								let cardsInDeck = flashcards.filter((fcard) => fcard.deckid === deck.id);
+								return (
+									<div key={deck.id} className="col s12 m6 l6">
+										<div className="deck completed">
+											<div className="deck-content-comp">
+												<DeckInfo className="col s12" deck={deck} />
+												<p className="decktypetxt">{deck.type}</p>
+												<a
+													onClick={this.restartDeck(cardsInDeck)}
+													className="btn-floating btn-large waves-effect deck-btn"
+												>
+													<i className="material-icons">replay</i>
+												</a>
 											</div>
-										);
-									}
-							})
-						}
-					</div>
-					</div>
+										</div>
+									</div>
+								);
+							}
+						})}
+				</div>
+			</div>
 		);
 	}
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-	  	removeCompletedFlashcards: (flashcard) => dispatch(removeCompletedFlashcards(flashcard))
-    }
-  }
+	return {
+		removeCompletedFlashcards: (flashcard) => dispatch(removeCompletedFlashcards(flashcard))
+	};
+};
 
 const mapStateToProps = (state) => {
 	return {

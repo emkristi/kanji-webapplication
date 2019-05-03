@@ -103,12 +103,9 @@ export const loaduser2 = () => {
 export const loaduser = () => {
 	return (dispatch, getState, { getFirestore }) => {
 		const firestore = getFirestore(); // reference to our firestore database
-		const userId = getState().firebase.auth.uid;
 
 		firestore.collection('users').get().then((snapshot) => {
 			snapshot.docs.forEach((doc) => {
-				let users = doc.data();
-
 				//items = JSON.stringify(items);
 				//this.setState({ users : users})
 				//this.setState({ items : items })

@@ -8,34 +8,29 @@ import '../../CSS/auth.css';
 import { Link } from 'react-router-dom';
 
 class SignIn extends Component {
-    _isMounted = false;
-    state = {
-        email: '',
-        password: '',
-        isSignedIn: false,
-        name:'',
-        userId:''
-    }
-    uiConfig = {
-        signInFlow: 'popup',
-        signInOptions: [
-            firebase.auth.FacebookAuthProvider.PROVIDER_ID
-        ],
-        callbacks: {
-            signInSuccess: () => false
-        }
-    }
-    componentDidMount = () => {
-        var unsubscribe = firebase.auth().onAuthStateChanged(user => {
-            this.setState({isSignedIn:!!user})
-        })
-        unsubscribe();
-    }
+	_isMounted = false;
+	state = {
+		email: '',
+		password: '',
+		isSignedIn: false,
+		name: '',
+		userId: ''
+	};
+	uiConfig = {
+		signInFlow: 'popup',
+		signInOptions: [ firebase.auth.FacebookAuthProvider.PROVIDER_ID ],
+		callbacks: {
+			signInSuccess: () => false
+		}
+	};
+	componentDidMount = () => {
+		var unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+			this.setState({ isSignedIn: !!user });
+		});
+		unsubscribe();
+	};
 
-    
-    
-
-    /**
+	/**
      * Function that fires when a user changes an input field
      */
 	handleChange = (e) => {
@@ -63,47 +58,46 @@ class SignIn extends Component {
 		const { authError, auth } = this.props;
 		if (auth.uid) return <Redirect to="/" />;
 
-    return (
-      <div className="auth-container">
-        <div className="row center">
-            <div className="auth-title">Sign In</div>
-            <form className="auth-content center" onSubmit={this.handleSubmit}>
-                <div className="auth-input">
-                <div className="input-field">
-                    <label htmlFor="email">Email</label>
-                    <input type="email" id="email" required onChange={this.handleChange}/>
-                </div>
-            <div className="input-field">
-                <label htmlFor="password">Password</label>
-                <input type="password" id="password" required onChange={this.handleChange}/>
-            </div>
-            </div>
-            <div className="input-field">
-                <button className="btn"><i class="material-icons">arrow_forward</i><span>Sign in</span></button>
-                <div className="red-text center">
-                    { authError ? <p>{authError}</p> : null}
-                </div>
-            </div>
-            <div className="auth-text">OR</div>
-            <div className="fb-login-field">
-                {this.state.isSignedIn ? (
-                    <div>Signed in"</div>
-                    ):(
-                        <StyledFirebaseAuth
-                            uiConfig={this.uiConfig}
-                            firebaseAuth={firebase.auth()}
-                    />
-                    )
-                }
-            </div>
-            <div className="auth-link">
-                <p>Dont have a user? Create one <Link to ='/signup'>here</Link> </p>
-            </div>
-        </form>
-        </div>
-      </div>
-    )
-  }
+		return (
+			<div className="auth-container">
+				<div className="row center">
+					<div className="auth-title">Sign In</div>
+					<form className="auth-content center" onSubmit={this.handleSubmit}>
+						<div className="auth-input">
+							<div className="input-field">
+								<label htmlFor="email">Email</label>
+								<input type="email" id="email" required onChange={this.handleChange} />
+							</div>
+							<div className="input-field">
+								<label htmlFor="password">Password</label>
+								<input type="password" id="password" required onChange={this.handleChange} />
+							</div>
+						</div>
+						<div className="input-field">
+							<button className="btn">
+								<i className="material-icons">arrow_forward</i>
+								<span>Sign in</span>
+							</button>
+							<div className="red-text center">{authError ? <p>{authError}</p> : null}</div>
+						</div>
+						<div className="auth-text">OR</div>
+						<div className="fb-login-field">
+							{this.state.isSignedIn ? (
+								<div>Signed in"</div>
+							) : (
+								<StyledFirebaseAuth uiConfig={this.uiConfig} firebaseAuth={firebase.auth()} />
+							)}
+						</div>
+						<div className="auth-link">
+							<p>
+								Dont have a user? Create one <Link to="/signup">here</Link>{' '}
+							</p>
+						</div>
+					</form>
+				</div>
+			</div>
+		);
+	}
 }
 
 const mapStateToProps = (state) => {
