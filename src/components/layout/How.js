@@ -13,6 +13,15 @@ class How extends Component {
                         <div className="info">
                             <h4 className="center-align">How to use Memji</h4>
                             <br></br>
+                            <div className="row">
+								<div className="col s12 m6 l6">
+									<h5 className="">DECKS</h5>
+                                    Click on a deck to start playing. You can either choose a deck with flashcards that go from Kanji to English or picture flashcards. A deck has a category, but since they also contain radicals some words in the categories doesn't have anything to do with the category itself. 
+								</div>
+								<div className="col s12 m6 l6  center-align">
+									<img class="activator logoimg" src="img/numdeck.png" alt="Memji logo" />{' '}
+								</div>
+							</div>
 
                             <div className="row">
 								<div className="col s12 m6 l6">
@@ -22,10 +31,10 @@ class How extends Component {
 								<div className="col s12 m6 l6  center-align">
                                     <div className="row">
                                         <div className="col s6 m6 l6">
-                                            <img class="fcimg" src="img/fcfront.png" alt="Memji logo" />{' '}
+                                            <img class="fcimg" src="img/fcfront.png" alt="flashcard front" />{' '}
                                         </div>
                                         <div className="col s6 m6 l6">
-                                            <img class="fcimg" src="img/fcback.png" alt="Memji logo" />{' '}
+                                            <img class="fcimg" src="img/fcback.png" alt="flashcard back" />{' '}
                                         </div>
 
                                     </div>
@@ -68,21 +77,30 @@ class How extends Component {
 
                             <br></br>
                             <div className="row">
-                            <div className="col s12 m6 l6">
+                                <div className="col s12 m6 l6">
 									<h5 className="">PHOTOFLASHCARDS</h5>
-                                    For photoflashcards an image will appear along with four different Kanji. Click a kanji. If correct kanji, the flashcard will flip around where you will see the easy and hard buttons along with clientInformation. 
+                                    For photoflashcards an image will appear along with four different Kanji. Click a kanji. If correct kanji, the flashcard will flip around where you will see the easy and hard buttons along with information. 
 								</div>
 								<div className="col s12 m6 l6  center-align">
-									<img class="activator logoimg" src="" alt="Memji logo" />{' '}
-								</div>
-                            </div>
-                            
-                            <div className="row">
-                                <div className="col s12 m12 l12 center">
-                                    <br></br>
-                                    <Link to="/">Click here to start</Link>
+                                    <div className="row">
+                                        <div className="col s6 m6 l6">
+                                            <img class="fcimg" src="img/pfcapple.png" alt="photoflashcard front" />{' '}
+                                        </div>
+                                        <div className="col s6 m6 l6">
+                                            <img class="fcimg" src="img/pfcappleback.png" alt="photoflashcard back" />{' '}
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
+
+                            <div className="row">
+                                <div className="col s12 m12 l12 center startlink">
+                                    <br></br>
+                                    <Link to="/">Click here to begin!</Link>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>

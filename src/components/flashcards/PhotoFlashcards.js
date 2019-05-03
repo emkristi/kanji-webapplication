@@ -35,6 +35,8 @@ class PhotoFlashcards extends Component {
 
   handleHard = (e) => {
     this.changeFc();
+
+
   }
 
   handleEasy = (e) => {
