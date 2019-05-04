@@ -34,9 +34,29 @@ class PhotoFlashcards extends Component {
   
 
   handleHard = (e) => {
-    this.changeFc();
+    const { flashcards, match: { params: { id } }, auth, users } = this.props;
 
+    let categoryfcs = flashcards.filter(f => f.deckid === id);
+    let user = users.find(u => u.id === auth.uid);
 
+    // seenFc -> flashcards som allerede er gått gjennom
+    const seenFc = user.flashcardArray ? user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id) : [];
+
+    if (!(seenFc.length === categoryfcs.length - 1)) {
+      this.changeFc();
+      let lastFc = categoryfcs.filter(elem => !seenFc.includes(elem.id));
+      if(lastFc){
+        this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
+        this.changeFc();
+      }
+      return;
+    }else if(seenFc.length === categoryfcs.length - 1){
+      this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
+      document.getElementById("but1").style.backgroundColor = "white";
+      document.getElementById("but2").style.backgroundColor = "white";
+      document.getElementById("but3").style.backgroundColor = "white";
+      document.getElementById("but4").style.backgroundColor = "white";
+    }
   }
 
   handleEasy = (e) => {
@@ -47,6 +67,7 @@ class PhotoFlashcards extends Component {
     
     this.props.updateUser(categoryfcs[currentCard].id);
 
+    this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
     this.changeFc();
 
   }
@@ -170,7 +191,6 @@ class PhotoFlashcards extends Component {
       currentCard: currentNumber
     });
 
-    this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
 
     document.getElementById("but1").style.backgroundColor = "white";
     document.getElementById("but2").style.backgroundColor = "white";
