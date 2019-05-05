@@ -60,16 +60,29 @@ class PhotoFlashcards extends Component {
   }
 
   handleEasy = (e) => {
-    const { flashcards, match: { params: { id } } } = this.props;
+    const { auth, users, flashcards, match: { params: { id } } } = this.props;
     const { currentCard } = this.state;
 
     let categoryfcs = flashcards.filter(val => val.deckid === id);
-    
-    this.props.updateUser(categoryfcs[currentCard].id);
+    let user = users.find(u => u.id === auth.uid);
+    const seenFc = user.flashcardArray ? user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id) : [];
+  
+    let remainingFc = categoryfcs.filter(elem => !seenFc.includes(elem.id));
 
-    this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
-    this.changeFc();
+    // dersom kun ett kort igjen og det er det man er på -> legg til i db og gå ut av deck
+    if((seenFc.length === categoryfcs.length - 1) && (remainingFc[0].id === categoryfcs[currentCard].id)){
+      this.props.updateUser(categoryfcs[currentCard].id);
+      window.location.href = '/';
+      return;
+    }
 
+    // sjekker om er mer enn ett usett flashcard igjen eller om er ett igjen men som ikke er det gjeldende
+    if ((!(seenFc.length === categoryfcs.length - 1)) || (seenFc.length === categoryfcs.length - 1) && (!seenFc.includes(remainingFc))) {
+      this.props.updateUser(categoryfcs[currentCard].id); 
+      this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
+      this.changeFc(); 
+      return;
+    }
   }
 
 
@@ -135,12 +148,6 @@ class PhotoFlashcards extends Component {
     const seenFc = user.flashcardArray ? user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id) : [];
 
     this.props.loaduser();
-
-    // If no more unseen flashcards, go back to frontpage
-    if (seenFc.length === categoryfcs.length - 1) {
-      window.location.href = '/';
-      return;
-    }
 
     let currentNumber = 0;
     // If flashcards in buffer, show first element and remove element from buffer

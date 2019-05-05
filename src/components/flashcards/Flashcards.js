@@ -158,16 +158,7 @@ class Flashcards extends Component {
     let categoryfcs = flashcards.filter(f => f.deckid === id);
     let user = users.find(u => u.id === auth.uid);
 
-    // seenFc -> flashcards som allerede er gått gjennom
-    const seenFc = user.flashcardArray ? user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id) : [];
-
     this.props.loaduser();
-
-    //console.log(seenFc);
-    //console.log(categoryfcs);
-
-    // If no more unseen flashcards, go back to frontpage
-   
     
     let currentNumber = 0;
     // If flashcards in buffer, show first element and remove element from buffer
