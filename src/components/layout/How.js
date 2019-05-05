@@ -39,8 +39,6 @@ class How extends Component {
 
                                     </div>
                                 </div>
-
-
 							</div>
 
 							<div className="row">
@@ -98,23 +96,12 @@ class How extends Component {
                             </div>
 
                             <br></br>
-                            <br></br>
                             <div className="row">
                                 <div className="col s12 m12 l12 center startlink">
                                     <button className="btn"><Link to="/" id="beginlink">Start</Link></button>
                                     <br></br>
-                                    
                                 </div>
                             </div>
-
-
-                            <div className="row">
-								<div className="col s12 m12 l12 center">
-									<br />
-									<Link to="/">Click here to start</Link>
-								</div>
-							</div>
-
                         </div>
                     </div>
                 </div>
