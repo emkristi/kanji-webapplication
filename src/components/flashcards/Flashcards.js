@@ -81,7 +81,6 @@ class Flashcards extends Component {
 
   handleHard = (e) => {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
-    const { currentCard, bufferfc, fcArray, localfcardarr} = this.state;
 
     let categoryfcs = flashcards.filter(f => f.deckid === id);
     let user = users.find(u => u.id === auth.uid);
@@ -89,21 +88,28 @@ class Flashcards extends Component {
     // seenFc -> flashcards som allerede er gått gjennom
     const seenFc = user.flashcardArray ? user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id) : [];
 
+    // hvis 
     if (!(seenFc.length === categoryfcs.length - 1)) {
       this.changeFc();
       let lastFc = categoryfcs.filter(elem => !seenFc.includes(elem.id));
 
+      console.log(lastFc);
+
       if(lastFc){
+        console.log(lastFc);
         this.changeFc();
       }
       return;
     }else if(seenFc.length === categoryfcs.length - 1){
+      let lastFc = categoryfcs.filter(elem => !seenFc.includes(elem.id));
+
+      console.log("hei", lastFc);
     }
   }
 
   handleEasy = (e) => {
     const { flashcards, match: { params: { id } } } = this.props;
-    const { mnemonics, auth, users } = this.props;
+    const { auth, users } = this.props;
     const { currentCard } = this.state;
 
     let categoryfcs = flashcards.filter(val => val.deckid === id);
@@ -112,35 +118,26 @@ class Flashcards extends Component {
     // seenFc -> flashcards som allerede er gått gjennom
     const seenFc = user.flashcardArray ? user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id) : [];
   
+    let remainingFc = categoryfcs.filter(elem => !seenFc.includes(elem.id));
 
-    if (!(seenFc.length === categoryfcs.length - 1)) {
-      this.changeFc();
-      let lastFc = categoryfcs.filter(elem => !seenFc.includes(elem.id));
-      
-      if(lastFc){
-        this.props.updateUser(categoryfcs[currentCard].id);
-        this.changeFc();
-      }
-      
-      //window.location.href = '/';
+    // dersom kun ett kort igjen og det er det man er på -> legg til i db og gå ut av deck
+    if((seenFc.length === categoryfcs.length - 1) && (remainingFc[0].id === categoryfcs[currentCard].id)){
+      this.props.updateUser(categoryfcs[currentCard].id);
+      window.location.href = '/';
       return;
-    }else if(seenFc.length === categoryfcs.length - 1){
-      //this.changeFc();
-      console.log("siste easy, hard trykt");
-
-        let lastFc = categoryfcs.filter(elem => !seenFc.includes(elem.id));
-  
-        if(lastFc){
-          this.props.addCompletedFlashcards(lastFc[0].id);
-        }
-        
-        window.location.href = '/';
-        return;
-      
     }
 
-    //this.setState({showMnemField: false});
+    // sjekker om er mer enn ett usett flashcard igjen eller om er ett igjen men som ikke er det gjeldende
+    if ((!(seenFc.length === categoryfcs.length - 1)) || (seenFc.length === categoryfcs.length - 1) && (!seenFc.includes(remainingFc))) {
+      this.props.updateUser(categoryfcs[currentCard].id); 
+      this.changeFc(); 
+      return;
+
+    }
   }
+
+    //this.setState({showMnemField: false});
+  
 
   findIndexOfFcId = (categoryfcs, fcid) => {
     let value = categoryfcs.find((val) => {
