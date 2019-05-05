@@ -76,12 +76,14 @@ class PhotoFlashcards extends Component {
     }
 
     // sjekker om er mer enn ett usett flashcard igjen eller om er ett igjen men som ikke er det gjeldende
-    if ((!(seenFc.length === categoryfcs.length - 1)) || (seenFc.length === categoryfcs.length - 1) && (!seenFc.includes(remainingFc))) {
+    if ((!(seenFc.length === categoryfcs.length - 1)) || ((seenFc.length === categoryfcs.length - 1) && (!seenFc.includes(remainingFc)))) {
       this.props.updateUser(categoryfcs[currentCard].id); 
       this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
       this.changeFc(); 
       return;
+
     }
+    
   }
 
 
@@ -103,12 +105,10 @@ class PhotoFlashcards extends Component {
 
     let categoryfcs = flashcards.filter(val => val.deckid === id);
     e.preventDefault();
-    let mnem = this.state.mnemonic;
 
     let user = users.find(u => u.id === auth.uid);
     let gjeldendeFlashcard = categoryfcs[currentCard];
     let gjeldendeMnem = "";
-    let ingenMnemInArr = false;
     for(let i = 0; i < mnemonics.length; ++i){
       if(gjeldendeFlashcard.id === mnemonics[i].fcId && mnemonics[i].userId === user.id){
         gjeldendeMnem = mnemonics[i];
@@ -144,7 +144,6 @@ class PhotoFlashcards extends Component {
 
     let categoryfcs = flashcards.filter(f => f.deckid === id);
     let user = users.find(u => u.id === auth.uid);
-    const seenFc = user.flashcardArray ? user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id) : [];
 
     this.props.loaduser();
 

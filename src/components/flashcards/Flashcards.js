@@ -50,12 +50,10 @@ class Flashcards extends Component {
 
     let categoryfcs = flashcards.filter(val => val.deckid === id);
     e.preventDefault();
-    let mnem = this.state.mnemonic;
     let user = users.find(u => u.id === auth.uid);
 
     let gjeldendeFlashcard = categoryfcs[currentCard];
     let gjeldendeMnem = "";
-    let ingenMnemInArr = false;
     for(let i = 0; i < mnemonics.length; ++i){
       if(gjeldendeFlashcard.id === mnemonics[i].fcId && mnemonics[i].userId === user.id){
         // finner gjeldende mnemonic hcis det er noen
@@ -127,7 +125,7 @@ class Flashcards extends Component {
     }
 
     // sjekker om er mer enn ett usett flashcard igjen eller om er ett igjen men som ikke er det gjeldende
-    if ((!(seenFc.length === categoryfcs.length - 1)) || (seenFc.length === categoryfcs.length - 1) && (!seenFc.includes(remainingFc))) {
+    if ((!(seenFc.length === categoryfcs.length - 1)) || ((seenFc.length === categoryfcs.length - 1) && (!seenFc.includes(remainingFc)))) {
       this.props.updateUser(categoryfcs[currentCard].id); 
       this.changeFc(); 
       return;
@@ -152,7 +150,7 @@ class Flashcards extends Component {
 
   changeFc = (e) => {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
-    const { currentCard, bufferfc, fcArray, localfcardarr} = this.state;
+    const { currentCard, bufferfc } = this.state;
 
     let categoryfcs = flashcards.filter(f => f.deckid === id);
     let user = users.find(u => u.id === auth.uid);
@@ -297,7 +295,7 @@ class Flashcards extends Component {
 															flashcards && (
 																<p>
 																	{radarray.map((radical) => {
-																		return <span>{radical} </span>;
+																		return <span key={radical}>{radical} </span>;
 																	})}
 																</p>
 															)}
@@ -316,7 +314,7 @@ class Flashcards extends Component {
 																flashcards && (
 																	<p>
 																		{radarray.map((radical) => {
-																			return <span>{radical} </span>;
+																			return <span key={radical}>{radical} </span>;
 																		})}
 																	</p>
 																)}
