@@ -27,7 +27,7 @@ class About extends Component {
 								</div>
 
 								<div className="col s12 m6 l6 center-align">
-									<img className="activator fruitimg" src="img/pear.jpg" alt="Pear drawing" />{' '}
+									<img className="activator fruitimg" src="img/mandarin.png" alt="Mandarin illustration" />{' '}
 								</div>
 							</div>
 							<br></br>

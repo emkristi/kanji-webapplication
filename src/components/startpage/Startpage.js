@@ -9,7 +9,7 @@ class Startpage extends Component {
 						<div className="s-content">
 							<div className="row">
 								<div className="col s12 m6 l5">
-									<img src="img/LOGO-STOR.jpg" alt="logo" />
+									<img src="img/memjilogo.png" alt="logo" />
 								</div>
 
 								<div className="col s12 m6 l7 ">
