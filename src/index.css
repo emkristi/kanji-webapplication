@@ -74,14 +74,7 @@ nav ul a:hover {
   height: 2rem;
 }
 
-.s-content{
-  width: 70rem;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
+
 
 .startpage-btn{
   margin: 1rem;
@@ -96,4 +89,48 @@ nav ul a:hover {
   font-weight: bold;
   height: 3rem;
   border-radius: 150px;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .s-content{
+    width: 25rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) and (max-width: 800px) {
+  .s-content{
+    width: 40rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 800px) {
+  .s-content{
+    width: 70rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+}
+
+.navbarlinks{
+  color: black !important;
+}
+
+.dropdown-content{
+  width: 10rem !important;
 }

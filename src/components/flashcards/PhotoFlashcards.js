@@ -13,390 +13,367 @@ import { replaceMnemonic } from '../../store/actions/flashcardActions';
 import '../../CSS/photoflashcard.css';
 
 class PhotoFlashcards extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			currentCard: 0,
-			bufferfc: [],
-			isFlipped: false
-		};
-	}
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentCard: 0,
+      bufferfc: [],
+      isFlipped: false
+    };
+  }
 
-	componentDidMount() {
-		this.props.firestore.setListener({ collection: 'users' });
-	}
+  componentDidMount(){
+    this.props.firestore.setListener({collection: 'users'})
+  }
 
-	componentWillUnmount() {
-		this.props.firestore.unsetListener({ collection: 'users' });
-	}
+  componentWillUnmount(){
+    this.props.firestore.unsetListener({collection: 'users'})
+  }
 
-	flipClick = (e) => {
-		e.preventDefault();
-		this.setState((prevState) => ({ isFlipped: !prevState.isFlipped }));
-		console.log('flappy floppy?');
-	};
+  
 
-	handleHard = (e) => {
-		this.changeFc();
-	};
+  handleHard = (e) => {
+    const { flashcards, match: { params: { id } }, auth, users } = this.props;
 
-	handleEasy = (e) => {
-		const { flashcards, match: { params: { id } } } = this.props;
-		const { currentCard } = this.state;
+    let categoryfcs = flashcards.filter(f => f.deckid === id);
+    let user = users.find(u => u.id === auth.uid);
 
-		let categoryfcs = flashcards.filter((val) => val.deckid === id);
+    // seenFc -> flashcards som allerede er gått gjennom
+    const seenFc = user.flashcardArray ? user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id) : [];
 
-		this.props.updateUser(categoryfcs[currentCard].id);
+    if (!(seenFc.length === categoryfcs.length - 1)) {
+      this.changeFc();
+      let lastFc = categoryfcs.filter(elem => !seenFc.includes(elem.id));
+      if(lastFc){
+        this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
+        this.changeFc();
+      }
+      return;
+    }else if(seenFc.length === categoryfcs.length - 1){
+      this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
+      document.getElementById("but1").style.backgroundColor = "white";
+      document.getElementById("but2").style.backgroundColor = "white";
+      document.getElementById("but3").style.backgroundColor = "white";
+      document.getElementById("but4").style.backgroundColor = "white";
+    }
+  }
 
-		this.changeFc();
-	};
+  handleEasy = (e) => {
+    const { auth, users, flashcards, match: { params: { id } } } = this.props;
+    const { currentCard } = this.state;
 
-	handleEditMnemClick = (e) => {
-		this.setState({ showMnemField: true });
-	};
+    let categoryfcs = flashcards.filter(val => val.deckid === id);
+    let user = users.find(u => u.id === auth.uid);
+    const seenFc = user.flashcardArray ? user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id) : [];
+  
+    let remainingFc = categoryfcs.filter(elem => !seenFc.includes(elem.id));
 
-	handleMnemonicChange = (e) => {
-		e.preventDefault();
-		this.setState({
-			[e.target.id]: e.target.value
-		});
-	};
+    // dersom kun ett kort igjen og det er det man er på -> legg til i db og gå ut av deck
+    if((seenFc.length === categoryfcs.length - 1) && (remainingFc[0].id === categoryfcs[currentCard].id)){
+      this.props.updateUser(categoryfcs[currentCard].id);
+      window.location.href = '/';
+      return;
+    }
 
-	handleMnemonicSubmit = (e) => {
-		const { flashcards, match: { params: { id } } } = this.props;
-		const { mnemonics, users, auth } = this.props;
-		const { currentCard } = this.state;
+    // sjekker om er mer enn ett usett flashcard igjen eller om er ett igjen men som ikke er det gjeldende
+    if ((!(seenFc.length === categoryfcs.length - 1)) || (seenFc.length === categoryfcs.length - 1) && (!seenFc.includes(remainingFc))) {
+      this.props.updateUser(categoryfcs[currentCard].id); 
+      this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
+      this.changeFc(); 
+      return;
+    }
+  }
 
-		let categoryfcs = flashcards.filter((val) => val.deckid === id);
-		e.preventDefault();
 
-		let user = users.find((u) => u.id === auth.uid);
-		let gjeldendeFlashcard = categoryfcs[currentCard];
-		let gjeldendeMnem = '';
-		for (let i = 0; i < mnemonics.length; ++i) {
-			if (gjeldendeFlashcard.id === mnemonics[i].fcId && mnemonics[i].userId === user.id) {
-				gjeldendeMnem = mnemonics[i];
-				console.log('gjeldende', gjeldendeMnem);
-				for (let j = 0; j < user.mnemonicArr.length; j++) {
-					console.log(gjeldendeMnem.id, user.mnemonicArr[j]);
-					if (user.mnemonicArr[j] === gjeldendeMnem.id) {
-						this.props.replaceMnemonic(this.state.mnemonic, gjeldendeMnem, gjeldendeFlashcard.id);
-					}
-				}
-			}
-		}
+  handleEditMnemClick = (e) => {
+    this.setState({showMnemField: true});
+  }
 
-		if (gjeldendeMnem === '') {
-			this.props.updateMnemonic(this.state.mnemonic, categoryfcs[currentCard].id);
-		}
-	};
+  handleMnemonicChange = (e) => {
+    e.preventDefault();
+    this.setState({
+      [e.target.id]: e.target.value
+    })
+  }
 
-	findIndexOfFcId = (categoryfcs, fcid) => {
-		let value = categoryfcs.find((val) => {
-			return val.id === fcid;
-		});
-		return categoryfcs.indexOf(value);
-	};
+  handleMnemonicSubmit = (e) => {
+    const { flashcards, match: { params: { id } } } = this.props;
+    const { mnemonics, users, auth } = this.props;
+    const { currentCard } = this.state;
 
-	findFlashcardById = (id) => {
-		const { flashcards } = this.props;
-		return flashcards.find((f) => f.id === id);
-	};
+    let categoryfcs = flashcards.filter(val => val.deckid === id);
+    e.preventDefault();
+    let mnem = this.state.mnemonic;
 
-	changeFc = (e) => {
-		const { flashcards, match: { params: { id } }, auth, users } = this.props;
-		const { currentCard, bufferfc } = this.state;
+    let user = users.find(u => u.id === auth.uid);
+    let gjeldendeFlashcard = categoryfcs[currentCard];
+    let gjeldendeMnem = "";
+    let ingenMnemInArr = false;
+    for(let i = 0; i < mnemonics.length; ++i){
+      if(gjeldendeFlashcard.id === mnemonics[i].fcId && mnemonics[i].userId === user.id){
+        gjeldendeMnem = mnemonics[i];
+        for(let j = 0; j < user.mnemonicArr.length; j++){
+          if(user.mnemonicArr[j] === gjeldendeMnem.id){
+            this.props.replaceMnemonic(this.state.mnemonic, gjeldendeMnem, gjeldendeFlashcard.id);
+          } 
+        }
+      } 
+    }
 
-		let categoryfcs = flashcards.filter((f) => f.deckid === id);
-		let user = users.find((u) => u.id === auth.uid);
-		const seenFc = user.flashcardArray
-			? user.flashcardArray.filter((f) => this.findFlashcardById(f).deckid === id)
-			: [];
+    if(gjeldendeMnem === ""){
+      this.props.updateMnemonic(this.state.mnemonic, categoryfcs[currentCard].id)
+    }
+  }
 
-		this.props.loaduser();
 
-		// If no more unseen flashcards, go back to frontpage
-		if (seenFc.length === categoryfcs.length - 1) {
-			window.location.href = '/';
-			return;
-		}
+  findIndexOfFcId = (categoryfcs, fcid) => {
+    let value = categoryfcs.find((val) => {
+      return (val.id === fcid)
+    });
+    return categoryfcs.indexOf(value);
+  }
 
-		let currentNumber = 0;
-		// If flashcards in buffer, show first element and remove element from buffer
-		if (bufferfc.length > 0) {
-			currentNumber = this.findIndexOfFcId(categoryfcs, bufferfc[0]);
-			if (bufferfc.length > 1) {
-				this.setState({ bufferfc: bufferfc.splice(1, bufferfc.length - 1) });
-			} else {
-				this.setState({ bufferfc: [] });
-			}
-			// If no flashcards in buffer, find random flashcard from category flashcards
-		} else {
-			let temp = true;
-			while (temp) {
-				currentNumber = Math.round(Math.random() * (categoryfcs.length - 1));
-				// If this random flashcard is not seen before
-				if (
-					!(
-						(user.flashcardArray && user.flashcardArray.includes(categoryfcs[currentNumber].id)) ||
-						currentNumber === currentCard
-					)
-				) {
-					//Check if random flashcard's got radicals
-					let fcradicals = categoryfcs[currentNumber].radicals;
-					if (fcradicals.length > 0) {
-						let notseen = [];
-						for (let i = 0; i < fcradicals.length; i++) {
-							if (
-								!(
-									(user.flashcardArray && user.flashcardArray.includes(fcradicals[i].id)) ||
-									currentCard === this.findIndexOfFcId(categoryfcs, fcradicals[i].id)
-								)
-							) {
-								notseen.push(fcradicals[i].id); // add unseen radical to array
-							}
-						}
-						//if there are radicals who are not seen, show first radical in array and push others + parent flashcard to buffer array in state
-						if (notseen.length > 0) {
-							let flashcard = categoryfcs[currentNumber];
-							currentNumber = this.findIndexOfFcId(categoryfcs, notseen[0]);
-							let newarray = [];
-							for (let i = 1; i < notseen.length; i++) {
-								newarray.push(notseen[i]);
-							}
-							newarray.push(flashcard.id);
-							this.setState({ bufferfc: [ ...bufferfc, ...newarray ] });
-						}
-					}
-					temp = false;
-				}
-			}
-		}
+  findFlashcardById = (id) => {
+    const { flashcards } = this.props;
+    return flashcards.find(f => f.id === id);
+  }
 
-		console.log(user.flashcardArray);
+  changeFc = (e) => {
+    const { flashcards, match: { params: { id } }, auth, users } = this.props;
+    const { currentCard, bufferfc } = this.state;
 
-		// set found current number
-		this.setState({
-			currentCard: currentNumber
-		});
+    let categoryfcs = flashcards.filter(f => f.deckid === id);
+    let user = users.find(u => u.id === auth.uid);
+    const seenFc = user.flashcardArray ? user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id) : [];
 
-		this.setState((prevState) => ({ isFlipped: !prevState.isFlipped }));
+    this.props.loaduser();
 
-		document.getElementById('but1').style.backgroundColor = 'white';
-		document.getElementById('but2').style.backgroundColor = 'white';
-		document.getElementById('but3').style.backgroundColor = 'white';
-		document.getElementById('but4').style.backgroundColor = 'white';
-	};
+    let currentNumber = 0;
+    // If flashcards in buffer, show first element and remove element from buffer
+    if (bufferfc.length > 0) {
+      currentNumber = this.findIndexOfFcId(categoryfcs, bufferfc[0]);
+      if (bufferfc.length > 1) {
+        this.setState({ bufferfc: bufferfc.splice(1, bufferfc.length - 1) })
+      } else {
+        this.setState({ bufferfc: [] });
+      }
+      // If no flashcards in buffer, find random flashcard from category flashcards
+    } else {
+      let temp = true;
+      while (temp) {
+        currentNumber = (Math.round(Math.random() * (categoryfcs.length - 1)));
+        // If this random flashcard is not seen before
+        if (!(((user.flashcardArray && user.flashcardArray.includes(categoryfcs[currentNumber].id)) || (currentNumber === currentCard)))) {
+          //Check if random flashcard's got radicals
+          let fcradicals = categoryfcs[currentNumber].radicals;
+          if (fcradicals.length > 0) {
+            let notseen = [];
+            for (let i = 0; i < fcradicals.length; i++) {
+              if (!((user.flashcardArray && user.flashcardArray.includes(fcradicals[i].id)) || currentCard === this.findIndexOfFcId(categoryfcs, fcradicals[i].id))) {
+                notseen.push(fcradicals[i].id); // add unseen radical to array
+              }
+            }
+            //if there are radicals who are not seen, show first radical in array and push others + parent flashcard to buffer array in state
+            if (notseen.length > 0) {
+              let flashcard = categoryfcs[currentNumber];
+              currentNumber = this.findIndexOfFcId(categoryfcs, notseen[0]);
+              let newarray = [];
+              for (let i = 1; i < notseen.length; i++) {
+                newarray.push(notseen[i]);
+              }
+              newarray.push(flashcard.id);
+              this.setState({ bufferfc: [...bufferfc, ...newarray] });
+            }
+          }
+          temp = false;
+        }
+      }
+    }
 
-	handleFButton = (e) => {
-		const { flashcards, match: { params: { id } } } = this.props;
-		const { currentCard } = this.state;
-		let categoryfcs = flashcards.filter((val) => val.deckid === id);
 
-		var buttonId = e.target.id;
-		console.log(buttonId);
 
-		if (e.target.value === categoryfcs[currentCard].kanji) {
-			this.setState((prevState) => ({ isFlipped: !prevState.isFlipped }));
-			document.getElementById(buttonId).style.backgroundColor = 'rgb(121,	196,	154)';
-		} else if (e.target.value !== categoryfcs[currentCard].kanji) {
-			document.getElementById(buttonId).style.backgroundColor = 'rgb(200,	67,	81)';
-		}
-	};
+    // set found current number
+    this.setState({
+      currentCard: currentNumber
+    });
 
-	randomKanjiArray = () => {
-		const { flashcards, match: { params: { id } } } = this.props;
-		const { currentCard } = this.state;
 
-		let categoryfcs;
-		var arr = [];
-		if (flashcards) {
-			categoryfcs = flashcards.filter((val) => val.deckid === id);
-			arr.push(categoryfcs[currentCard].kanji);
-		}
+    document.getElementById("but1").style.backgroundColor = "white";
+    document.getElementById("but2").style.backgroundColor = "white";
+    document.getElementById("but3").style.backgroundColor = "white";
+    document.getElementById("but4").style.backgroundColor = "white";
 
-		if (categoryfcs) {
-			while (arr.length < 4) {
-				var r = Math.round(Math.random() * (categoryfcs.length - 1));
 
-				if (!arr.includes(categoryfcs[r].kanji)) {
-					arr.push(categoryfcs[r].kanji);
-				}
-			}
-			arr.sort(function() {
-				return 0.5 - Math.random();
-			});
+  }
 
-			return arr;
-		}
-	};
+  handleFButton = (e) => {
+    const { flashcards, match: { params: { id } } } = this.props;
+    const { currentCard } = this.state;
+    let categoryfcs = flashcards.filter(val => val.deckid === id);
 
-	render() {
-		const { flashcards, match: { params: { id } }, auth, users } = this.props;
-		const { currentCard } = this.state;
-		const { mnemonics } = this.props;
+    var buttonId = e.target.id;
+    if (e.target.value === categoryfcs[currentCard].kanji) {
+      this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
+      document.getElementById(buttonId).style.backgroundColor = "rgb(121,	196,	154)";
+    } else if (e.target.value !== categoryfcs[currentCard].kanji){
+      document.getElementById(buttonId).style.backgroundColor = "rgb(200,	67,	81)";
+    }
 
-		var randomArray = this.randomKanjiArray();
-		// console.log("r", randomArray);
+    
+  }
 
-		if (!auth.uid) return <Redirect to="/signin" />;
+  randomKanjiArray = () => {
+    const { flashcards, match: { params: { id } } } = this.props;
+    const { currentCard } = this.state;
 
-		// Only show flashcards in current category
-		let categoryfcs = [];
-		if (flashcards) {
-			categoryfcs = flashcards.filter((f) => f.deckid === id);
-		}
+    let categoryfcs;
+    var arr = [];
+    if(flashcards){
+      categoryfcs = flashcards.filter(val => val.deckid === id);
+      arr.push(categoryfcs[currentCard].kanji);
+    }
+    
+    if(categoryfcs){
+      while (arr.length < 4) {
+        var r = (Math.round(Math.random() * (categoryfcs.length - 1)));
+  
+        if (!arr.includes(categoryfcs[r].kanji)) {
+          arr.push(categoryfcs[r].kanji);
+        }
+      }
+      arr.sort(function () {
+        return .5 - Math.random();
+      });
+  
+      return arr;
 
-		// Check if you've seen every flashcard
-		let user;
-		if (users) {
-			user = users.find((u) => u.id === auth.uid);
-			if (
-				user.flashcardArray &&
-				user.flashcardArray.filter((f) => this.findFlashcardById(f).deckid === id).length === categoryfcs.length
-			) {
-				return (
-					<div>
-						Du har vært gjennom alle i denne kategorien{' '}
-						<button onClick={() => (window.location.href = '/')}>Gå tilbake</button>
-						<button onClick={this.restartDeck} id="restartbutton">
-							Start på nytt
-						</button>
-					</div>
-				);
-			}
-		}
+    }
+    
+    
+  }
 
-		let personalmnemonic;
-		if (users && mnemonics) {
-			user = users.find((u) => u.id === auth.uid);
-			for (let i = 0; i < mnemonics.length; ++i) {
-				if (
-					user.mnemonicArr &&
-					categoryfcs[currentCard].id === mnemonics[i].fcId &&
-					user.id === mnemonics[i].userId
-				) {
-					personalmnemonic = mnemonics[i].mnemonic;
-				}
-			}
-		}
+  render() {
+    const { flashcards, match: { params: { id } }, auth, users } = this.props;
+    const { currentCard } = this.state;
+    const { mnemonics } = this.props;
 
-		// Error handling
-		if (!categoryfcs[currentCard]) return <div />;
 
-		return (
-			<div className="pf-content">
-				<div className="row">
-					<div className="col s12">
-						<ReactCardFlip isFlipped={this.state.isFlipped} flipDirection="horizontal">
-							<div className="pfc-card center" key="front">
-								<div>
-									<img
-										className="content"
-										src={categoryfcs[currentCard].pictureUrl}
-										alt="current kanji"
-										width="400rem"
-										height="300rem"
-									/>
-								</div>
-								<div className="row">
-									<button
-										className="pfc-btn"
-										onClick={this.handleFButton}
-										id="but1"
-										value={randomArray[0]}
-									>
-										{randomArray[0]}
-									</button>
-									<button
-										className="pfc-btn"
-										onClick={this.handleFButton}
-										id="but2"
-										value={randomArray[1]}
-									>
-										{randomArray[1]}
-									</button>
-								</div>
-								<div className="row">
-									<button
-										className="pfc-btn"
-										onClick={this.handleFButton}
-										id="but3"
-										value={randomArray[2]}
-									>
-										{randomArray[2]}
-									</button>
-									<button
-										className="pfc-btn"
-										onClick={this.handleFButton}
-										id="but4"
-										value={randomArray[3]}
-									>
-										{randomArray[3]}
-									</button>
-								</div>
-							</div>
+    var randomArray = this.randomKanjiArray();
+    
+    if (!auth.uid) return <Redirect to='/signin' />;
 
-							<div className="pfc-card" key="back">
-								<div className="center">
-									<span className="back-kan"> {categoryfcs[currentCard].kanji} </span>
-									<br />
-									<span className="back-eng"> {categoryfcs[currentCard].eng} </span>
-									<br />
-								</div>
-								<br />
+    // Only show flashcards in current category
+    let categoryfcs = [];
+    if (flashcards) {
+      categoryfcs = flashcards.filter(f => f.deckid === id)
+    }
 
-								<br />
-								<div className="row">
-									<div className="col s10 back-h left-align">mnemonic</div>
-								</div>
+    // Check if you've seen every flashcard
+    let user;
+    if (users) {
+      user = users.find(u => u.id === auth.uid);
+      /*
+      if (user.flashcardArray
+        && user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id).length === categoryfcs.length) {
+        return (<div>Du har vært gjennom alle i denne kategorien <button onClick={() => window.location.href = '/'}>Gå tilbake</button>
+          <button onClick={this.restartDeck} id="restartbutton">Start på nytt</button>
+        </div>);
+      }
+      */
+    }
 
-								<div className="row">
-									<div className="col pmnemdiv">
-										<span className="card-title">
-											{personalmnemonic && <span>{personalmnemonic}</span>}
-										</span>
+    let personalmnemonic;
+    if (users && mnemonics) {
+      user = users.find(u => u.id === auth.uid);
+      for(let i = 0; i < mnemonics.length; ++i){
+        if(user.mnemonicArr && (categoryfcs[currentCard].id === mnemonics[i].fcId) && (user.id === mnemonics[i].userId)){
+          personalmnemonic = mnemonics[i].mnemonic;
+        }
+      }
+    }
 
-										<span className="card-title">
-											{!personalmnemonic && <span>{categoryfcs[currentCard].mnemonic}</span>}
-										</span>
+    // Error handling
+    if (!categoryfcs[currentCard]) return (<div></div>);
 
-										<form onSubmit={this.handleMnemonicSubmit}>
-											<div className="row center pneminput">
-												<div className="col s10 input-field inline">
-													<input
-														placeholder="Write new mnemonic"
-														type="text"
-														id="mnemonic"
-														onChange={this.handleMnemonicChange}
-													/>
-												</div>
+    return (
+      <div className="pf-content">
+        <div className="row">
+        <div className="col s12">
+      <ReactCardFlip isFlipped={this.state.isFlipped} flipDirection="horizontal">
+        <div className="pfc-card center" key="front">
+          <div><img className="content" src={categoryfcs[currentCard].pictureUrl} alt="current kanji" width="400rem" height="300rem" /></div>
+            <div className="row">
+              <button className="pfc-btn" onClick={this.handleFButton} id='but1' value={randomArray[0]}>{randomArray[0]}</button>
+              <button className="pfc-btn" onClick={this.handleFButton} id='but2' value={randomArray[1]}>{randomArray[1]}</button>
+                
+            </div>
+            <div className="row">
+              <button className="pfc-btn" onClick={this.handleFButton} id='but3' value={randomArray[2]}>{randomArray[2]}</button>
+              <button className="pfc-btn" onClick={this.handleFButton} id='but4' value={randomArray[3]}>{randomArray[3]}</button>  
+            </div>
+        </div>
 
-												<div className="col s2 input-field inline right-align ">
-													<i onClick={this.handleMnemonicSubmit} className="material-icons">
-														add_circle
-													</i>
-												</div>
-											</div>
-										</form>
-									</div>
-								</div>
+        <div className="pfc-card" key="back">
+          <div className="center">
+          <span className="back-kan"> {categoryfcs[currentCard].kanji} </span>
+          <br></br>
+          <span className="back-eng"> {categoryfcs[currentCard].eng} </span>
+          <br></br>
+          </div>
+          <br></br>
+        
+          <br></br>
+         
+          
+          <div className="row">
 
-								<div className="center back-buttons">
-									<button className="btn back-btn" onClick={this.handleHard} id="Hard">
-										Hard
-									</button>
-									<button className="btn back-btn" onClick={this.handleEasy} id="Easy">
-										Easy
-									</button>
-								</div>
-							</div>
-						</ReactCardFlip>
-					</div>
-				</div>
-			</div>
-		);
-	}
+            <div className="col pmnemdiv">
+            <div className="row">
+            <div className="col s10 back-h left-align">mnemonic</div>
+          </div>
+              <div className="pmnemtext">
+                <span className="card-title">
+                  {personalmnemonic &&<span>{personalmnemonic}</span>}
+                </span>
+                        
+                <span className="card-title">
+                  {!personalmnemonic && <span>{categoryfcs[currentCard].mnemonic}</span> }
+                </span>
+              </div>
+
+              <form onSubmit={this.handleMnemonicSubmit}>
+                <div className="row center pneminput">
+                  
+                  <div className="col s10 input-field inline">
+                    <input placeholder="Write new mnemonic" type="text" id="mnemonic" onChange={this.handleMnemonicChange}/>
+                  </div>
+
+                  <div className="col s2 input-field inline right-align ">
+                    <i onClick={this.handleMnemonicSubmit} className="material-icons">add_circle</i>
+                  </div>
+
+                </div>
+            </form>
+            </div>
+
+            
+          </div>
+
+
+         
+          
+          <div className="center back-buttons">
+            <button className="btn back-btn" onClick={this.handleHard} id="Hard">Hard</button>
+            <button className="btn back-btn" onClick={this.handleEasy} id="Easy">Easy</button>
+          </div>
+        </div>
+            
+      </ReactCardFlip>
+      </div>
+      </div>
+      </div>
+    )
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {

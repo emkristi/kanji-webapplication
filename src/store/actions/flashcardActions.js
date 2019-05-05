@@ -121,18 +121,12 @@ export const updateMnemonicArray = (mnemonic) => {
 		const firestore = getFirestore();
 		const userId = getState().firebase.auth.uid;
 
-		firestore
-			.collection('users')
-			.doc(userId)
-			.update({
-				// arrayUnion legger til elem. hvis ikke eksiterer fra før
-				mnemonicArr: firestore.FieldValue.arrayUnion(mnemonic.id)
-			})
-			.then(() => {
-				dispatch({ type: 'ADD_MNEMONIC_ARR', mnemonic });
-			})
-			.catch((err) => {
-				dispatch({ type: 'ADD_MNEMONIC_ARR_ERROR', err });
-			});
-	};
-};
+        firestore.collection('users').doc(userId).update({
+            mnemonicArr: firestore.FieldValue.arrayUnion(mnemonic.id)
+        }).then(() => {
+            dispatch({ type: 'ADD_MNEMONIC_ARR', mnemonic });
+        }).catch((err) => {
+            dispatch({ type: 'ADD_MNEMONIC_ARR_ERROR', err });
+        })
+    }
+}

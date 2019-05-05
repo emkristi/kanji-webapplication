@@ -115,6 +115,10 @@
       min-width: 15rem;
       max-width: 20rem;
     }
+
+    .stroke-picture{
+      width: 5rem;
+    }
     
   }
 

@@ -4,14 +4,12 @@ const initState = {
 }
 
 /**
- * authReducer function. 
- * This is where we manipulate the state (data) in our application
+ * authReducer function
  * 
  * @param {*} state 
  * @param {*} action 
  */
 const authReducer = (state = initState, action) => {
-    // need to check action type
     switch(action.type){
         case 'LOGIN_ERROR':
             console.log('login error');

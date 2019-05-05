@@ -11,11 +11,11 @@ import '../../CSS/frontpage.css';
 class Frontpage extends Component {
 	restartDeck = (cardsInDeck) => (e) => {
 		e.preventDefault();
-		for (let i = 0; i < cardsInDeck.length; ++i) {
-			this.props.removeCompletedFlashcards(cardsInDeck[i].id);
-			console.log('removed ', cardsInDeck[i].id);
-		}
-	};
+		for(let i = 0; i < cardsInDeck.length; ++i){
+				this.props.removeCompletedFlashcards(cardsInDeck[i].id);
+		} 
+	}
+
 
 	render() {
 		const { decks, flashcards, auth, users } = this.props;
