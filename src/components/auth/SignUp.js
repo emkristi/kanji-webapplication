@@ -29,14 +29,12 @@ class SignUp extends Component {
      */
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.signUp(this.state)
-        this.props.history.push('/howto');
-
+        this.props.signUp(this.state);
     }
 
   render() {
     const {authError, auth} = this.props;
-    if (auth.uid) return <Redirect to='/' />  
+    if (auth.uid) return <Redirect to='/howto' />  
 
     return (
     <div>
