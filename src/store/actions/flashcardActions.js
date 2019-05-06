@@ -1,3 +1,7 @@
+/**
+ * Creates new flashcard from user input
+ * @param {*} flashcard 	User input from CreateFlashcard.js
+ */
 export const createFlashcard = (flashcard) => {
 	return (dispatch, getState, { getFirestore }) => {
 		const firestore = getFirestore();
@@ -16,20 +20,21 @@ export const createFlashcard = (flashcard) => {
 	};
 };
 
-export const addCompletedFlashcards = (flashcardidd) => {
+/**
+ * Adds completed flashcards in an array in User. This is used to know which flashcards
+ * the user has seen (clicked easy on). 
+ * @param {} flashcardId 
+ */
+export const addCompletedFlashcards = (flashcardId) => {
 	return (dispatch, getState, { getFirestore }) => {
 		const firestore = getFirestore();
 		const userId = getState().firebase.auth.uid;
-		const flashcardId = flashcardidd;
 
-		firestore
-			.collection('users')
-			.doc(userId)
-			.update({
+		firestore.collection('users').doc(userId).update({
 				flashcardArray: firestore.FieldValue.arrayUnion(flashcardId)
 			})
 			.then(() => {
-				dispatch({ type: 'ADD_COMPLETED_FLASHCARDS', flashcardidd });
+				dispatch({ type: 'ADD_COMPLETED_FLASHCARDS', flashcardId });
 			})
 			.catch((err) => {
 				dispatch({ type: 'ADD_COMPLETED_FLASHCARDS_ERROR', err });
@@ -37,6 +42,11 @@ export const addCompletedFlashcards = (flashcardidd) => {
 	};
 };
 
+/**
+ * Removes completed flashcards from the flashcardArray for logged in user. 
+ * Used to restart a deck that has been completed if the restart button is clicked. 
+ * @param {*} flashcardid 
+ */
 export const removeCompletedFlashcards = (flashcardid) => {
 	return (dispatch, getState, { getFirestore }) => {
 		const firestore = getFirestore();
@@ -58,6 +68,11 @@ export const removeCompletedFlashcards = (flashcardid) => {
 	};
 };
 
+/**
+ * Method for adding a personal mnemonic to a flashcard. 
+ * @param {string} newMnemonic 
+ * @param {string} fcId 
+ */
 export const updateMnemonic = (newMnemonic, fcId) => {
 	return (dispatch, getState, { getFirestore }) => {
 		const firestore = getFirestore();
@@ -93,6 +108,12 @@ export const updateMnemonic = (newMnemonic, fcId) => {
 	};
 };
 
+/**
+ * Method for replacing a personal mnemonic. 
+ * @param {string} newMnemonic 	new mnemonic 
+ * @param {array} oldMnemonic 	mnemonic that is getting replaced
+ * @param {string} fcId 		id of flashcard
+ */
 export const replaceMnemonic = (newMnemonic, oldMnemonic, fcId) => {
 	return (dispatch, getState, { getFirestore }) => {
 		const firestore = getFirestore();
@@ -116,6 +137,11 @@ export const replaceMnemonic = (newMnemonic, oldMnemonic, fcId) => {
 	};
 };
 
+/**
+ * Updates the mnemonic array for the user.
+ * Used to only show mnemonics that the logged in user has made.
+ * @param {array} mnemonic
+ */
 export const updateMnemonicArray = (mnemonic) => {
 	return (dispatch, getState, { getFirestore }) => {
 		const firestore = getFirestore();

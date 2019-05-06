@@ -30,7 +30,7 @@
 }
 
 .deck-content{
-  margin-top: 5rem;
+  margin-top: 3.5rem;
 }
 
 .deck-content-comp{
@@ -67,8 +67,6 @@
 
 .deck-btn:hover{
   background-color: rgb(143,	167,	248	);
-
-
 }
 
 .decktypetxt{
@@ -77,4 +75,8 @@
   color: rgb(73,	84,	121);
 }
 
+.completionstat{
+  font-style: italic;
+  color: rgb(73,	84,	121);
+}
 

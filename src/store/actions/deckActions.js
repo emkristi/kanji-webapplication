@@ -1,3 +1,7 @@
+/**
+ * Creates a new deck from user input
+ * @param {*} deck  User input from CreateDeck.js
+ */
 export const createDeck = (deck) => {
     return (dispatch, getState, {getFirestore}) => {
         const firestore = getFirestore(); 

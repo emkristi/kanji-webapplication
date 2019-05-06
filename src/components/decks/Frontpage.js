@@ -8,14 +8,21 @@ import { Redirect } from 'react-router-dom';
 import { removeCompletedFlashcards } from '../../store/actions/flashcardActions';
 import '../../CSS/frontpage.css';
 
+/**
+ * 
+ */
 class Frontpage extends Component {
+
+	/**
+	 * Function for when the restart button is clicked. Removes flashcards in the deck
+	 * that is clicked from userarray. 
+	 */
 	restartDeck = (cardsInDeck) => (e) => {
 		e.preventDefault();
 		for(let i = 0; i < cardsInDeck.length; ++i){
 				this.props.removeCompletedFlashcards(cardsInDeck[i].id);
 		} 
 	}
-
 
 	render() {
 		const { decks, flashcards, auth, users } = this.props;
@@ -36,6 +43,7 @@ class Frontpage extends Component {
 						decks &&
 						decks.map((deck) => {
 							let unfinisheddecks;
+							let cardsInDeck = flashcards.filter((fcard) => fcard.deckid === deck.id);
 							if (user.flashcardArray == null) {
 								unfinisheddecks = flashcards;
 							} else {
@@ -56,22 +64,21 @@ class Frontpage extends Component {
 													<DeckInfo deck={deck} />
 												</Link>
 												<p className="decktypetxt">{deck.type}</p>
+												<p className="completionstat">{cardsInDeck.length - unfinisheddecks.length}{"/"}{cardsInDeck.length}{" completed"}</p>
 											</div>
 										</div>
 									</div>
 								);
 							} else {
-								let cardsInDeck = flashcards.filter((fcard) => fcard.deckid === deck.id);
+								
 								return (
 									<div key={deck.id} className="col s12 m6 l6">
 										<div className="deck completed">
 											<div className="deck-content-comp">
 												<DeckInfo className="col s12" deck={deck} />
 												<p className="decktypetxt">{deck.type}</p>
-												<a
-													onClick={this.restartDeck(cardsInDeck)}
-													className="btn-floating btn-large waves-effect deck-btn"
-												>
+
+												<a onClick={this.restartDeck(cardsInDeck)}className="btn-floating btn-large waves-effect deck-btn">
 													<i className="material-icons">replay</i>
 												</a>
 											</div>

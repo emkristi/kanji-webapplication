@@ -6,7 +6,6 @@ import { Redirect } from 'react-router-dom';
 import { addCompletedFlashcards } from '../../store/actions/flashcardActions';
 import ReactCardFlip from 'react-card-flip';
 import { updateUser } from '../../store/actions/userActions';
-import { updateusers } from '../../store/actions/userActions';
 import { loaduser } from '../../store/actions/userActions';
 import { updateMnemonic } from '../../store/actions/flashcardActions';
 import { replaceMnemonic } from '../../store/actions/flashcardActions';
@@ -30,15 +29,14 @@ class PhotoFlashcards extends Component {
     this.props.firestore.unsetListener({collection: 'users'})
   }
 
-  
-
+  /**
+   * 
+   */
   handleHard = (e) => {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
 
     let categoryfcs = flashcards.filter(f => f.deckid === id);
     let user = users.find(u => u.id === auth.uid);
-
-    // seenFc -> flashcards som allerede er gått gjennom
     const seenFc = user.flashcardArray ? user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id) : [];
 
     if (!(seenFc.length === categoryfcs.length - 1)) {
@@ -68,14 +66,12 @@ class PhotoFlashcards extends Component {
   
     let remainingFc = categoryfcs.filter(elem => !seenFc.includes(elem.id));
 
-    // dersom kun ett kort igjen og det er det man er på -> legg til i db og gå ut av deck
     if((seenFc.length === categoryfcs.length - 1) && (remainingFc[0].id === categoryfcs[currentCard].id)){
       this.props.updateUser(categoryfcs[currentCard].id);
       window.location.href = '/';
       return;
     }
 
-    // sjekker om er mer enn ett usett flashcard igjen eller om er ett igjen men som ikke er det gjeldende
     if ((!(seenFc.length === categoryfcs.length - 1)) || ((seenFc.length === categoryfcs.length - 1) && (!seenFc.includes(remainingFc)))) {
       this.props.updateUser(categoryfcs[currentCard].id); 
       this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
@@ -85,7 +81,6 @@ class PhotoFlashcards extends Component {
     }
     
   }
-
 
   handleEditMnemClick = (e) => {
     this.setState({showMnemField: true});
@@ -189,38 +184,35 @@ class PhotoFlashcards extends Component {
       }
     }
 
-
-
-    // set found current number
     this.setState({
       currentCard: currentNumber
     });
-
 
     document.getElementById("but1").style.backgroundColor = "white";
     document.getElementById("but2").style.backgroundColor = "white";
     document.getElementById("but3").style.backgroundColor = "white";
     document.getElementById("but4").style.backgroundColor = "white";
-
-
   }
 
   handleFButton = (e) => {
     const { flashcards, match: { params: { id } } } = this.props;
     const { currentCard } = this.state;
+    
     let categoryfcs = flashcards.filter(val => val.deckid === id);
-
     var buttonId = e.target.id;
+
     if (e.target.value === categoryfcs[currentCard].kanji) {
       this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
       document.getElementById(buttonId).style.backgroundColor = "rgb(121,	196,	154)";
     } else if (e.target.value !== categoryfcs[currentCard].kanji){
       document.getElementById(buttonId).style.backgroundColor = "rgb(200,	67,	81)";
     }
-
-    
   }
 
+  /**
+   * Method for getting an array of random Kanji for the buttons on the photoflashcards
+   * where one of them is the correct Kanji. 
+   */
   randomKanjiArray = () => {
     const { flashcards, match: { params: { id } } } = this.props;
     const { currentCard } = this.state;
@@ -245,10 +237,7 @@ class PhotoFlashcards extends Component {
       });
   
       return arr;
-
     }
-    
-    
   }
 
   render() {
@@ -267,18 +256,9 @@ class PhotoFlashcards extends Component {
       categoryfcs = flashcards.filter(f => f.deckid === id)
     }
 
-    // Check if you've seen every flashcard
     let user;
     if (users) {
       user = users.find(u => u.id === auth.uid);
-      /*
-      if (user.flashcardArray
-        && user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id).length === categoryfcs.length) {
-        return (<div>Du har vært gjennom alle i denne kategorien <button onClick={() => window.location.href = '/'}>Gå tilbake</button>
-          <button onClick={this.restartDeck} id="restartbutton">Start på nytt</button>
-        </div>);
-      }
-      */
     }
 
     let personalmnemonic;
@@ -291,7 +271,6 @@ class PhotoFlashcards extends Component {
       }
     }
 
-    // Error handling
     if (!categoryfcs[currentCard]) return (<div></div>);
 
     return (
@@ -378,9 +357,7 @@ class PhotoFlashcards extends Component {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		addCompletedFlashcards: (flashcard) => dispatch(addCompletedFlashcards(flashcard)),
-		//removeCompletedFlashcards: (flashcard) => dispatch(removeCompletedFlashcards(flashcard))
 		updateUser: (flashcard) => dispatch(updateUser(flashcard)),
-		updateusers: (flashcard) => dispatch(updateusers(flashcard)),
 		loaduser: () => dispatch(loaduser()),
 		replaceMnemonic: (newMnemonic, oldMnemonic, fcId) => dispatch(replaceMnemonic(newMnemonic, oldMnemonic, fcId)),
 		updateMnemonic: (mnemonic, fcId) => dispatch(updateMnemonic(mnemonic, fcId))
@@ -388,7 +365,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 const mapStateToProps = (state) => {
 	return {
-		flashcards: state.firestore.ordered.flashcards, // gives an array of the flashcards.. flashcard property, we are accessing the flashcards from the state in the flashcardReducer. We are grabbing this and attatching it to the flashcard property inside the props of this component (flashcard: )
+		flashcards: state.firestore.ordered.flashcards, 
 		auth: state.firebase.auth,
 		mnemonics: state.firestore.ordered.mnemonics
 	};

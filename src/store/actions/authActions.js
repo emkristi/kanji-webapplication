@@ -1,3 +1,7 @@
+/**
+ * 
+ * @param {*} credentials 
+ */
 export const signIn = (credentials) => {
 	return (dispatch, getState, { getFirebase }) => {
 		const firebase = getFirebase();
@@ -14,6 +18,9 @@ export const signIn = (credentials) => {
 	};
 };
 
+/**
+ * Signs user out of application
+ */
 export const signOut = () => {
 	return (dispatch, getState, { getFirebase }) => {
 		const firebase = getFirebase();
@@ -25,6 +32,10 @@ export const signOut = () => {
 	};
 };
 
+/**
+ * Signs user up, adds user to database
+ * @param {*} newUser 
+ */
 export const signUp = (newUser) => {
 	return (dispatch, getState, { getFirebase, getFirestore }) => {
 		const firebase = getFirebase();
