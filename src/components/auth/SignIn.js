@@ -7,6 +7,10 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import '../../CSS/auth.css';
 import { Link } from 'react-router-dom';
 
+/**
+ * For signing in to the application. 
+ * @class
+ */
 class SignIn extends Component {
 	_isMounted = false;
 	state = {
@@ -16,6 +20,7 @@ class SignIn extends Component {
 		name: '',
 		userId: ''
 	};
+
 	uiConfig = {
 		signInFlow: 'popup',
 		signInOptions: [ firebase.auth.FacebookAuthProvider.PROVIDER_ID ],
@@ -23,6 +28,7 @@ class SignIn extends Component {
 			signInSuccess: () => false
 		}
 	};
+
 	componentDidMount = () => {
 		var unsubscribe = firebase.auth().onAuthStateChanged((user) => {
 			this.setState({ isSignedIn: !!user });
@@ -30,27 +36,18 @@ class SignIn extends Component {
 		unsubscribe();
 	};
 
-	/**
-     * Function that fires when a user changes an input field
-     */
 	handleChange = (e) => {
-		// setState updates the state
 		this.setState({
-			[e.target.id]: e.target.value // target to get the target element, and id to get wither the password or email id, depending on which the user types into. e.target.value -> so that we can update the state with the value with what the user has written into the input field, and the state changes
+			[e.target.id]: e.target.value
 		});
 	};
 
-	/*responseFacebook = response =>{
-        console.log("respons", response);
-    }*/
 	componentClicked = (e) => {
 		console.log('clicked');
 	};
-	/**
-     * Function for when a user submits the form
-     */
+
 	handleSubmit = (e) => {
-		e.preventDefault(); // prevents the default action of the form being submitted and the page being refreshed when button is clicked or enter is pressed
+		e.preventDefault();
 		this.props.signIn(this.state);
 	};
 

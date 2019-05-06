@@ -22,7 +22,7 @@
   border-style: none;    
   border-radius: 15px;
   padding: 0.6rem;
-  opacity: 0.9;
+  opacity: 0.85;
   margin-bottom: 1.5rem;
   height: 17rem;
   text-transform: lowercase;
@@ -37,11 +37,11 @@
   margin-top: 3rem;
 }
 
-/*
+
 .deck:hover {
     opacity: 1.0;
 }
-*/
+
 
 .completed {
   color: rgba(73,	84,	121	,0.8);

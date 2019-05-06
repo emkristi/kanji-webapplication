@@ -6,7 +6,10 @@ import '../../CSS/auth.css'
 import { Link } from 'react-router-dom';
 
 
-
+/**
+ * For signing up to the application
+ * @class
+ */
 class SignUp extends Component {
     state = {
         email: '',

@@ -66,6 +66,7 @@ class PhotoFlashcards extends Component {
   
     let remainingFc = categoryfcs.filter(elem => !seenFc.includes(elem.id));
 
+
     if((seenFc.length === categoryfcs.length - 1) && (remainingFc[0].id === categoryfcs[currentCard].id)){
       this.props.updateUser(categoryfcs[currentCard].id);
       window.location.href = '/';
@@ -75,7 +76,8 @@ class PhotoFlashcards extends Component {
     if ((!(seenFc.length === categoryfcs.length - 1)) || ((seenFc.length === categoryfcs.length - 1) && (!seenFc.includes(remainingFc)))) {
       this.props.updateUser(categoryfcs[currentCard].id); 
       this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
-      this.changeFc(); 
+      setTimeout(this.changeFc, 400);
+
       return;
 
     }

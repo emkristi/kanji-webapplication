@@ -9,7 +9,8 @@ import { removeCompletedFlashcards } from '../../store/actions/flashcardActions'
 import '../../CSS/frontpage.css';
 
 /**
- * 
+ * Frontpage component. Contains decks of flashcards.
+ * @class
  */
 class Frontpage extends Component {
 
@@ -64,7 +65,7 @@ class Frontpage extends Component {
 													<DeckInfo deck={deck} />
 												</Link>
 												<p className="decktypetxt">{deck.type}</p>
-												<p className="completionstat">{cardsInDeck.length - unfinisheddecks.length}{"/"}{cardsInDeck.length}{" completed"}</p>
+												<p className="completionstat">{cardsInDeck.length}{" cards"}</p>
 											</div>
 										</div>
 									</div>
