@@ -23,17 +23,14 @@ export const updateUser = (flashcardId) => {
 	};
 };
 
-/**
- * Loads user. Used to get updated information from database.
- */
 export const loaduser = () => {
 	return (dispatch, getState, { getFirestore }) => {
 		const firestore = getFirestore(); 
-		const userId = getState().firebase.auth.uid;
+		//const userId = getState().firebase.auth.uid;
 
 		firestore.collection('users').get().then((snapshot) => {
 			snapshot.docs.forEach((doc) => {
-				let users = doc.data();
+				//let users = doc.data();
 			});
 		});
 	};

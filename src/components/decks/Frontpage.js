@@ -35,6 +35,7 @@ class Frontpage extends Component {
 
 		//NB gjør om til /start med må bruke href ellers kommer navbar med??
 		if (!auth.uid) return <Redirect to="/signin" />;
+		
 
 		return (
 			<div className="frontpage-content center-align">
@@ -55,26 +56,18 @@ class Frontpage extends Component {
 							if (unfinisheddecks.length > 0) {
 								return (
 									<div key={deck.id} className="col s12 m6 l6">
-									<Link
-													to={deck.type === 'Images' ? '/img/' + deck.id : '/' + deck.id}
-													key={deck.id}
-													id="link"
-												>
-										<div className="deck not-completed">
-											<div className="deck-content">
-												
+										<Link to={deck.type === 'Images' ? '/img/' + deck.id : '/' + deck.id} key={deck.id} id="link">
+											<div className="deck not-completed">
+												<div className="deck-content">
 													<DeckInfo deck={deck} />
 													<p className="decktypetxt">{deck.type}</p>
-												<p className="completionstat">{cardsInDeck.length}{" cards"}</p>
-												
-												
+													<p className="completionstat">{cardsInDeck.length}{" cards"}</p>
+												</div>
 											</div>
-										</div>
 										</Link>
 									</div>
 								);
 							} else {
-								
 								return (
 									<div key={deck.id} className="col s12 m6 l6">
 										<div className="deck completed">
@@ -82,9 +75,9 @@ class Frontpage extends Component {
 												<DeckInfo className="col s12" deck={deck} />
 												<p className="decktypetxt">{deck.type}</p>
 
-												<a onClick={this.restartDeck(cardsInDeck)}className="btn-floating btn-large waves-effect deck-btn">
+												<div onClick={this.restartDeck(cardsInDeck)}className="btn-floating btn-large waves-effect deck-btn">
 													<i className="material-icons">replay</i>
-												</a>
+												</div>
 											</div>
 										</div>
 									</div>

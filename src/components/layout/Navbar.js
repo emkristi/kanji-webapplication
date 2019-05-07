@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Dropdown } from 'react-materialize'
 import { signOut } from '../../store/actions/authActions';
+import { Link } from 'react-router-dom'
 
 const Navbar = (props) => {
     const { auth} = props;
@@ -12,23 +13,23 @@ const Navbar = (props) => {
             <div>
                 <nav className="transparent z-depth-0">
                     <div className="nav-wrapper">
-                        <a href="/"><img className="navlogo" src="img/LOGOLITENNY.jpg" width="60rem" alt="logo" /></a>
+                        <Link to={'/'}><img className="navlogo" src="img/LOGOLITENNY.jpg" width="60rem" alt="logo" /></Link>
                         
                         <ul className="right">
                             {(auth.uid) &&
-                                <Dropdown trigger={<a className="brand-logo right"><i className="right material-icons md-36">menu</i></a>} options={{coverTrigger: false}}>
-                                    <a className="navbarlinks" href='/howto'>How to play</a>
-                                    <a className="navbarlinks" href='/about'>Credits</a>
-                                    <a className="navbarlinks" href='/start' onClick={props.signOut}>Log out</a>
+                                <Dropdown trigger={<div className="brand-logo right"><i className="right material-icons md-36">menu</i></div>} options={{coverTrigger: false}}>
+                                    <Link to={'/howto'} className="navbarlinks">How to play</Link>
+                                    <Link to={'/about'} className="navbarlinks">About</Link>
+                                    <Link to={'/start'} onClick={props.signOut} className="navbarlinks">Log out</Link>
                                 </Dropdown>
                             }
 
                             {(!auth.uid) &&
-                                <Dropdown trigger={<a className="brand-logo right"><i className="material-icons md-36">menu</i></a>} options={{coverTrigger: false}}>
-                                    <a className="navbarlinks" href='/signup'>Sign up</a>
-                                    <a className="navbarlinks" href='/signin'>Sign in</a>
-                                    <a className="navbarlinks" href='/howto'>How to play</a>
-                                    <a className="navbarlinks" href='/about'>Credits</a>
+                                <Dropdown trigger={<div className="brand-logo right"><i className="material-icons md-36">menu</i></div>} options={{coverTrigger: false}}>
+                                    <Link to={'/signup'} className="navbarlinks">Sign up</Link>
+                                    <Link to={'/signin'} className="navbarlinks">Sign in</Link>
+                                    <Link to={'/howto'} className="navbarlinks">How to play</Link>
+                                    <Link to={'/credits'} className="navbarlinks">Credits</Link>
                                 </Dropdown>
                             }
                         </ul>

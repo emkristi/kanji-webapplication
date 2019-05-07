@@ -102,6 +102,10 @@ class Flashcards extends Component {
     const seenFc = user.flashcardArray ? user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id) : [];
     let remainingFc = categoryfcs.filter(elem => !seenFc.includes(elem.id));
 
+    console.log(seenFc);
+    console.log(remainingFc);
+    console.log(user.flashcardArray);
+
     // if only one card left -> added to user in database then returns to deck page when button is clicked
     if((seenFc.length === categoryfcs.length - 1) && (remainingFc[0].id === categoryfcs[currentCard].id)){
       this.props.updateUser(categoryfcs[currentCard].id);
@@ -140,7 +144,7 @@ class Flashcards extends Component {
     let categoryfcs = flashcards.filter(f => f.deckid === id);
     let user = users.find(u => u.id === auth.uid);
 
-    this.props.loaduser();
+    //this.props.loaduser();
     
     let currentNumber = 0;
     // If flashcards in buffer, show first element and remove element from buffer
