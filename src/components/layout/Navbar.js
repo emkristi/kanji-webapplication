@@ -14,7 +14,7 @@ const Navbar = (props) => {
                 <nav className="transparent z-depth-0">
                     <div className="nav-wrapper">
                         {(auth.uid) &&
-                        
+
                         <Link to={'/'}><img className="navlogo" src="img/LOGOLITENNY.jpg" width="60rem" alt="logo" /></Link>
                         }
                         {!(auth.uid) &&
@@ -26,7 +26,7 @@ const Navbar = (props) => {
                             {(auth.uid) &&
                                 <Dropdown trigger={<div className="brand-logo right"><i className="right material-icons md-36">menu</i></div>} options={{coverTrigger: false}}>
                                     <Link to={'/howto'} className="navbarlinks">How to play</Link>
-                                    <Link to={'/about'} className="navbarlinks">About</Link>
+                                    <Link to={'/about'} className="navbarlinks">Credits</Link>
                                     <Link to={'/start'} onClick={props.signOut} className="navbarlinks">Log out</Link>
                                 </Dropdown>
                             }
@@ -36,7 +36,7 @@ const Navbar = (props) => {
                                     <Link to={'/signup'} className="navbarlinks">Sign up</Link>
                                     <Link to={'/signin'} className="navbarlinks">Sign in</Link>
                                     <Link to={'/howto'} className="navbarlinks">How to play</Link>
-                                    <Link to={'/credits'} className="navbarlinks">Credits</Link>
+                                    <Link to={'/about'} className="navbarlinks">Credits</Link>
                                 </Dropdown>
                             }
                         </ul>
