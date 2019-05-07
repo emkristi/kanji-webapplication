@@ -120,6 +120,9 @@ class PhotoFlashcards extends Component {
     if(gjeldendeMnem === ""){
       this.props.addMnemonic(this.state.mnemonic, categoryfcs[currentCard].id)
     }
+
+    document.getElementById('mnemonic').value = '';
+
   }
 
 
@@ -194,6 +197,7 @@ class PhotoFlashcards extends Component {
     document.getElementById("but2").style.backgroundColor = "white";
     document.getElementById("but3").style.backgroundColor = "white";
     document.getElementById("but4").style.backgroundColor = "white";
+    document.getElementById('mnemonic').value = '';
   }
 
   handleFButton = (e) => {
@@ -328,8 +332,8 @@ class PhotoFlashcards extends Component {
                     <input placeholder="Write new mnemonic" type="text" id="mnemonic" onChange={this.handleMnemonicChange}/>
                   </div>
 
-                  <div className="col s2 input-field inline right-align ">
-                    <i onClick={this.handleMnemonicSubmit} className="material-icons">add_circle</i>
+                  <div className="col s2 input-field inline right-align">
+                    <i onClick={this.handleMnemonicSubmit} className="material-icons addmnembut">add_circle</i>
                   </div>
 
                 </div>

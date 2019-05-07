@@ -1,3 +1,4 @@
+/*
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { firestoreConnect } from 'react-redux-firebase' // used to connect to firestore
@@ -118,3 +119,4 @@ export default compose(
         }
     ])
 )(Flashcards)
+*/
