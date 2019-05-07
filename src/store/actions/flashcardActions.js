@@ -73,7 +73,7 @@ export const removeCompletedFlashcards = (flashcardid) => {
  * @param {string} newMnemonic 
  * @param {string} fcId 
  */
-export const updateMnemonic = (newMnemonic, fcId) => {
+export const addMnemonic = (newMnemonic, fcId) => {
 	return (dispatch, getState, { getFirestore }) => {
 		const firestore = getFirestore();
 		const userId = getState().firebase.auth.uid;

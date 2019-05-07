@@ -7,7 +7,7 @@ import { addCompletedFlashcards } from '../../store/actions/flashcardActions';
 import ReactCardFlip from 'react-card-flip';
 import { updateUser } from '../../store/actions/userActions';
 import { loaduser } from '../../store/actions/userActions';
-import { updateMnemonic } from '../../store/actions/flashcardActions';
+import { addMnemonic } from '../../store/actions/flashcardActions';
 import { replaceMnemonic } from '../../store/actions/flashcardActions';
 import '../../CSS/photoflashcard.css';
 
@@ -118,7 +118,7 @@ class PhotoFlashcards extends Component {
     }
 
     if(gjeldendeMnem === ""){
-      this.props.updateMnemonic(this.state.mnemonic, categoryfcs[currentCard].id)
+      this.props.addMnemonic(this.state.mnemonic, categoryfcs[currentCard].id)
     }
   }
 
@@ -362,7 +362,7 @@ const mapDispatchToProps = (dispatch) => {
 		updateUser: (flashcard) => dispatch(updateUser(flashcard)),
 		loaduser: () => dispatch(loaduser()),
 		replaceMnemonic: (newMnemonic, oldMnemonic, fcId) => dispatch(replaceMnemonic(newMnemonic, oldMnemonic, fcId)),
-		updateMnemonic: (mnemonic, fcId) => dispatch(updateMnemonic(mnemonic, fcId))
+		addMnemonic: (mnemonic, fcId) => dispatch(addMnemonic(mnemonic, fcId))
 	};
 };
 const mapStateToProps = (state) => {

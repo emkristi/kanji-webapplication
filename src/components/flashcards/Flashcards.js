@@ -6,7 +6,7 @@ import { compose } from 'redux';
 import { addCompletedFlashcards } from '../../store/actions/flashcardActions';
 import { updateUser } from '../../store/actions/userActions';
 import { loaduser } from '../../store/actions/userActions';
-import { updateMnemonic } from '../../store/actions/flashcardActions';
+import { addMnemonic } from '../../store/actions/flashcardActions';
 import { replaceMnemonic } from '../../store/actions/flashcardActions';
 import '../../CSS/flashcard.css';
 
@@ -67,7 +67,7 @@ class Flashcards extends Component {
     }
 
     if(gjeldendeMnem === ""){
-      this.props.updateMnemonic(this.state.mnemonic, categoryfcs[currentCard].id)
+      this.props.addMnemonic(this.state.mnemonic, categoryfcs[currentCard].id)
     }
     this.setState({showMnemField: false});
   }
@@ -239,7 +239,7 @@ class Flashcards extends Component {
 									<div className="flip-card-front valign-wrapper">
 										<div className="card-content">
 											<span className=""> {categoryfcs[currentCard].kanji} </span>
-                      
+
 										</div>
 									</div>
 
@@ -379,7 +379,7 @@ const mapDispatchToProps = (dispatch) => {
 		updateUser: (flashcard) => dispatch(updateUser(flashcard)),
 		loaduser: () => dispatch(loaduser()),
 		replaceMnemonic: (newMnemonic, oldMnemonic, fcId) => dispatch(replaceMnemonic(newMnemonic, oldMnemonic, fcId)),
-		updateMnemonic: (mnemonic, fcId) => dispatch(updateMnemonic(mnemonic, fcId))
+		addMnemonic: (mnemonic, fcId) => dispatch(addMnemonic(mnemonic, fcId))
 	};
 };
 const mapStateToProps = (state) => {
