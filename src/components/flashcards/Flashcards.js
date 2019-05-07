@@ -140,7 +140,7 @@ class Flashcards extends Component {
     let categoryfcs = flashcards.filter(f => f.deckid === id);
     let user = users.find(u => u.id === auth.uid);
 
-    //this.props.loaduser();
+    this.props.loaduser();
     
     let currentNumber = 0;
     // If flashcards in buffer, show first element and remove element from buffer
