@@ -25,7 +25,7 @@ class SignIn extends Component {
 		signInFlow: 'popup',
 		signInOptions: [ firebase.auth.FacebookAuthProvider.PROVIDER_ID ],
 		callbacks: {
-			signInSuccess: () => false
+			signInSuccessWithAuthResult: () => false
 		}
 	};
 
@@ -71,10 +71,7 @@ class SignIn extends Component {
 							</div>
 						</div>
 						<div className="input-field">
-							<button className="btn">
-								<i className="material-icons">arrow_forward</i>
-								<span>Sign in</span>
-							</button>
+							<button className="btn">Sign in</button>
 							<div className="red-text center">{authError ? <p>{authError}</p> : null}</div>
 						</div>
 						<div className="auth-text">OR</div>

@@ -29,8 +29,6 @@
     margin: 1.5rem;
 }
 
-.fb-login-field{
-}
 
 .btn{
     background-color: rgb(143,	167,	248	);
@@ -54,4 +52,9 @@
     margin-right: auto;
     width: 90%;
    
+}
+
+
+.firebaseui-idp-icon{
+    margin-top: 0rem;
 }

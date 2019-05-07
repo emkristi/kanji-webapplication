@@ -13,8 +13,15 @@ const Navbar = (props) => {
             <div>
                 <nav className="transparent z-depth-0">
                     <div className="nav-wrapper">
-                        <Link to={'/'}><img className="navlogo" src="img/LOGOLITENNY.jpg" width="60rem" alt="logo" /></Link>
+                        {(auth.uid) &&
                         
+                        <Link to={'/'}><img className="navlogo" src="img/LOGOLITENNY.jpg" width="60rem" alt="logo" /></Link>
+                        }
+                        {!(auth.uid) &&
+
+                        <a href='/start'><img className="navlogo" src="img/LOGOLITENNY.jpg" width="60rem" alt="logo" /></a>
+                        }
+
                         <ul className="right">
                             {(auth.uid) &&
                                 <Dropdown trigger={<div className="brand-logo right"><i className="right material-icons md-36">menu</i></div>} options={{coverTrigger: false}}>

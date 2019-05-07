@@ -31,6 +31,7 @@ export const loaduser = () => {
 		firestore.collection('users').get().then((snapshot) => {
 			snapshot.docs.forEach((doc) => {
 				let users = doc.data();
+				return users;
 			});
 		});
 	};
