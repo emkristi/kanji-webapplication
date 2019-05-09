@@ -1,26 +1,4 @@
 /**
- * Creates new flashcard from user input
- * @param {*} flashcard 	User input from CreateFlashcard.js
- */
-export const createFlashcard = (flashcard) => {
-	return (dispatch, getState, { getFirestore }) => {
-		const firestore = getFirestore();
-
-		firestore
-			.collection('flashcards')
-			.add({
-				...flashcard
-			})
-			.then(() => {
-				dispatch({ type: 'CREATE_FLASHCARD', flashcard });
-			})
-			.catch((err) => {
-				dispatch({ type: 'CREATE_FLASHCARD_ERROR', err });
-			});
-	};
-};
-
-/**
  * Adds completed flashcards in an array in User. This is used to know which flashcards
  * the user has seen (clicked easy on). 
  * @param {} flashcardId 
@@ -156,3 +134,27 @@ export const updateMnemonicArray = (mnemonic) => {
         })
     }
 }
+
+/**
+ * Creates new flashcard from user input. Not in use but code is kept for future development.
+ * @param {*} flashcard 	User input from CreateFlashcard.js
+ */
+/*
+export const createFlashcard = (flashcard) => {
+	return (dispatch, getState, { getFirestore }) => {
+		const firestore = getFirestore();
+
+		firestore
+			.collection('flashcards')
+			.add({
+				...flashcard
+			})
+			.then(() => {
+				dispatch({ type: 'CREATE_FLASHCARD', flashcard });
+			})
+			.catch((err) => {
+				dispatch({ type: 'CREATE_FLASHCARD_ERROR', err });
+			});
+	};
+};
+*/

@@ -93,7 +93,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        // dispatch takes in the action creator which is signUp, imported at top
         signUp: (newUser) => dispatch(signUp(newUser))
     }
 }

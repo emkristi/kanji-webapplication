@@ -1,3 +1,9 @@
+/**
+ * Component for creating a new deck. The code is not in use but is kept in the app for
+ * future development
+ */
+
+ /*
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createDeck } from '../../store/actions/deckActions'
@@ -50,3 +56,4 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(null, mapDispatchToProps)(CreateDeck)
+*/

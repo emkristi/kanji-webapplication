@@ -7,7 +7,7 @@ import deckReducer from './deckReducer'
 import userReducer from './userReducer'
 
 /**
- * Root reducer that combines reducers in the application
+ * Root reducer, combines reducers in the application
  */
 const rootReducer = combineReducers({
   auth: authReducer,  

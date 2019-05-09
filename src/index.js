@@ -13,7 +13,7 @@ import fbConfig from './config/fbConfig'
 
 
 /**
- * Creating a store and storing it in the variable 'store'.
+ * Redux store
  */
 const store = createStore(rootReducer,
     compose(
