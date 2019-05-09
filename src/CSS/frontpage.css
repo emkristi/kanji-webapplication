@@ -6,7 +6,6 @@
 }
 
 .frontpage-content {
-  /*padding-top: 25px;*/
   max-width: 52rem;
   min-width: 20rem;
   padding: 5px;
@@ -51,7 +50,7 @@
   width: 100%;
   /*background-color: lightgray;*/
 }
-
+/*
 .not-completed {
   
 }
@@ -104,5 +103,7 @@
 
 .dropdown-content:hover {
   cursor: auto !important;
-  /*pointer-events: none;*/
+  pointer-events: none;
 }
+
+*/
