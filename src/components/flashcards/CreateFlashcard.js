@@ -1,3 +1,4 @@
+/*
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createFlashcard } from '../../store/actions/flashcardActions'
@@ -8,9 +9,7 @@ class CreateFlashcard extends Component {
         kanji: ''
     }
 
-    /**
-     * Function that fires when a user changes an input field
-     */
+ 
     handleChange = (e) => {
         e.preventDefault();
         this.setState({
@@ -18,9 +17,7 @@ class CreateFlashcard extends Component {
         })
     }
 
-    /**
-     * Function for submitting info written in input fields
-     */
+   
     handleSubmit = (e) => {
         e.preventDefault(); // prevents page from reloading
         this.props.createFlashcard(this.state) // we have access to createFlashcard because of the mapDispatchToProps. Inside the function we pass the flashcard we want to create, which the state, so we pass this.state. This flashcard is going to be passed into the function in mapDispatchToProps
@@ -51,13 +48,6 @@ class CreateFlashcard extends Component {
     }
 }
 
-/**
- * returns an object. whatever property we want to add to the props, we add to this object.
- * we add a method to the props called createFlashcard
- * 
- * 
- * @param {*} dispatch 
- */
 const mapDispatchToProps = (dispatch) => {
     return {
         
@@ -65,6 +55,6 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-// using connect() to connect this component to the redux store
-// we pass null since we don't have a mapStateToProps in this component
 export default connect(null, mapDispatchToProps)(CreateFlashcard)
+
+*/

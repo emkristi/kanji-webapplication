@@ -12,10 +12,12 @@ const initState = {
  */
 const flashcardReducer = (state = initState, action) => {
 	switch (action.type) {
+		/*
 		case 'CREATE_FLASHCARD':
 			return state;
 		case 'CREATE_FLASHCARD_ERROR':
 			return state;
+		*/
 		case 'ADD_COMPLETED_FLASHCARDS':
 			return state;
 		case 'ADD_COMPLETED_FLASHCARDS_ERROR':

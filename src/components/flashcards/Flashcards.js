@@ -263,7 +263,7 @@ class Flashcards extends Component {
                               <p>
                                 {radarray.map(radical => {
                                   return(
-                                    <span key={radical}>{radical } {" "} </span>
+                                    <span key={radical}>{radical }</span>
                                   )
                                 })}
                               </p>
@@ -296,7 +296,7 @@ class Flashcards extends Component {
 
                               {!(categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards) &&
                                 <p><span>
-                                  {categoryfcs[currentCard].kanji}
+                                  {categoryfcs[currentCard].kanji}{"ge"}
                                 </span></p>
                               }
                             </div>

@@ -80,3 +80,38 @@
   color: rgb(73,	84,	121);
 }
 
+.dropdown-content{
+  width: 14rem !important;
+  max-height: 19rem;
+  opacity: 1 !important;
+}
+
+.dropdown-content li>a, .dropdown-content li>span {
+  color: black !important;
+  pointer-events: none;
+  cursor: none;
+}
+
+.li {
+  cursor: help;
+
+}
+
+/*
+.dropdown-trigger {
+  cursor: help !important;
+}
+*/
+
+
+
+.dropdown-content li {
+  cursor: auto;
+  opacity: 1px;
+  pointer-events: none !important;
+}
+
+.dropdown-content:hover {
+  cursor: auto !important;
+  /*pointer-events: none;*/
+}

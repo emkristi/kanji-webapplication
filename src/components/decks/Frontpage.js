@@ -7,12 +7,15 @@ import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import { removeCompletedFlashcards } from '../../store/actions/flashcardActions';
 import '../../CSS/frontpage.css';
+import { Dropdown, Divider } from 'react-materialize'
+
 
 /**
  * Frontpage component. Contains decks of flashcards.
  * @class
  */
 class Frontpage extends Component {
+	
 
 	/**
 	 * Function for when the restart button is clicked. Removes flashcards in the deck
@@ -25,6 +28,8 @@ class Frontpage extends Component {
 		} 
 	}
 
+	
+
 	render() {
 		const { decks, flashcards, auth, users } = this.props;
 
@@ -36,9 +41,11 @@ class Frontpage extends Component {
 		//NB gjør om til /start med må bruke href ellers kommer navbar med??
 		if (!auth.uid) return <Redirect to="/signin" />;
 		
+	
 
 		return (
 			<div className="frontpage-content center-align">
+			
 				<div className="row">
 					{flashcards &&
 						user &&
@@ -46,6 +53,9 @@ class Frontpage extends Component {
 						decks.map((deck) => {
 							let unfinisheddecks;
 							let cardsInDeck = flashcards.filter((fcard) => fcard.deckid === deck.id);
+							let radInDeck = cardsInDeck.filter((fcard => fcard.radicals === ""));
+							let kanInDeck = cardsInDeck.filter((fcard => fcard.radicals !== ""));
+							
 							if (user.flashcardArray == null) {
 								unfinisheddecks = flashcards;
 							} else {
@@ -58,13 +68,40 @@ class Frontpage extends Component {
 									<div key={deck.id} className="col s12 m6 l6">
 										<Link to={deck.type === 'Images' ? '/img/' + deck.id : '/' + deck.id} key={deck.id} id="link">
 											<div className="deck not-completed">
+											<Dropdown className="dropdown-content" trigger={<i className="material-icons right">info_outline</i>}>
+													<span>KANJI IN DECK</span>
+													{
+														kanInDeck.map(card => {
+																return (
+																	<span key={card}>{card.kanji}{" - "}{card.eng}</span>
+																)
+															}
+														)
+													}
+													<Divider/>
+													<span>RADICALS IN DECK</span>
+													{
+														radInDeck.map(card => {
+																return (
+																	<span key={card}>{card.kanji}{" - "}{card.eng}</span>
+																)
+															}
+														)
+													}
+				
+												</Dropdown>
 												<div className="deck-content">
+												
 													<DeckInfo deck={deck} />
 													<p className="decktypetxt">{deck.type}</p>
 													<p className="completionstat">{cardsInDeck.length}{" cards"}</p>
+														
 												</div>
+												
+												
 											</div>
 										</Link>
+										
 									</div>
 								);
 							} else {
