@@ -56,7 +56,6 @@
   
 }
 
-/* */
 #link{
   color: rgb(100,	106	,246	);
 }
@@ -96,14 +95,6 @@
   cursor: help;
 
 }
-
-/*
-.dropdown-trigger {
-  cursor: help !important;
-}
-*/
-
-
 
 .dropdown-content li {
   cursor: auto;
