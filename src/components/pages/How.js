@@ -10,18 +10,23 @@ class How extends Component {
                     <div className="col s12">
                         <div className="info">
                             <h4 className="center-align">How to use Memji</h4>
-                            <br></br>
-                            <div className="row">
+
+                            <div className="row howto-row">
 								<div className="col s12 m6 l6">
 									<h5 className="">DECKS</h5>
-                                    Click on a deck to start playing. You can either choose a deck with flashcards that go from Kanji to English or picture flashcards. A deck has a category, but since they also contain radicals some words in the categories doesn't have anything to do with the category itself. 
+                                    Each deck has a category and type. The info button in the top corner of each deck shows
+                                    all radicals and kanji in a deck. 
+                                    
+                                    <br/>
+                                    <b > NB! </b> Since the app shows radicals that a kanji are made up of before the kanji itself, some radicals in the
+                                    decks has nothing to do with the category of the deck. 
 								</div>
 								<div className="col s12 m6 l6  center-align">
 									<img className="activator logoimg" src="img/numdeck.png" alt="Memji logo" />{' '}
 								</div>
 							</div>
 
-							<div className="row">
+							<div className="row howto-row">
 								<div className="col s12 m6 l6">
 									<h5 className="">FLASHCARDS - KANJI TO ENGLISH</h5>
 									On the front of the flashcards is a kanji. When hovering (on desktop) or clicking
@@ -41,7 +46,7 @@ class How extends Component {
                                 </div>
 							</div>
 
-							<div className="row">
+							<div className="row howto-row">
 								<div className="col s12 m6 l6">
 									<h5 className="">BUTTONS</h5>
 									If you click the easy button the flashcard wont appear again until deck is
@@ -53,8 +58,7 @@ class How extends Component {
 								</div>
 							</div>
 
-                            <br></br>
-                            <div className="row">
+                            <div className="row howto-row">
                                 <div className="col s12 m6 l6">
 									<h5 className="">MNEMONICS</h5>
 									Each flashcard has a mnemonic suggestion. By clicking the pen icon you can make your
@@ -64,9 +68,8 @@ class How extends Component {
 									<img className="activator logoimg" src="img/mnembut.png" alt="Memji logo" />{' '}
 								</div>
 							</div>
-
-                            <br></br>
-                            <div className="row">
+                           
+                            <div className="row howto-row">
                                 <div className="col s12 m6 l6">
 									<h5 className="">STROKE ORDER</h5>
                                     Some flashcards has gifs of the kanjis strokeorder on the back of the flashcards. This shows how the kanji is drawn.
@@ -76,8 +79,8 @@ class How extends Component {
 								</div>
                             </div>
 
-                            <br></br>
-                            <div className="row">
+                     
+                            <div className="row howto-row">
                                 <div className="col s12 m6 l6">
 									<h5 className="">PHOTOFLASHCARDS</h5>
                                     For photoflashcards an image will appear along with four different Kanji. Click a kanji. If correct kanji, the flashcard will flip around where you will see the easy and hard buttons along with information. 
@@ -95,8 +98,8 @@ class How extends Component {
                                 </div>
                             </div>
 
-                            <br></br>
-                            <div className="row">
+                            <br/>
+                            <div className="row howto-row">
                                 <div className="col s12 m12 l12 center startlink">
                                     <button className="btn"><Link to="/" id="beginlink">Start</Link></button>
                                     <br></br>

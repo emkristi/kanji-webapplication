@@ -18,6 +18,11 @@
 
 }
 
+.howto-row {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
 .fcimg{
     max-width: 10rem;
 }

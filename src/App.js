@@ -6,9 +6,9 @@ import SignUp from './components/auth/SignUp'
 import Frontpage from './components/decks/Frontpage'
 import Flashcards from './components/flashcards/Flashcards'
 import PhotoFlashcards from './components/flashcards/PhotoFlashcards'
-import Startpage from './components/startpage/Startpage'
-import About from './components/layout/About'
-import How from './components/layout/How'
+import Startpage from './components/pages/Startpage'
+import About from './components/pages/About'
+import How from './components/pages/How'
 
 class App extends Component {
   render() {

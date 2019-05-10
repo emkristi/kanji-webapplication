@@ -38,7 +38,6 @@ class Frontpage extends Component {
 			user = users.find((u) => u.id === auth.uid);
 		}
 
-		//NB gjør om til /start med må bruke href ellers kommer navbar med??
 		if (!auth.uid) return <Redirect to="/signin" />;
 		
 	
@@ -63,23 +62,16 @@ class Frontpage extends Component {
 									(fcard) => fcard.deckid === deck.id && user.flashcardArray.indexOf(fcard.id) === -1
 								);
 							}
-							if (unfinisheddecks.length > 0) {
+							if (unfinisheddecks.length > 0 && (deck.type === "Images")) {
 								return (
 									<div key={deck.id} className="col s12 m6 l6">
 										<Link to={deck.type === 'Images' ? '/img/' + deck.id : '/' + deck.id} key={deck.id} id="link">
 											<div className="deck not-completed">
-											<Dropdown className="dropdown-content" trigger={<i className="material-icons right">info_outline</i>}>
-													<span>KANJI IN DECK</span>
-													{
-														kanInDeck.map(card => {
-																return (
-																	<span key={card}>{card.kanji}{" - "}{card.eng}</span>
-																)
-															}
-														)
-													}
-													<Divider/>
-													<span>RADICALS IN DECK</span>
+											<Dropdown className="dropdown-content dropdown-content-deck" options={{belowOrigin: true, hover: true, closeOnClick: true}}
+												trigger={<i className="material-icons right">info_outline</i>}>
+													
+													<span className="word-list-title">KANJI IN DECK</span>
+													
 													{
 														radInDeck.map(card => {
 																return (
@@ -104,6 +96,53 @@ class Frontpage extends Component {
 										
 									</div>
 								);
+							} else if(unfinisheddecks.length > 0){
+								return(
+									<div key={deck.id} className="col s12 m6 l6">
+										<Link to={deck.type === 'Images' ? '/img/' + deck.id : '/' + deck.id} key={deck.id} id="link">
+											<div className="deck not-completed">
+											<Dropdown className="dropdown-content dropdown-content-deck" options={{belowOrigin: true, hover: true, closeOnClick: true}}
+												trigger={<i className="material-icons right">info_outline</i>}>
+													
+													<span className="word-list-title">KANJI IN DECK</span>
+													{
+														kanInDeck.map(card => {
+																return (
+																	<span key={card}>{card.kanji}{" - "}{card.eng}</span>
+																)
+															}
+														)
+													}
+
+													<Divider/>
+													
+													<span className="word-list-title">RADICALS IN DECK</span>
+													{
+														radInDeck.map(card => {
+																return (
+																	<span key={card}>{card.kanji}{" - "}{card.eng}</span>
+																)
+															}
+														)
+													}
+				
+												</Dropdown>
+												<div className="deck-content">
+												
+													<DeckInfo deck={deck} />
+													<p className="decktypetxt">{deck.type}</p>
+													<p className="completionstat">{cardsInDeck.length}{" cards"}</p>
+														
+												</div>
+												
+												
+											</div>
+										</Link>
+										
+									</div>
+								
+								)
+
 							} else {
 								return (
 									<div key={deck.id} className="col s12 m6 l6">
