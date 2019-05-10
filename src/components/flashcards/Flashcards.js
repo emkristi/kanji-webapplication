@@ -296,7 +296,7 @@ class Flashcards extends Component {
 
                               {!(categoryfcs && categoryfcs[currentCard] && categoryfcs[currentCard].radicals && flashcards) &&
                                 <p><span>
-                                  {categoryfcs[currentCard].kanji}{"ge"}
+                                  {categoryfcs[currentCard].kanji}{" "}
                                 </span></p>
                               }
                             </div>
