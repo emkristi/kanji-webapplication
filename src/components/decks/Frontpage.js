@@ -67,6 +67,7 @@ class Frontpage extends Component {
 									<div key={deck.id} className="col s12 m6 l6">
 										<Link to={deck.type === 'Images' ? '/img/' + deck.id : '/' + deck.id} key={deck.id} id="link">
 											<div className="deck not-completed">
+												<div className="info-dropdown">
 											<Dropdown className="dropdown-content dropdown-content-deck" options={{belowOrigin: true, hover: true, closeOnClick: true}}
 												trigger={<i className="material-icons right">info_outline</i>}>
 													
@@ -82,6 +83,7 @@ class Frontpage extends Component {
 													}
 				
 												</Dropdown>
+												</div>
 												<div className="deck-content">
 												
 													<DeckInfo deck={deck} />
@@ -101,6 +103,7 @@ class Frontpage extends Component {
 									<div key={deck.id} className="col s12 m6 l6">
 										<Link to={deck.type === 'Images' ? '/img/' + deck.id : '/' + deck.id} key={deck.id} id="link">
 											<div className="deck not-completed">
+											<div className="info-dropdown">
 											<Dropdown className="dropdown-content dropdown-content-deck" options={{belowOrigin: true, hover: true, closeOnClick: true}}
 												trigger={<i className="material-icons right">info_outline</i>}>
 													
@@ -127,6 +130,7 @@ class Frontpage extends Component {
 													}
 				
 												</Dropdown>
+												</div>
 												<div className="deck-content">
 												
 													<DeckInfo deck={deck} />

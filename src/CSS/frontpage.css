@@ -121,3 +121,15 @@
   cursor: auto !important;
   /*pointer-events: none;*/
 }
+
+@media screen and (max-width: 450px) {
+  
+  .info-dropdown{
+    display: none !important;
+  }
+
+  
+
+  
+}
+
