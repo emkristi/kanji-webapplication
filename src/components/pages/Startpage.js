@@ -16,7 +16,7 @@ class Startpage extends Component {
 							<div className="row">
 
 								<div className="col s12 m6 l5">
-									<img src="img/memjilogo.png" alt="logo" />
+									<img src="img/memjilogo.png" alt="logo" width="800rem" />
 								</div>
 
 								<div className="col s12 m6 l7 ">
