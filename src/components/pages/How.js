@@ -14,12 +14,12 @@ class How extends Component {
                             <div className="row howto-row">
 								<div className="col s12 m6 l6">
 									<h5 className="">DECKS</h5>
-                                    Each deck has a category and type. The info button in the top corner of each deck shows
+                                    Each deck has a category and a type. The info button in the top corner of each deck shows
                                     all radicals and kanji in a deck. 
                                     
                                     <br/>
-                                    <b > NB! </b> Since the app shows radicals that a kanji are made up of before the kanji itself, some radicals in the
-                                    decks has nothing to do with the category of the deck. 
+                                    <b > Important! </b> Since the app shows radicals that a kanji are made up of before the kanji itself, the meaning of some radicals in the
+                                    decks has nothing to do with the category of the deck.
 								</div>
 								<div className="col s12 m6 l6  center-align">
 									<img className="activator logoimg" src="img/numdeck.png" alt="Memji logo" />{' '}
@@ -30,8 +30,7 @@ class How extends Component {
 								<div className="col s12 m6 l6">
 									<h5 className="">FLASHCARDS - KANJI TO ENGLISH</h5>
 									On the front of the flashcards is a kanji. When hovering (on desktop) or clicking
-									(mobile) the card it will flip and you can see the translation and other
-									information.
+									(mobile) the card will flip and the translation along with other information will be shown.
 								</div>
 								<div className="col s12 m6 l6  center-align">
                                     <div className="row">
@@ -49,7 +48,7 @@ class How extends Component {
 							<div className="row howto-row">
 								<div className="col s12 m6 l6">
 									<h5 className="">BUTTONS</h5>
-									If you click the easy button the flashcard wont appear again until deck is
+									If you click the easy button, the flashcard wont appear again until the deck is
 									restarted. By clicking hard button the flashcard will reappear randomly in the deck
 									until the easy button is clicked.
 								</div>
@@ -72,7 +71,7 @@ class How extends Component {
                             <div className="row howto-row">
                                 <div className="col s12 m6 l6">
 									<h5 className="">STROKE ORDER</h5>
-                                    Some flashcards has gifs of the kanjis strokeorder on the back of the flashcards. This shows how the kanji is drawn.
+                                    On the back of certain flashcards, there will be a gif of how the kanji is drawn. 
 								</div>
 								<div className="col s12 m6 l6  center-align">
 									<img className="logoimg" src="img/strokeimg.png" alt="Memji logo" />{' '}
@@ -83,7 +82,7 @@ class How extends Component {
                             <div className="row howto-row">
                                 <div className="col s12 m6 l6">
 									<h5 className="">PHOTOFLASHCARDS</h5>
-                                    For photoflashcards an image will appear along with four different Kanji. Click a kanji. If correct kanji, the flashcard will flip around where you will see the easy and hard buttons along with information. 
+                                    For photoflashcards an image will appear along with four different kanji. If correct kanji is clicked, the flashcard will flip around where you will see the easy and hard buttons along with information. 
 								</div>
 								<div className="col s12 m6 l6  center-align">
                                     <div className="row">

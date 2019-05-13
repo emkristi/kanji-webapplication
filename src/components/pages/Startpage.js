@@ -25,8 +25,8 @@ class Startpage extends Component {
 									</div>
 
 									<div className="s-text">
-										Memji focuses on learning Kanji by learning the radicals that kanjis are built
-										up of.
+										Memji focuses on learning kanji by learning the radicals that kanjis are built
+										up of before the kanji itself.
 									</div>
 
 									<br />

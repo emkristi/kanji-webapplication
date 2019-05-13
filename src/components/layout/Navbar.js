@@ -25,7 +25,7 @@ const Navbar = (props) => {
                         <ul className="right">
                             {(auth.uid) &&
                                 <Dropdown trigger={<div className="brand-logo right"><i className="right material-icons md-36">menu</i></div>} options={{coverTrigger: false}}>
-                                    <Link to={'/howto'} className="navbarlinks">How to play</Link>
+                                    <Link to={'/howto'} className="navbarlinks">How to use</Link>
                                     <Link to={'/about'} className="navbarlinks">Credits</Link>
                                     <Link to={'/start'} onClick={props.signOut} className="navbarlinks">Log out</Link>
                                 </Dropdown>

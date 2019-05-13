@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { signIn } from '../../store/actions/authActions';
 import { Redirect } from 'react-router-dom';
 import firebase from 'firebase/app'; //forsøk på å løse warning. Fjerne /app hvis noe ødelegges her
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import '../../CSS/auth.css';
 import { Link } from 'react-router-dom';
 
@@ -23,7 +22,6 @@ class SignIn extends Component {
 
 	uiConfig = {
 		signInFlow: 'popup',
-		signInOptions: [ firebase.auth.FacebookAuthProvider.PROVIDER_ID ],
 		callbacks: {
 			signInSuccessWithAuthResult: () => false
 		}
@@ -60,6 +58,8 @@ class SignIn extends Component {
 				<div className="row center">
 					<div className="auth-title">Sign In</div>
 					<form className="auth-content center" onSubmit={this.handleSubmit}>
+						<br></br>
+						<br></br>
 						<div className="auth-input">
 							<div className="input-field">
 								<label htmlFor="email">Email</label>
@@ -70,18 +70,13 @@ class SignIn extends Component {
 								<input type="password" id="password" required onChange={this.handleChange} />
 							</div>
 						</div>
+						<br></br>
 						<div className="input-field">
 							<button className="btn">Sign in</button>
 							<div className="red-text center">{authError ? <p>{authError}</p> : null}</div>
 						</div>
-						<div className="auth-text">OR</div>
-						<div className="fb-login-field">
-							{this.state.isSignedIn ? (
-								<div>Signed in"</div>
-							) : (
-								<StyledFirebaseAuth uiConfig={this.uiConfig} firebaseAuth={firebase.auth()} />
-							)}
-						</div>
+					
+						
 						<div className="auth-link">
 							<p>
 								Dont have a user? Create one <Link to="/signup">here</Link>{' '}

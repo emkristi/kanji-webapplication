@@ -43,6 +43,7 @@ class SignUp extends Component {
     <div>
         <div className="row" margin="30px">
 
+
       <div className="auth-container center">
       <div className="auth-title">Sign Up</div>
 

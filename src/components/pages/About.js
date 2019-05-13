@@ -23,7 +23,7 @@ class About extends Component {
 							<div className="row">
 								<div className="col s12 m6 l6">
 									<h5>PHOTOFLASHCARDS</h5>
-									All images in the Photoflashcard Deck called Fruit are illustrated by Kine Mentzoni.
+									All images in the photoflashcard deck called 'Fruit' are illustrated by Kine Mentzoni.
 								</div>
 
 								<div className="col s12 m6 l6 center-align">
@@ -34,7 +34,7 @@ class About extends Component {
 							<div className="row">
 								<div className="col s12 m6 l6">
 									<h5>STROKE ORDER</h5>
-									<span>Stroke order gifs used in some flashcards are borrowed from <a href="https://en.wikipedia.org/wiki/List_of_kanji_by_concept#Numbers,_counting,_sequence" target="_blank">this website</a></span>
+									<span>Stroke order gifs used in some flashcards are borrowed from <a href="https://en.wikipedia.org/wiki/List_of_kanji_by_concept#Numbers,_counting,_sequence" rel="noopener noreferrer" target="_blank">this website.</a></span>
 								</div>
 								
 								<div className="col s12 m6 l6 center-align">
