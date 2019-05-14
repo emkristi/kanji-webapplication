@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { signIn } from '../../store/actions/authActions';
 import { Redirect } from 'react-router-dom';
-import firebase from 'firebase/app'; //forsøk på å løse warning. Fjerne /app hvis noe ødelegges her
+import firebase from 'firebase/app';
 import '../../CSS/auth.css';
 import { Link } from 'react-router-dom';
 
 /**
  * Some of this code is borrowed from tutorial: https://www.youtube.com/watch?v=f4Lg-nzE0u8&list=PL4cUxeGkcC9iWstfXntcj8f-dFZ4UtlN3&index=8
- * 
+
  * Compontent for signing in to the application. 
  * @class
  */
@@ -36,12 +36,18 @@ class SignIn extends Component {
 		unsubscribe();
 	};
 
+	/**
+	 * Handles input field
+	 */
 	handleChange = (e) => {
 		this.setState({
 			[e.target.id]: e.target.value
 		});
 	};
 
+	/**
+	 * Signs in user if sign in button is clicked
+	 */
 	handleSubmit = (e) => {
 		e.preventDefault();
 		this.props.signIn(this.state);
@@ -54,7 +60,7 @@ class SignIn extends Component {
 		return (
 			<div className="auth-container">
 				<div className="row center">
-					<div className="auth-title">Sign In</div>
+					<div className="auth-title">Log in</div>
 					<form className="auth-content center" onSubmit={this.handleSubmit}>
 						<br></br>
 						<br></br>
@@ -70,7 +76,7 @@ class SignIn extends Component {
 						</div>
 						<br></br>
 						<div className="input-field">
-							<button className="btn">Sign in</button>
+							<button className="btn">Log in</button>
 							<div className="red-text center">{authError ? <p>{authError}</p> : null}</div>
 						</div>
 					

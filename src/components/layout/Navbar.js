@@ -38,7 +38,7 @@ const Navbar = (props) => {
                             {(!auth.uid) &&
                                 <Dropdown trigger={<div className="brand-logo right"><i className="material-icons md-36">menu</i></div>} options={{coverTrigger: false}}>
                                     <Link to={'/signup'} className="navbarlinks">Sign up</Link>
-                                    <Link to={'/signin'} className="navbarlinks">Sign in</Link>
+                                    <Link to={'/signin'} className="navbarlinks">Log in</Link>
                                     <Link to={'/howto'} className="navbarlinks">How to play</Link>
                                     <Link to={'/about'} className="navbarlinks">Credits</Link>
                                 </Dropdown>
