@@ -3,7 +3,7 @@ const initState = {
 }
 
 /**
- * authReducer function
+ * authReducer function. Code is borrowed from the tutorial https://www.youtube.com/watch?v=CkePdocytWM&list=PL4cUxeGkcC9iWstfXntcj8f-dFZ4UtlN3&index=23
  * @param {*} state 
  * @param {*} action 
  */
