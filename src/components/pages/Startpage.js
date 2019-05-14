@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-
+/**
+ * Compontent for the startpage in the application
+ */
 class Startpage extends Component {
 	render() {
 		const { auth } = this.props; 

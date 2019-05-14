@@ -1,3 +1,8 @@
+/**
+ * Component for creating a new flashcard. The code is not in use but is kept in the app for
+ * future development
+ */
+
 /*
 import React, { Component } from 'react'
 import { connect } from 'react-redux'

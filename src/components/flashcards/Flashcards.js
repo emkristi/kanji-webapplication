@@ -10,6 +10,10 @@ import { addMnemonic } from '../../store/actions/flashcardActions';
 import { replaceMnemonic } from '../../store/actions/flashcardActions';
 import '../../CSS/flashcard.css';
 
+/**
+ * Flashcard component (kanji to english flashcards)
+ * @class
+ */
 class Flashcards extends Component {
   constructor(props) {
     super(props);
@@ -30,10 +34,16 @@ class Flashcards extends Component {
     this.props.firestore.unsetListener({collection: 'users'})
   }
 
+  /**
+   * Shows mnemonic inputfield if edit icon is clicked
+   */
   handleEditMnemClick = (e) => {
     this.setState({showMnemField: true});
   }
 
+  /**
+   * Handles change in mnemonic inputfield
+   */
   handleMnemonicChange = (e) => {
     e.preventDefault();
     this.setState({
@@ -42,7 +52,7 @@ class Flashcards extends Component {
   }
 
   /**
-   * Function for submitting a new eprsonal mnemonic.
+   * Function for submitting a new personal mnemonic.
    */
   handleMnemonicSubmit = (e) => {
     const { mnemonics, users, auth, flashcards, match: { params: { id } } } = this.props;
@@ -59,7 +69,6 @@ class Flashcards extends Component {
         gjeldendeMnem = mnemonics[i];
         for(let j = 0; j < user.mnemonicArr.length; j++){
           if(user.mnemonicArr[j] === gjeldendeMnem.id){
-
             this.props.replaceMnemonic(this.state.mnemonic, gjeldendeMnem, gjeldendeFlashcard.id);
           } 
         }
@@ -74,7 +83,8 @@ class Flashcards extends Component {
   
 
   /**
-   * Function for when the Hard button is clicked
+   * Function for when the Hard button is clicked. When clicked, the flashcard will appear again at a random time in the deck until
+   * easy button has been clicked. 
    */
   handleHard = (e) => {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
@@ -90,7 +100,8 @@ class Flashcards extends Component {
   }
 
   /**
-   * Function for when the Easy button is clicked
+   * Function for when the Easy button is clicked. Makes sure flashcard is added to user array so that it wont appear again in the deck
+   * unless deck has been restarted. 
    */
   handleEasy = (e) => {
     const { flashcards, match: { params: { id } } } = this.props;
@@ -130,8 +141,8 @@ class Flashcards extends Component {
   }
 
   /**
-   * Function for changing to random flashcard. Makes sure to only show Kanji if all radicals
-   * in said Kanji has been shown. 
+   * Function for changing to a random flashcard. Makes sure to only show a new Kanji if all radicals
+   * in said Kanji has been shown in previous flashcards. 
    */
   changeFc = (e) => {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
@@ -226,8 +237,7 @@ class Flashcards extends Component {
 			radarray = rad.map((r) => flashcards.find((f) => f.id === r.id).kanji);
 		}
 
-		// Error handling
-		if (!categoryfcs[currentCard]) return <div>Not defined</div>;
+		if (!categoryfcs[currentCard]) return <div></div>;
 
 		return (
 			<div className="flashcard-content">
@@ -239,7 +249,6 @@ class Flashcards extends Component {
 									<div className="flip-card-front valign-wrapper">
 										<div className="card-content">
 											<span className=""> {categoryfcs[currentCard].kanji} </span>
-
 										</div>
 									</div>
 
@@ -373,6 +382,11 @@ class Flashcards extends Component {
 		);
 	}
 }
+
+/**
+ * Function for dispatching actions 
+ * @param {*} dispatch 
+ */
 const mapDispatchToProps = (dispatch) => {
 	return {
 		addCompletedFlashcards: (flashcard) => dispatch(addCompletedFlashcards(flashcard)),
@@ -382,6 +396,11 @@ const mapDispatchToProps = (dispatch) => {
 		addMnemonic: (mnemonic, fcId) => dispatch(addMnemonic(mnemonic, fcId))
 	};
 };
+
+/**
+ * Function for getting data from the store
+ * @param {*} state 
+ */
 const mapStateToProps = (state) => {
 	return {
 		flashcards: state.firestore.ordered.flashcards, 

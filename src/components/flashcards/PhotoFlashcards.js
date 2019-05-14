@@ -11,6 +11,10 @@ import { addMnemonic } from '../../store/actions/flashcardActions';
 import { replaceMnemonic } from '../../store/actions/flashcardActions';
 import '../../CSS/photoflashcard.css';
 
+/**
+ * Photoflashcards compontent for flashcards where an image appears and the user chooses between four kanji.
+ * @class
+ */
 class PhotoFlashcards extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +34,8 @@ class PhotoFlashcards extends Component {
   }
 
   /**
-   * 
+   * Function for when the Hard button is clicked. When clicked, the flashcard will appear again at a random time in the deck until
+   * easy button has been clicked. 
    */
   handleHard = (e) => {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
@@ -56,6 +61,10 @@ class PhotoFlashcards extends Component {
     }
   }
 
+  /**
+   * Function for when the Easy button is clicked. Makes sure flashcard is added to user array so that it wont appear again in the deck
+   * unless deck has been restarted. 
+   */
   handleEasy = (e) => {
     const { auth, users, flashcards, match: { params: { id } } } = this.props;
     const { currentCard } = this.state;
@@ -84,10 +93,10 @@ class PhotoFlashcards extends Component {
     
   }
 
-  handleEditMnemClick = (e) => {
-    this.setState({showMnemField: true});
-  }
-
+ 
+  /**
+   * Handles change in mnemonic inputfield
+   */
   handleMnemonicChange = (e) => {
     e.preventDefault();
     this.setState({
@@ -95,6 +104,9 @@ class PhotoFlashcards extends Component {
     })
   }
 
+  /**
+   * Function for submitting a new personal mnemonic.
+   */
   handleMnemonicSubmit = (e) => {
     const { flashcards, match: { params: { id } } } = this.props;
     const { mnemonics, users, auth } = this.props;
@@ -138,6 +150,10 @@ class PhotoFlashcards extends Component {
     return flashcards.find(f => f.id === id);
   }
 
+  /**
+   * Function for changing to a random flashcard. Makes sure to only show a new Kanji if all radicals
+   * in said Kanji has been shown in previous flashcards. 
+   */
   changeFc = (e) => {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
     const { currentCard, bufferfc } = this.state;
@@ -146,8 +162,8 @@ class PhotoFlashcards extends Component {
     let user = users.find(u => u.id === auth.uid);
 
     this.props.loaduser();
-
     let currentNumber = 0;
+
     // If flashcards in buffer, show first element and remove element from buffer
     if (bufferfc.length > 0) {
       currentNumber = this.findIndexOfFcId(categoryfcs, bufferfc[0]);
@@ -200,6 +216,10 @@ class PhotoFlashcards extends Component {
     document.getElementById('mnemonic').value = '';
   }
 
+  /**
+   * Method for handeling the buttons on the front of the photoflashcard. If correct button is clicked it will
+   * turn green then the card will flip over. If wrong button is clicked the button will turn red. 
+   */
   handleFButton = (e) => {
     const { flashcards, match: { params: { id } } } = this.props;
     const { currentCard } = this.state;
@@ -216,8 +236,8 @@ class PhotoFlashcards extends Component {
   }
 
   /**
-   * Method for getting an array of random Kanji for the buttons on the photoflashcards
-   * where one of them is the correct Kanji. 
+   * Method for getting an array of random kanji for the buttons on the photoflashcards
+   * where one of them is the correct kanji. 
    */
   randomKanjiArray = () => {
     const { flashcards, match: { params: { id } } } = this.props;
@@ -360,6 +380,10 @@ class PhotoFlashcards extends Component {
   }
 }
 
+/**
+ * Function for dispatching actions 
+ * @param {*} dispatch 
+ */
 const mapDispatchToProps = (dispatch) => {
 	return {
 		addCompletedFlashcards: (flashcard) => dispatch(addCompletedFlashcards(flashcard)),
@@ -369,6 +393,11 @@ const mapDispatchToProps = (dispatch) => {
 		addMnemonic: (mnemonic, fcId) => dispatch(addMnemonic(mnemonic, fcId))
 	};
 };
+
+/**
+ * Function for getting data from the store
+ * @param {*} state 
+ */
 const mapStateToProps = (state) => {
 	return {
 		flashcards: state.firestore.ordered.flashcards, 

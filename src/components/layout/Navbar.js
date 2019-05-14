@@ -4,8 +4,12 @@ import { Dropdown } from 'react-materialize'
 import { signOut } from '../../store/actions/authActions';
 import { Link } from 'react-router-dom'
 
+/**
+ * Navbar component
+ * @param {*} props 
+ */
 const Navbar = (props) => {
-    const { auth} = props;
+    const { auth } = props;
 
     return (
         <div>

@@ -1,9 +1,10 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
-//import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 
-// Initialize Firebase
+/**
+ * Firebase configuration
+ */
 var config = {
 	apiKey: 'AIzaSyCDQX_UAYLg44oOF40BGMT14Uk4prHJ5Hk',
 	authDomain: 'kanjiapp-8f121.firebaseapp.com',
@@ -16,7 +17,4 @@ var config = {
 firebase.initializeApp(config);
 firebase.firestore().settings({});
 
-//export const storage = firebase.storage().ref(); // ref
-
-//provider = new firebase.auth.FacebookAuthProvider();
 export default firebase;

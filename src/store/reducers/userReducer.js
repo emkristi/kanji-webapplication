@@ -5,6 +5,11 @@ const initState = {
     ]
 }
 
+/**
+ * User reducer
+ * @param {*} state 
+ * @param {*} action 
+ */
 const userReducer = (state = initState, action) => {
     switch (action.type) { 
         case 'UPDATE_USER':

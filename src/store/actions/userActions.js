@@ -1,10 +1,10 @@
 /**
- * Updates a users flashcardArray.
+ * Updates a users flashcardArray
  * @param {string} flashcardId 
  */
 export const updateUser = (flashcardId) => {
 	return (dispatch, getState, { getFirestore }) => {
-		const firestore = getFirestore(); // reference to our firestore database
+		const firestore = getFirestore();
 		const userId = getState().firebase.auth.uid;
 
 		firestore.collection('users').doc(userId).onSnapshot(function(doc) {});
@@ -23,10 +23,12 @@ export const updateUser = (flashcardId) => {
 	};
 };
 
+/**
+ * Loads user
+ */
 export const loaduser = () => {
 	return (dispatch, getState, { getFirestore }) => {
 		const firestore = getFirestore(); 
-		//const userId = getState().firebase.auth.uid;
 
 		firestore.collection('users').get().then((snapshot) => {
 			snapshot.docs.forEach((doc) => {

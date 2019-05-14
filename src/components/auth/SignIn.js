@@ -7,7 +7,9 @@ import '../../CSS/auth.css';
 import { Link } from 'react-router-dom';
 
 /**
- * For signing in to the application. 
+ * Some of this code is borrowed from tutorial: https://www.youtube.com/watch?v=f4Lg-nzE0u8&list=PL4cUxeGkcC9iWstfXntcj8f-dFZ4UtlN3&index=8
+ * 
+ * Compontent for signing in to the application. 
  * @class
  */
 class SignIn extends Component {
@@ -38,10 +40,6 @@ class SignIn extends Component {
 		this.setState({
 			[e.target.id]: e.target.value
 		});
-	};
-
-	componentClicked = (e) => {
-		console.log('clicked');
 	};
 
 	handleSubmit = (e) => {

@@ -1,7 +1,7 @@
 /**
  * Adds completed flashcards in an array in User. This is used to know which flashcards
  * the user has seen (clicked easy on). 
- * @param {} flashcardId 
+ * @param {string} flashcardId 
  */
 export const addCompletedFlashcards = (flashcardId) => {
 	return (dispatch, getState, { getFirestore }) => {
@@ -23,7 +23,7 @@ export const addCompletedFlashcards = (flashcardId) => {
 /**
  * Removes completed flashcards from the flashcardArray for logged in user. 
  * Used to restart a deck that has been completed if the restart button is clicked. 
- * @param {*} flashcardid 
+ * @param {string} flashcardid 
  */
 export const removeCompletedFlashcards = (flashcardid) => {
 	return (dispatch, getState, { getFirestore }) => {

@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import '../../CSS/info.css';
 import { Link } from 'react-router-dom';
 
+/**
+ * Component for the "How to play Memji" page in the application.
+ */
 class How extends Component {
 	render() {
 		return (

@@ -1,3 +1,7 @@
+/**
+ * Deck reducer. Not in use but kept for future development
+ */
+
 /*
 const initState = {
     decks: [

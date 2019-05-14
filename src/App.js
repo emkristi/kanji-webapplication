@@ -10,6 +10,9 @@ import Startpage from './components/pages/Startpage'
 import About from './components/pages/About'
 import How from './components/pages/How'
 
+/**
+ * App component. 
+ */
 class App extends Component {
   render() {
     return (

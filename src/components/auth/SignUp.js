@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 
 
 /**
+ * Some of this code is borrowed from this tutorial https://www.youtube.com/watch?v=f4Lg-nzE0u8&list=PL4cUxeGkcC9iWstfXntcj8f-dFZ4UtlN3&index=8
+ * 
  * For signing up to the application
  * @class
  */
@@ -42,7 +44,6 @@ class SignUp extends Component {
     return (
     <div>
         <div className="row" margin="30px">
-
 
       <div className="auth-container center">
       <div className="auth-title">Sign Up</div>

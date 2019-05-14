@@ -1,5 +1,5 @@
 /**
- * 
+ * Signs user in to application
  * @param {*} credentials 
  */
 export const signIn = (credentials) => {

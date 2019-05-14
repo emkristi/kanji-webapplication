@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import '../../CSS/info.css';
 
+/**
+ * Component for the About page in the application.
+ */
 class About extends Component {
 	render() {
 		return (

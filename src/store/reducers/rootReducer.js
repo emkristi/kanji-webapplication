@@ -3,11 +3,10 @@ import { combineReducers } from 'redux'
 import { firestoreReducer } from 'redux-firestore'
 import { firebaseReducer } from 'react-redux-firebase'
 import flashcardReducer from './flashcardReducer'
-//import deckReducer from './deckReducer'
 import userReducer from './userReducer'
 
 /**
- * Root reducer, combines reducers in the application
+ * Root reducer, combines the reducers in the application
  */
 const rootReducer = combineReducers({
   auth: authReducer,  

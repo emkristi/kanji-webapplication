@@ -12,6 +12,7 @@ import { Dropdown, Divider } from 'react-materialize'
 
 /**
  * Frontpage component. Contains decks of flashcards.
+ * 
  * @class
  */
 class Frontpage extends Component {
@@ -40,8 +41,6 @@ class Frontpage extends Component {
 
 		if (!auth.uid) return <Redirect to="/signin" />;
 		
-	
-
 		return (
 			<div className="frontpage-content center-align">
 			
@@ -87,8 +86,9 @@ class Frontpage extends Component {
 												<div className="deck-content">
 												
 													<DeckInfo deck={deck} />
-													<p className="decktypetxt">{deck.type}</p>
 													<p className="completionstat">{cardsInDeck.length}{" cards"}</p>
+
+													
 														
 												</div>
 												
@@ -134,7 +134,6 @@ class Frontpage extends Component {
 												<div className="deck-content">
 												
 													<DeckInfo deck={deck} />
-													<p className="decktypetxt">{deck.type}</p>
 													<p className="completionstat">{cardsInDeck.length}{" cards"}</p>
 														
 												</div>

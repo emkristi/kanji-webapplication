@@ -1,14 +1,12 @@
 const initState = {
 	flashcards: [],
-
 	mnemonics: []
 };
 
 /**
- * Here we handle the actions from flashcardActions.js
- * 
+ * Handles the actions from flashcardActions.js
  * @param {*} state 
- * @param {*} action taken in from CreateFlashcard
+ * @param {*} action 
  */
 const flashcardReducer = (state = initState, action) => {
 	switch (action.type) {
