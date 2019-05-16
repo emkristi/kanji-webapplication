@@ -16,7 +16,6 @@ const Navbar = (props) => {
     const { auth } = props;
     const logosrc = "https://firebasestorage.googleapis.com/v0/b/kanjiapp-8f121.appspot.com/o/LOGOLITENNY.jpg?alt=media&token=64293fe7-f33f-485b-8177-f7a4e8ffe6ab"
 
-
     return (
         <div>
         {!(window.location.pathname === "/start") && 
@@ -24,12 +23,10 @@ const Navbar = (props) => {
                 <nav className="transparent z-depth-0">
                     <div className="nav-wrapper">
                         {(auth.uid) &&
-
-                        <Link to={'/'}><img className="navlogo" src={logosrc} width="60rem" alt="logo" /></Link>
+                            <Link to={'/'}><img className="navlogo" src={logosrc} width="60rem" alt="logo" /></Link>
                         }
                         {!(auth.uid) &&
-
-                        <a href='/start'><img className="navlogo" src="img/LOGOLITENNY.jpg" width="60rem" alt="logo" /></a>
+                            <a href='/start'><img className="navlogo" src="img/LOGOLITENNY.jpg" width="60rem" alt="logo" /></a>
                         }
 
                         <ul className="right">
@@ -45,7 +42,6 @@ const Navbar = (props) => {
                                 <Dropdown trigger={<div className="brand-logo right"><i className="material-icons md-36">menu</i></div>} options={{coverTrigger: false}}>
                                     <Link to={'/signup'} className="navbarlinks">Sign up</Link>
                                     <Link to={'/signin'} className="navbarlinks">Log in</Link>
-                                    <Link to={'/howto'} className="navbarlinks">How to use</Link>
                                     <Link to={'/about'} className="navbarlinks">Credits</Link>
                                 </Dropdown>
                             }
