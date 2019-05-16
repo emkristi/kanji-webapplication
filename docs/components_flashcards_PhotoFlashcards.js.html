@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/flashcards/PhotoFlashcards.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/flashcards/PhotoFlashcards.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * File representing a photoflashcard
+ * @module PhotoFlashcard
+ */
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase'; // used to connect to firestore
+import { compose } from 'redux';
+import { Redirect } from 'react-router-dom';
+import { addCompletedFlashcards } from '../../store/actions/flashcardActions';
+import ReactCardFlip from 'react-card-flip';
+import { updateUser } from '../../store/actions/userActions';
+import { loaduser } from '../../store/actions/userActions';
+import { addMnemonic } from '../../store/actions/flashcardActions';
+import { replaceMnemonic } from '../../store/actions/flashcardActions';
+import '../../CSS/photoflashcard.css';
+
+/**
+ * Photoflashcards compontent for flashcards where an image appears and the user chooses between four kanji.
+ * @class
+ */
+class PhotoFlashcards extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentCard: 0,
+      bufferfc: [],
+      isFlipped: false
+    };
+  }
+
+  /**
+   * @function
+   */
+  componentDidMount(){
+    this.props.firestore.setListener({collection: 'users'})
+  }
+
+  /**
+   * @function
+   */
+  componentWillUnmount(){
+    this.props.firestore.unsetListener({collection: 'users'})
+  }
+
+  /**
+   * Function for when the Hard button is clicked. When clicked, the flashcard will appear again at a random time in the deck until
+   * easy button has been clicked. 
+   * @function
+   */
+  handleHard = (e) => {
+    const { flashcards, match: { params: { id } }, auth, users } = this.props;
+
+    let categoryfcs = flashcards.filter(f => f.deckid === id);
+    let user = users.find(u => u.id === auth.uid);
+    const seenFc = user.flashcardArray ? user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id) : [];
+
+    if (!(seenFc.length === categoryfcs.length - 1)) {
+      this.changeFc();
+      let lastFc = categoryfcs.filter(elem => !seenFc.includes(elem.id));
+      if(lastFc){
+        this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
+        this.changeFc();
+      }
+      return;
+    }else if(seenFc.length === categoryfcs.length - 1){
+      this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
+      document.getElementById("but1").style.backgroundColor = "white";
+      document.getElementById("but2").style.backgroundColor = "white";
+      document.getElementById("but3").style.backgroundColor = "white";
+      document.getElementById("but4").style.backgroundColor = "white";
+    }
+  }
+
+  /**
+   * Function for when the Easy button is clicked. Makes sure flashcard is added to user array so that it wont appear again in the deck
+   * unless deck has been restarted. 
+   * @function
+   */
+  handleEasy = (e) => {
+    const { auth, users, flashcards, match: { params: { id } } } = this.props;
+    const { currentCard } = this.state;
+
+    let categoryfcs = flashcards.filter(val => val.deckid === id);
+    let user = users.find(u => u.id === auth.uid);
+    const seenFc = user.flashcardArray ? user.flashcardArray.filter(f => this.findFlashcardById(f).deckid === id) : [];
+  
+    let remainingFc = categoryfcs.filter(elem => !seenFc.includes(elem.id));
+
+
+    if((seenFc.length === categoryfcs.length - 1) &amp;&amp; (remainingFc[0].id === categoryfcs[currentCard].id)){
+      this.props.updateUser(categoryfcs[currentCard].id);
+      window.location.href = '/';
+      return;
+    }
+
+    if ((!(seenFc.length === categoryfcs.length - 1)) || ((seenFc.length === categoryfcs.length - 1) &amp;&amp; (!seenFc.includes(remainingFc)))) {
+      this.props.updateUser(categoryfcs[currentCard].id); 
+      this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
+      setTimeout(this.changeFc, 400);
+
+      return;
+
+    }
+    
+  }
+
+ 
+  /**
+   * Handles change in mnemonic inputfield
+   * @function
+   */
+  handleMnemonicChange = (e) => {
+    e.preventDefault();
+    this.setState({
+      [e.target.id]: e.target.value
+    })
+  }
+
+  /**
+   * Function for submitting a new personal mnemonic.
+   * @function
+   */
+  handleMnemonicSubmit = (e) => {
+    const { flashcards, match: { params: { id } } } = this.props;
+    const { mnemonics, users, auth } = this.props;
+    const { currentCard } = this.state;
+
+    let categoryfcs = flashcards.filter(val => val.deckid === id);
+    e.preventDefault();
+
+    let user = users.find(u => u.id === auth.uid);
+    let gjeldendeFlashcard = categoryfcs[currentCard];
+    let gjeldendeMnem = "";
+    for(let i = 0; i &lt; mnemonics.length; ++i){
+      if(gjeldendeFlashcard.id === mnemonics[i].fcId &amp;&amp; mnemonics[i].userId === user.id){
+        gjeldendeMnem = mnemonics[i];
+        for(let j = 0; j &lt; user.mnemonicArr.length; j++){
+          if(user.mnemonicArr[j] === gjeldendeMnem.id){
+            this.props.replaceMnemonic(this.state.mnemonic, gjeldendeMnem, gjeldendeFlashcard.id);
+          } 
+        }
+      } 
+    }
+
+    if(gjeldendeMnem === ""){
+      this.props.addMnemonic(this.state.mnemonic, categoryfcs[currentCard].id)
+    }
+
+    document.getElementById('mnemonic').value = '';
+
+  }
+
+
+  /**
+   * Finds index of flashcard id. Used in changeFc function
+   * @function
+   */
+  findIndexOfFcId = (categoryfcs, fcid) => {
+    let value = categoryfcs.find((val) => {
+      return (val.id === fcid)
+    });
+    return categoryfcs.indexOf(value);
+  }
+
+  /**
+   * Finds flashcard by flashcardid. Used in changeFc function
+   * @function
+   */
+  findFlashcardById = (id) => {
+    const { flashcards } = this.props;
+    return flashcards.find(f => f.id === id);
+  }
+
+  /**
+   * Function for changing to a random flashcard. Makes sure to only show a new Kanji if all radicals
+   * in said Kanji has been shown in previous flashcards. 
+   * @function
+   */
+  changeFc = (e) => {
+    const { flashcards, match: { params: { id } }, auth, users } = this.props;
+    const { currentCard, bufferfc } = this.state;
+
+    let categoryfcs = flashcards.filter(f => f.deckid === id);
+    let user = users.find(u => u.id === auth.uid);
+
+    this.props.loaduser();
+    let currentNumber = 0;
+
+    // If flashcards in buffer, show first element and remove element from buffer
+    if (bufferfc.length > 0) {
+      currentNumber = this.findIndexOfFcId(categoryfcs, bufferfc[0]);
+      if (bufferfc.length > 1) {
+        this.setState({ bufferfc: bufferfc.splice(1, bufferfc.length - 1) })
+      } else {
+        this.setState({ bufferfc: [] });
+      }
+      // If no flashcards in buffer, find random flashcard from category flashcards
+    } else {
+      let temp = true;
+      while (temp) {
+        currentNumber = (Math.round(Math.random() * (categoryfcs.length - 1)));
+        // If this random flashcard is not seen before
+        if (!(((user.flashcardArray &amp;&amp; user.flashcardArray.includes(categoryfcs[currentNumber].id)) || (currentNumber === currentCard)))) {
+          //Check if random flashcard's got radicals
+          let fcradicals = categoryfcs[currentNumber].radicals;
+          if (fcradicals.length > 0) {
+            let notseen = [];
+            for (let i = 0; i &lt; fcradicals.length; i++) {
+              if (!((user.flashcardArray &amp;&amp; user.flashcardArray.includes(fcradicals[i].id)) || currentCard === this.findIndexOfFcId(categoryfcs, fcradicals[i].id))) {
+                notseen.push(fcradicals[i].id); // add unseen radical to array
+              }
+            }
+            //if there are radicals who are not seen, show first radical in array and push others + parent flashcard to buffer array in state
+            if (notseen.length > 0) {
+              let flashcard = categoryfcs[currentNumber];
+              currentNumber = this.findIndexOfFcId(categoryfcs, notseen[0]);
+              let newarray = [];
+              for (let i = 1; i &lt; notseen.length; i++) {
+                newarray.push(notseen[i]);
+              }
+              newarray.push(flashcard.id);
+              this.setState({ bufferfc: [...bufferfc, ...newarray] });
+            }
+          }
+          temp = false;
+        }
+      }
+    }
+
+    this.setState({
+      currentCard: currentNumber
+    });
+
+    document.getElementById("but1").style.backgroundColor = "white";
+    document.getElementById("but2").style.backgroundColor = "white";
+    document.getElementById("but3").style.backgroundColor = "white";
+    document.getElementById("but4").style.backgroundColor = "white";
+    document.getElementById('mnemonic').value = '';
+  }
+
+  /**
+   * Method for handeling the buttons on the front of the photoflashcard. If correct button is clicked it will
+   * turn green then the card will flip over. If wrong button is clicked the button will turn red. 
+   * @function
+   */
+  handleFButton = (e) => {
+    const { flashcards, match: { params: { id } } } = this.props;
+    const { currentCard } = this.state;
+    
+    let categoryfcs = flashcards.filter(val => val.deckid === id);
+    var buttonId = e.target.id;
+
+    if (e.target.value === categoryfcs[currentCard].kanji) {
+      this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
+      document.getElementById(buttonId).style.backgroundColor = "rgb(121,	196,	154)";
+    } else if (e.target.value !== categoryfcs[currentCard].kanji){
+      document.getElementById(buttonId).style.backgroundColor = "rgb(200,	67,	81)";
+    }
+  }
+
+  /**
+   * Method for getting an array of random kanji for the buttons on the photoflashcards
+   * where one of them is the correct kanji. 
+   * @function
+   */
+  randomKanjiArray = () => {
+    const { flashcards, match: { params: { id } } } = this.props;
+    const { currentCard } = this.state;
+
+    let categoryfcs;
+    var arr = [];
+    if(flashcards){
+      categoryfcs = flashcards.filter(val => val.deckid === id);
+      arr.push(categoryfcs[currentCard].kanji);
+    }
+    
+    if(categoryfcs){
+      while (arr.length &lt; 4) {
+        var r = (Math.round(Math.random() * (categoryfcs.length - 1)));
+  
+        if (!arr.includes(categoryfcs[r].kanji)) {
+          arr.push(categoryfcs[r].kanji);
+        }
+      }
+      arr.sort(function () {
+        return .5 - Math.random();
+      });
+  
+      return arr;
+    }
+  }
+
+  render() {
+    const { flashcards, match: { params: { id } }, auth, users } = this.props;
+    const { currentCard } = this.state;
+    const { mnemonics } = this.props;
+
+    var randomArray = this.randomKanjiArray();
+  
+    if (!auth.uid) return &lt;Redirect to='/signin' />;
+
+    // Only show flashcards in current category
+    let categoryfcs = [];
+    if (flashcards) {
+      categoryfcs = flashcards.filter(f => f.deckid === id)
+    }
+
+    let user;
+    if (users) {
+      user = users.find(u => u.id === auth.uid);
+    }
+
+    let personalmnemonic;
+    if (users &amp;&amp; mnemonics) {
+      user = users.find(u => u.id === auth.uid);
+      for(let i = 0; i &lt; mnemonics.length; ++i){
+        if(user.mnemonicArr &amp;&amp; (categoryfcs[currentCard].id === mnemonics[i].fcId) &amp;&amp; (user.id === mnemonics[i].userId)){
+          personalmnemonic = mnemonics[i].mnemonic;
+        }
+      }
+    }
+
+    if (!categoryfcs[currentCard]) return (&lt;div>&lt;/div>);
+
+    return (
+      &lt;div className="pf-content">
+        &lt;div className="row">
+        &lt;div className="col s12">
+      &lt;ReactCardFlip isFlipped={this.state.isFlipped} flipDirection="horizontal">
+        &lt;div className="pfc-card center" key="front">
+          &lt;div>&lt;img className="content" src={categoryfcs[currentCard].pictureUrl} alt="current kanji" width="400rem" height="300rem" />&lt;/div>
+            &lt;div className="row">
+              &lt;button className="pfc-btn" onClick={this.handleFButton} id='but1' value={randomArray[0]}>{randomArray[0]}&lt;/button>
+              &lt;button className="pfc-btn" onClick={this.handleFButton} id='but2' value={randomArray[1]}>{randomArray[1]}&lt;/button>
+                
+            &lt;/div>
+            &lt;div className="row">
+              &lt;button className="pfc-btn" onClick={this.handleFButton} id='but3' value={randomArray[2]}>{randomArray[2]}&lt;/button>
+              &lt;button className="pfc-btn" onClick={this.handleFButton} id='but4' value={randomArray[3]}>{randomArray[3]}&lt;/button>  
+            &lt;/div>
+        &lt;/div>
+
+        &lt;div className="pfc-card" key="back">
+          &lt;div className="center">
+          &lt;span className="back-kan"> {categoryfcs[currentCard].kanji} &lt;/span>
+          &lt;br>&lt;/br>
+          &lt;span className="back-eng"> {categoryfcs[currentCard].eng} &lt;/span>
+          &lt;br>&lt;/br>
+          &lt;/div>
+          &lt;br>&lt;/br>
+        
+          &lt;br>&lt;/br>
+         
+          
+          &lt;div className="row">
+
+            &lt;div className="col pmnemdiv">
+            &lt;div className="row">
+            &lt;div className="col s10 back-h left-align">mnemonic&lt;/div>
+          &lt;/div>
+              &lt;div className="pmnemtext">
+                &lt;span className="card-title">
+                  {personalmnemonic &amp;&amp;&lt;span>{personalmnemonic}&lt;/span>}
+                &lt;/span>
+                        
+                &lt;span className="card-title">
+                  {!personalmnemonic &amp;&amp; &lt;span>{categoryfcs[currentCard].mnemonic}&lt;/span> }
+                &lt;/span>
+              &lt;/div>
+
+              &lt;form onSubmit={this.handleMnemonicSubmit}>
+                &lt;div className="row center pneminput">
+                  
+                  &lt;div className="col s10 input-field inline">
+                    &lt;input placeholder="Write new mnemonic" type="text" id="mnemonic" onChange={this.handleMnemonicChange}/>
+                  &lt;/div>
+
+                  &lt;div className="col s2 input-field inline right-align">
+                    &lt;i onClick={this.handleMnemonicSubmit} className="material-icons addmnembut">add_circle&lt;/i>
+                  &lt;/div>
+
+                &lt;/div>
+            &lt;/form>
+            &lt;/div>
+
+            
+          &lt;/div>
+
+
+         
+          
+          &lt;div className="center back-buttons">
+            &lt;button className="btn back-btn" onClick={this.handleHard} id="Hard">Hard&lt;/button>
+            &lt;button className="btn back-btn" onClick={this.handleEasy} id="Easy">Easy&lt;/button>
+          &lt;/div>
+        &lt;/div>
+            
+      &lt;/ReactCardFlip>
+      &lt;/div>
+      &lt;/div>
+      &lt;/div>
+    )
+  }
+}
+
+/**
+ * Function for dispatching actions 
+ * @function
+ * @param {*} dispatch 
+ */
+const mapDispatchToProps = (dispatch) => {
+	return {
+		addCompletedFlashcards: (flashcard) => dispatch(addCompletedFlashcards(flashcard)),
+		updateUser: (flashcard) => dispatch(updateUser(flashcard)),
+		loaduser: () => dispatch(loaduser()),
+		replaceMnemonic: (newMnemonic, oldMnemonic, fcId) => dispatch(replaceMnemonic(newMnemonic, oldMnemonic, fcId)),
+		addMnemonic: (mnemonic, fcId) => dispatch(addMnemonic(mnemonic, fcId))
+	};
+};
+
+/**
+ * Function for getting data from the store
+ * @function
+ * @param {*} state 
+ */
+const mapStateToProps = (state) => {
+	return {
+		flashcards: state.firestore.ordered.flashcards, 
+		auth: state.firebase.auth,
+		mnemonics: state.firestore.ordered.mnemonics
+	};
+};
+
+export default compose(
+	connect(mapStateToProps, mapDispatchToProps),
+	firestoreConnect([
+		{ collection: 'flashcards' },
+		{ collection: 'decks' },
+		{ collection: 'users' },
+		{ collection: 'mnemonics' }
+	]),
+	connect((state, props) => ({
+		users: state.firestore.ordered.users
+	}))
+)(PhotoFlashcards);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-About.html">About</a></li><li><a href="module-App.html">App</a></li><li><a href="module-authActions.html">authActions</a></li><li><a href="module-authReducer.html">authReducer</a></li><li><a href="module-DeckInfo.html">DeckInfo</a></li><li><a href="module-Flashcard.html">Flashcard</a></li><li><a href="module-flashcardActions.html">flashcardActions</a></li><li><a href="module-flashcardReducer.html">flashcardReducer</a></li><li><a href="module-Frontpage.html">Frontpage</a></li><li><a href="module-How.html">How</a></li><li><a href="module-index.html">index</a></li><li><a href="module-Navbar.html">Navbar</a></li><li><a href="module-PhotoFlashcard.html">PhotoFlashcard</a></li><li><a href="module-rootReducer.html">rootReducer</a></li><li><a href="module-SignIn.html">SignIn</a></li><li><a href="module-SignUp.html">SignUp</a></li><li><a href="module-Startpage.html">Startpage</a></li><li><a href="module-userActions.html">userActions</a></li><li><a href="module-userReducer.html">userReducer</a></li></ul><h3>Classes</h3><ul><li><a href="module-About-About.html">About</a></li><li><a href="module-App-App.html">App</a></li><li><a href="module-Flashcard-Flashcards.html">Flashcards</a></li><li><a href="module-Frontpage-Frontpage.html">Frontpage</a></li><li><a href="module-How-How.html">How</a></li><li><a href="module-PhotoFlashcard-PhotoFlashcards.html">PhotoFlashcards</a></li><li><a href="module-SignIn-SignIn.html">SignIn</a></li><li><a href="module-SignUp-SignUp.html">SignUp</a></li><li><a href="module-Startpage-Startpage.html">Startpage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#config">config</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.2</a> on Thu May 16 2019 08:30:02 GMT+0200 (GMT+02:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

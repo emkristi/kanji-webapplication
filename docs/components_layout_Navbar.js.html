@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/layout/Navbar.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/layout/Navbar.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * File containing the navbar component
+ * @module Navbar
+ */
+
+import React from 'react'
+import { connect } from 'react-redux'
+import { Dropdown } from 'react-materialize'
+import { signOut } from '../../store/actions/authActions';
+import { Link } from 'react-router-dom'
+
+/**
+ * Navbar component. 
+ * @param {*} props 
+ */
+const Navbar = (props) => {
+    const { auth } = props;
+
+    return (
+        &lt;div>
+        {!(window.location.pathname === "/start") &amp;&amp; 
+            &lt;div>
+                &lt;nav className="transparent z-depth-0">
+                    &lt;div className="nav-wrapper">
+                        {(auth.uid) &amp;&amp;
+
+                        &lt;Link to={'/'}>&lt;img className="navlogo" src="img/LOGOLITENNY.jpg" width="60rem" alt="logo" />&lt;/Link>
+                        }
+                        {!(auth.uid) &amp;&amp;
+
+                        &lt;a href='/start'>&lt;img className="navlogo" src="img/LOGOLITENNY.jpg" width="60rem" alt="logo" />&lt;/a>
+                        }
+
+                        &lt;ul className="right">
+                            {(auth.uid) &amp;&amp;
+                                &lt;Dropdown trigger={&lt;div className="brand-logo right">&lt;i className="right material-icons md-36">menu&lt;/i>&lt;/div>} options={{coverTrigger: false}}>
+                                    &lt;Link to={'/howto'} className="navbarlinks">How to use&lt;/Link>
+                                    &lt;Link to={'/about'} className="navbarlinks">Credits&lt;/Link>
+                                    &lt;Link to={'/start'} onClick={props.signOut} className="navbarlinks">Log out&lt;/Link>
+                                &lt;/Dropdown>
+                            }
+
+                            {(!auth.uid) &amp;&amp;
+                                &lt;Dropdown trigger={&lt;div className="brand-logo right">&lt;i className="material-icons md-36">menu&lt;/i>&lt;/div>} options={{coverTrigger: false}}>
+                                    &lt;Link to={'/signup'} className="navbarlinks">Sign up&lt;/Link>
+                                    &lt;Link to={'/signin'} className="navbarlinks">Log in&lt;/Link>
+                                    &lt;Link to={'/howto'} className="navbarlinks">How to use&lt;/Link>
+                                    &lt;Link to={'/about'} className="navbarlinks">Credits&lt;/Link>
+                                &lt;/Dropdown>
+                            }
+                        &lt;/ul>
+                    &lt;/div>
+                &lt;/nav>
+            &lt;/div>
+        }
+        &lt;/div>       
+    )
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		signOut: () => dispatch(signOut())
+	};
+};
+
+const mapStateToProps = (state) => {
+	return {
+		auth: state.firebase.auth,
+		profile: state.firebase.profile
+	};
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-About.html">About</a></li><li><a href="module-App.html">App</a></li><li><a href="module-authActions.html">authActions</a></li><li><a href="module-authReducer.html">authReducer</a></li><li><a href="module-DeckInfo.html">DeckInfo</a></li><li><a href="module-Flashcard.html">Flashcard</a></li><li><a href="module-flashcardActions.html">flashcardActions</a></li><li><a href="module-flashcardReducer.html">flashcardReducer</a></li><li><a href="module-Frontpage.html">Frontpage</a></li><li><a href="module-How.html">How</a></li><li><a href="module-index.html">index</a></li><li><a href="module-Navbar.html">Navbar</a></li><li><a href="module-PhotoFlashcard.html">PhotoFlashcard</a></li><li><a href="module-rootReducer.html">rootReducer</a></li><li><a href="module-SignIn.html">SignIn</a></li><li><a href="module-SignUp.html">SignUp</a></li><li><a href="module-Startpage.html">Startpage</a></li><li><a href="module-userActions.html">userActions</a></li><li><a href="module-userReducer.html">userReducer</a></li></ul><h3>Classes</h3><ul><li><a href="module-About-About.html">About</a></li><li><a href="module-App-App.html">App</a></li><li><a href="module-Flashcard-Flashcards.html">Flashcards</a></li><li><a href="module-Frontpage-Frontpage.html">Frontpage</a></li><li><a href="module-How-How.html">How</a></li><li><a href="module-PhotoFlashcard-PhotoFlashcards.html">PhotoFlashcards</a></li><li><a href="module-SignIn-SignIn.html">SignIn</a></li><li><a href="module-SignUp-SignUp.html">SignUp</a></li><li><a href="module-Startpage-Startpage.html">Startpage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#config">config</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.2</a> on Thu May 16 2019 08:30:02 GMT+0200 (GMT+02:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

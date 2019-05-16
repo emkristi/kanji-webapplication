@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/auth/SignIn.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/auth/SignIn.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * File for the SignIn component. Some of this code is borrowed from tutorial: https://www.youtube.com/watch?v=f4Lg-nzE0u8&amp;list=PL4cUxeGkcC9iWstfXntcj8f-dFZ4UtlN3&amp;index=8
+ * @module SignIn
+ */
+
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { signIn } from '../../store/actions/authActions';
+import { Redirect } from 'react-router-dom';
+import firebase from 'firebase/app';
+import '../../CSS/auth.css';
+import { Link } from 'react-router-dom';
+
+/**
+ * Compontent for signing in to the application. 
+ * @class
+ */
+class SignIn extends Component {
+	_isMounted = false;
+	state = {
+		email: '',
+		password: '',
+		isSignedIn: false,
+		name: '',
+		userId: ''
+	};
+
+	uiConfig = {
+		signInFlow: 'popup',
+		callbacks: {
+			signInSuccessWithAuthResult: () => false
+		}
+	};
+
+	/**
+	 * @method
+	 */
+	componentDidMount = () => {
+		var unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+			this.setState({ isSignedIn: !!user });
+		});
+		unsubscribe();
+	};
+
+	/**
+	 * Handles input field
+	 * @function
+	 */
+	handleChange = (e) => {
+		this.setState({
+			[e.target.id]: e.target.value
+		});
+	};
+
+	/**
+	 * Signs in user if sign in button is clicked
+	 * @function
+	 */
+	handleSubmit = (e) => {
+		e.preventDefault();
+		this.props.signIn(this.state);
+	};
+
+	render() {
+		const { authError, auth } = this.props;
+		if (auth.uid) return &lt;Redirect to="/" />;
+
+		return (
+			&lt;div className="auth-container">
+				&lt;div className="row center">
+					&lt;div className="auth-title">Log in&lt;/div>
+					&lt;form className="auth-content center" onSubmit={this.handleSubmit}>
+						&lt;br>&lt;/br>
+						&lt;br>&lt;/br>
+						&lt;div className="auth-input">
+							&lt;div className="input-field">
+								&lt;label htmlFor="email">Email&lt;/label>
+								&lt;input type="email" id="email" required onChange={this.handleChange} />
+							&lt;/div>
+							&lt;div className="input-field">
+								&lt;label htmlFor="password">Password&lt;/label>
+								&lt;input type="password" id="password" required onChange={this.handleChange} />
+							&lt;/div>
+						&lt;/div>
+						&lt;br>&lt;/br>
+						&lt;div className="input-field">
+							&lt;button className="btn">Log in&lt;/button>
+							&lt;div className="red-text center">{authError ? &lt;p>{authError}&lt;/p> : null}&lt;/div>
+						&lt;/div>
+					
+						
+						&lt;div className="auth-link">
+							&lt;p>
+								Dont have a user? Create one &lt;Link to="/signup">here&lt;/Link>{' '}
+							&lt;/p>
+						&lt;/div>
+					&lt;/form>
+				&lt;/div>
+			&lt;/div>
+		);
+	}
+}
+
+/**
+ * Function for getting data from the store
+ * @function
+ * @param {*} state 
+ */
+const mapStateToProps = (state) => {
+	return {
+		authError: state.auth.authError,
+		auth: state.firebase.auth
+	};
+};
+
+ /**
+ * Function for dispatching actions
+ * @function
+ * @param {*} dispatch 
+ */
+const mapDispatchToProps = (dispatch) => {
+	return {
+		signIn: (creds) => dispatch(signIn(creds))
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-About.html">About</a></li><li><a href="module-App.html">App</a></li><li><a href="module-authActions.html">authActions</a></li><li><a href="module-authReducer.html">authReducer</a></li><li><a href="module-DeckInfo.html">DeckInfo</a></li><li><a href="module-Flashcard.html">Flashcard</a></li><li><a href="module-flashcardActions.html">flashcardActions</a></li><li><a href="module-flashcardReducer.html">flashcardReducer</a></li><li><a href="module-Frontpage.html">Frontpage</a></li><li><a href="module-How.html">How</a></li><li><a href="module-index.html">index</a></li><li><a href="module-Navbar.html">Navbar</a></li><li><a href="module-PhotoFlashcard.html">PhotoFlashcard</a></li><li><a href="module-rootReducer.html">rootReducer</a></li><li><a href="module-SignIn.html">SignIn</a></li><li><a href="module-SignUp.html">SignUp</a></li><li><a href="module-Startpage.html">Startpage</a></li><li><a href="module-userActions.html">userActions</a></li><li><a href="module-userReducer.html">userReducer</a></li></ul><h3>Classes</h3><ul><li><a href="module-About-About.html">About</a></li><li><a href="module-App-App.html">App</a></li><li><a href="module-Flashcard-Flashcards.html">Flashcards</a></li><li><a href="module-Frontpage-Frontpage.html">Frontpage</a></li><li><a href="module-How-How.html">How</a></li><li><a href="module-PhotoFlashcard-PhotoFlashcards.html">PhotoFlashcards</a></li><li><a href="module-SignIn-SignIn.html">SignIn</a></li><li><a href="module-SignUp-SignUp.html">SignUp</a></li><li><a href="module-Startpage-Startpage.html">Startpage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#config">config</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.2</a> on Thu May 16 2019 08:30:02 GMT+0200 (GMT+02:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

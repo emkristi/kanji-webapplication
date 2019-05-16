@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: store/actions/flashcardActions.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: store/actions/flashcardActions.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * File contains flashcard related actions
+ * @module flashcardActions
+ */
+
+/**
+ * Adds completed flashcards in an array in User. This is used to know which flashcards
+ * the user has seen (clicked easy on). 
+ * @function
+ * @param {string} flashcardId
+ */
+export const addCompletedFlashcards = (flashcardId) => {
+	return (dispatch, getState, { getFirestore }) => {
+		const firestore = getFirestore();
+		const userId = getState().firebase.auth.uid;
+
+		firestore.collection('users').doc(userId).update({
+				flashcardArray: firestore.FieldValue.arrayUnion(flashcardId)
+			})
+			.then(() => {
+				dispatch({ type: 'ADD_COMPLETED_FLASHCARDS', flashcardId });
+			})
+			.catch((err) => {
+				dispatch({ type: 'ADD_COMPLETED_FLASHCARDS_ERROR', err });
+			});
+	};
+};
+
+/**
+ * Removes completed flashcards from the flashcardArray for logged in user. 
+ * Used to restart a deck that has been completed if the restart button is clicked. 
+ * @function
+ * @param {string} flashcardid 
+ */
+export const removeCompletedFlashcards = (flashcardid) => {
+	return (dispatch, getState, { getFirestore }) => {
+		const firestore = getFirestore();
+		const userId = getState().firebase.auth.uid;
+		const fid = flashcardid;
+
+		firestore
+			.collection('users')
+			.doc(userId)
+			.update({
+				flashcardArray: firestore.FieldValue.arrayRemove(fid)
+			})
+			.then(() => {
+				dispatch({ type: 'REMOVE_COMPLETED_FLASHCARDS', flashcardid });
+			})
+			.catch((err) => {
+				dispatch({ type: 'REMOVE_COMPLETED_FLASHCARDS_ERROR', err });
+			});
+	};
+};
+
+/**
+ * Method for adding a personal mnemonic to a flashcard. 
+ * @function
+ * @param {string} newMnemonic 
+ * @param {string} fcId 
+ */
+export const addMnemonic = (newMnemonic, fcId) => {
+	return (dispatch, getState, { getFirestore }) => {
+		const firestore = getFirestore();
+		const userId = getState().firebase.auth.uid;
+
+		const mnemref = firestore.collection('mnemonics').doc();
+
+		mnemref
+			.set({
+				mnemonic: newMnemonic,
+				fcId: fcId,
+				userId: userId
+			})
+			.then(() => {
+				dispatch({ type: 'ADD_MNEMONIC', newMnemonic });
+			})
+			.catch((err) => {
+				dispatch({ type: 'ADD_MNEMONIC_ERROR', err });
+			});
+
+		firestore
+			.collection('users')
+			.doc(userId)
+			.update({
+				mnemonicArr: firestore.FieldValue.arrayUnion(mnemref.id)
+			})
+			.then(() => {
+				dispatch({ type: 'ADD_MNEMONIC_ARR' });
+			})
+			.catch((err) => {
+				dispatch({ type: 'ADD_MNEMONIC_ARR_ERROR', err });
+			});
+	};
+};
+
+/**
+ * Method for replacing a personal mnemonic. 
+ * @function
+ * @param {string} newMnemonic 	new mnemonic 
+ * @param {array} oldMnemonic 	mnemonic that is getting replaced
+ * @param {string} fcId 		id of flashcard
+ */
+export const replaceMnemonic = (newMnemonic, oldMnemonic, fcId) => {
+	return (dispatch, getState, { getFirestore }) => {
+		const firestore = getFirestore();
+		const userId = getState().firebase.auth.uid;
+		const oldMnemonicId = oldMnemonic.id;
+
+		firestore
+			.collection('mnemonics')
+			.doc(oldMnemonicId)
+			.set({
+				mnemonic: newMnemonic,
+				fcId: fcId,
+				userId: userId
+			})
+			.then(() => {
+				dispatch({ type: 'REPLACE_MNEMONIC', newMnemonic });
+			})
+			.catch((err) => {
+				dispatch({ type: 'REPLACE_MNEMONIC_ERROR', err });
+			});
+	};
+};
+
+/**
+ * Updates the mnemonic array for the user.
+ * Used to only show mnemonics that the logged in user has made.
+ * @function
+ * @param {array} mnemonic Array of mnemonics that the user has clicked easy on
+ */
+export const updateMnemonicArray = (mnemonic) => {
+	return (dispatch, getState, { getFirestore }) => {
+		const firestore = getFirestore();
+		const userId = getState().firebase.auth.uid;
+
+        firestore.collection('users').doc(userId).update({
+            mnemonicArr: firestore.FieldValue.arrayUnion(mnemonic.id)
+        }).then(() => {
+            dispatch({ type: 'ADD_MNEMONIC_ARR', mnemonic });
+        }).catch((err) => {
+            dispatch({ type: 'ADD_MNEMONIC_ARR_ERROR', err });
+        })
+    }
+}
+
+/**
+ * Creates new flashcard from user input. Not in use but code is kept for future development.
+ * @param {*} flashcard 	User input from CreateFlashcard.js
+ */
+/*
+export const createFlashcard = (flashcard) => {
+	return (dispatch, getState, { getFirestore }) => {
+		const firestore = getFirestore();
+
+		firestore
+			.collection('flashcards')
+			.add({
+				...flashcard
+			})
+			.then(() => {
+				dispatch({ type: 'CREATE_FLASHCARD', flashcard });
+			})
+			.catch((err) => {
+				dispatch({ type: 'CREATE_FLASHCARD_ERROR', err });
+			});
+	};
+};
+*/</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-About.html">About</a></li><li><a href="module-App.html">App</a></li><li><a href="module-authActions.html">authActions</a></li><li><a href="module-authReducer.html">authReducer</a></li><li><a href="module-DeckInfo.html">DeckInfo</a></li><li><a href="module-Flashcard.html">Flashcard</a></li><li><a href="module-flashcardActions.html">flashcardActions</a></li><li><a href="module-flashcardReducer.html">flashcardReducer</a></li><li><a href="module-Frontpage.html">Frontpage</a></li><li><a href="module-How.html">How</a></li><li><a href="module-index.html">index</a></li><li><a href="module-Navbar.html">Navbar</a></li><li><a href="module-PhotoFlashcard.html">PhotoFlashcard</a></li><li><a href="module-rootReducer.html">rootReducer</a></li><li><a href="module-SignIn.html">SignIn</a></li><li><a href="module-SignUp.html">SignUp</a></li><li><a href="module-Startpage.html">Startpage</a></li><li><a href="module-userActions.html">userActions</a></li><li><a href="module-userReducer.html">userReducer</a></li></ul><h3>Classes</h3><ul><li><a href="module-About-About.html">About</a></li><li><a href="module-App-App.html">App</a></li><li><a href="module-Flashcard-Flashcards.html">Flashcards</a></li><li><a href="module-Frontpage-Frontpage.html">Frontpage</a></li><li><a href="module-How-How.html">How</a></li><li><a href="module-PhotoFlashcard-PhotoFlashcards.html">PhotoFlashcards</a></li><li><a href="module-SignIn-SignIn.html">SignIn</a></li><li><a href="module-SignUp-SignUp.html">SignUp</a></li><li><a href="module-Startpage-Startpage.html">Startpage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#config">config</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.2</a> on Thu May 16 2019 08:30:02 GMT+0200 (GMT+02:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/decks/Frontpage.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/decks/Frontpage.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Frontpage when user is logged in to application. Displays all the decks.
+ * @module Frontpage
+ */
+
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase'; 
+import { compose } from 'redux';
+import DeckInfo from './DeckInfo';
+import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import { removeCompletedFlashcards } from '../../store/actions/flashcardActions';
+import '../../CSS/frontpage.css';
+import { Dropdown, Divider } from 'react-materialize'
+
+
+/**
+ * Frontpage component. Contains decks of flashcards.
+ * @class
+ */
+class Frontpage extends Component {
+	
+	/**
+	 * Function for when the restart button is clicked. Removes flashcards in the deck
+	 * that is clicked from userarray. 
+	 * @function
+	 */
+	restartDeck = (cardsInDeck) => (e) => {
+		e.preventDefault();
+		for(let i = 0; i &lt; cardsInDeck.length; ++i){
+				this.props.removeCompletedFlashcards(cardsInDeck[i].id);
+		} 
+	}
+
+	render() {
+		const { decks, flashcards, auth, users } = this.props;
+
+		let user;
+		if (users) {
+			user = users.find((u) => u.id === auth.uid);
+		}
+
+		if (!auth.uid) return &lt;Redirect to="/signin" />;
+		
+		return (
+			&lt;div className="frontpage-content center-align">
+				&lt;div className="row">
+					{flashcards &amp;&amp;
+						user &amp;&amp;
+						decks &amp;&amp;
+						decks.map((deck) => {
+							let unfinisheddecks;
+							let cardsInDeck = flashcards.filter((fcard) => fcard.deckid === deck.id);
+							let radInDeck = cardsInDeck.filter((fcard => fcard.radicals === ""));
+							let kanInDeck = cardsInDeck.filter((fcard => fcard.radicals !== ""));
+							
+							if (user.flashcardArray == null) {
+								unfinisheddecks = flashcards;
+							} else {
+								unfinisheddecks = flashcards.filter(
+									(fcard) => fcard.deckid === deck.id &amp;&amp; user.flashcardArray.indexOf(fcard.id) === -1
+								);
+							}
+							if (unfinisheddecks.length > 0 &amp;&amp; (deck.type === "Images")) {
+								return (
+									&lt;div key={deck.id} className="col s12 m6 l6">
+										&lt;Link to={deck.type === 'Images' ? '/img/' + deck.id : '/' + deck.id} key={deck.id} id="link">
+											&lt;div className="deck not-completed">
+												&lt;div className="info-dropdown">
+													&lt;Dropdown className="dropdown-content dropdown-content-deck" options={{belowOrigin: true, hover: true, closeOnClick: true}}
+													trigger={&lt;i className="material-icons right">info_outline&lt;/i>}>					
+													&lt;span className="word-list-title">KANJI IN DECK&lt;/span>											
+														{radInDeck.map(card => {
+																return (
+																	&lt;span key={card}>{card.kanji}{" - "}{card.eng}&lt;/span>
+																)}
+															)
+														}
+				
+												&lt;/Dropdown>
+												&lt;/div>
+												&lt;div className="deck-content">		
+													&lt;DeckInfo deck={deck} />
+													&lt;p className="completionstat">{cardsInDeck.length}{" cards"}&lt;/p>	
+												&lt;/div>
+											&lt;/div>
+										&lt;/Link>
+									&lt;/div>
+								);
+							} else if(unfinisheddecks.length > 0){
+								return(
+									&lt;div key={deck.id} className="col s12 m6 l6">
+										&lt;Link to={deck.type === 'Images' ? '/img/' + deck.id : '/' + deck.id} key={deck.id} id="link">
+											&lt;div className="deck not-completed">
+											&lt;div className="info-dropdown">
+											&lt;Dropdown className="dropdown-content dropdown-content-deck" options={{belowOrigin: true, hover: true, closeOnClick: true}}
+												trigger={&lt;i className="material-icons right">info_outline&lt;/i>}>
+													
+													&lt;span className="word-list-title">KANJI IN DECK&lt;/span>
+													{
+														kanInDeck.map(card => {
+																return (
+																	&lt;span key={card}>{card.kanji}{" - "}{card.eng}&lt;/span>
+																)
+															}
+														)
+													}
+
+													&lt;Divider/>
+													
+													&lt;span className="word-list-title">RADICALS IN DECK&lt;/span>
+													{
+														radInDeck.map(card => {
+																return (
+																	&lt;span key={card}>{card.kanji}{" - "}{card.eng}&lt;/span>
+																)
+															}
+														)
+													}
+				
+												&lt;/Dropdown>
+												&lt;/div>
+												&lt;div className="deck-content">
+												
+													&lt;DeckInfo deck={deck} />
+													&lt;p className="completionstat">{cardsInDeck.length}{" cards"}&lt;/p>
+														
+												&lt;/div>
+												
+												
+											&lt;/div>
+										&lt;/Link>
+										
+									&lt;/div>
+								
+								)
+
+							} else {
+								return (
+									&lt;div key={deck.id} className="col s12 m6 l6">
+										&lt;div className="deck completed">
+											&lt;div className="deck-content-comp">
+												&lt;DeckInfo className="col s12" deck={deck} />
+												&lt;p className="decktypetxt">{deck.type}&lt;/p>
+
+												&lt;div onClick={this.restartDeck(cardsInDeck)}className="btn-floating btn-large waves-effect deck-btn">
+													&lt;i className="material-icons">replay&lt;/i>
+												&lt;/div>
+											&lt;/div>
+										&lt;/div>
+									&lt;/div>
+								);
+							}
+						})}
+				&lt;/div>
+			&lt;/div>
+		);
+	}
+}
+
+ /**
+ * Function for dispatching actions
+ * @function
+ * @param {*} dispatch 
+ */
+const mapDispatchToProps = (dispatch) => {
+	return {
+		removeCompletedFlashcards: (flashcard) => dispatch(removeCompletedFlashcards(flashcard))
+	};
+};
+
+/**
+ * Function for getting data from the store
+ * @function
+ * @param {*} state 
+ */
+const mapStateToProps = (state) => {
+	return {
+		decks: state.firestore.ordered.decks, 
+		flashcards: state.firestore.ordered.flashcards,
+		auth: state.firebase.auth,
+		users: state.firestore.ordered.users
+	};
+};
+
+export default compose(
+	connect(mapStateToProps, mapDispatchToProps),
+	firestoreConnect([
+		{
+			collection: 'decks'
+		}
+	]),
+	firestoreConnect([
+		{
+			collection: 'flashcards'
+		}
+	]),
+	firestoreConnect([
+		{
+			collection: 'users'
+		}
+	])
+)(Frontpage);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-About.html">About</a></li><li><a href="module-App.html">App</a></li><li><a href="module-authActions.html">authActions</a></li><li><a href="module-authReducer.html">authReducer</a></li><li><a href="module-DeckInfo.html">DeckInfo</a></li><li><a href="module-Flashcard.html">Flashcard</a></li><li><a href="module-flashcardActions.html">flashcardActions</a></li><li><a href="module-flashcardReducer.html">flashcardReducer</a></li><li><a href="module-Frontpage.html">Frontpage</a></li><li><a href="module-How.html">How</a></li><li><a href="module-index.html">index</a></li><li><a href="module-Navbar.html">Navbar</a></li><li><a href="module-PhotoFlashcard.html">PhotoFlashcard</a></li><li><a href="module-rootReducer.html">rootReducer</a></li><li><a href="module-SignIn.html">SignIn</a></li><li><a href="module-SignUp.html">SignUp</a></li><li><a href="module-Startpage.html">Startpage</a></li><li><a href="module-userActions.html">userActions</a></li><li><a href="module-userReducer.html">userReducer</a></li></ul><h3>Classes</h3><ul><li><a href="module-About-About.html">About</a></li><li><a href="module-App-App.html">App</a></li><li><a href="module-Flashcard-Flashcards.html">Flashcards</a></li><li><a href="module-Frontpage-Frontpage.html">Frontpage</a></li><li><a href="module-How-How.html">How</a></li><li><a href="module-PhotoFlashcard-PhotoFlashcards.html">PhotoFlashcards</a></li><li><a href="module-SignIn-SignIn.html">SignIn</a></li><li><a href="module-SignUp-SignUp.html">SignUp</a></li><li><a href="module-Startpage-Startpage.html">Startpage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#config">config</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.2</a> on Thu May 16 2019 08:30:02 GMT+0200 (GMT+02:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
