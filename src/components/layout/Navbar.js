@@ -1,3 +1,7 @@
+/**
+ * File containing the navbar component
+ * @module Navbar
+ */
 import React from 'react'
 import { connect } from 'react-redux'
 import { Dropdown } from 'react-materialize'
@@ -5,7 +9,7 @@ import { signOut } from '../../store/actions/authActions';
 import { Link } from 'react-router-dom'
 
 /**
- * Navbar component
+ * Navbar component. 
  * @param {*} props 
  */
 const Navbar = (props) => {
@@ -54,12 +58,22 @@ const Navbar = (props) => {
     )
 }
 
+/**
+ * Function for getting data from the store
+ * @function
+ * @param {*} state 
+ */
 const mapDispatchToProps = (dispatch) => {
 	return {
 		signOut: () => dispatch(signOut())
 	};
 };
 
+/**
+ * Function for dispatching actions
+ * @function
+ * @param {*} dispatch 
+ */
 const mapStateToProps = (state) => {
 	return {
 		auth: state.firebase.auth,

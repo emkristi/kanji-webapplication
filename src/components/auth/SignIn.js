@@ -1,3 +1,7 @@
+/**
+ * File for the SignIn component.
+ * @module SignIn
+ */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { signIn } from '../../store/actions/authActions';
@@ -7,9 +11,8 @@ import '../../CSS/auth.css';
 import { Link } from 'react-router-dom';
 
 /**
- * Some of this code is borrowed from tutorial: https://www.youtube.com/watch?v=f4Lg-nzE0u8&list=PL4cUxeGkcC9iWstfXntcj8f-dFZ4UtlN3&index=8
-
  * Compontent for signing in to the application. 
+ * Some of this code is borrowed from tutorial: https://www.youtube.com/watch?v=f4Lg-nzE0u8&list=PL4cUxeGkcC9iWstfXntcj8f-dFZ4UtlN3&index=8
  * @class
  */
 class SignIn extends Component {
@@ -29,6 +32,9 @@ class SignIn extends Component {
 		}
 	};
 
+	/**
+	 * @method
+	 */
 	componentDidMount = () => {
 		var unsubscribe = firebase.auth().onAuthStateChanged((user) => {
 			this.setState({ isSignedIn: !!user });
@@ -38,6 +44,7 @@ class SignIn extends Component {
 
 	/**
 	 * Handles input field
+	 * @function
 	 */
 	handleChange = (e) => {
 		this.setState({
@@ -47,6 +54,7 @@ class SignIn extends Component {
 
 	/**
 	 * Signs in user if sign in button is clicked
+	 * @function
 	 */
 	handleSubmit = (e) => {
 		e.preventDefault();
@@ -93,6 +101,11 @@ class SignIn extends Component {
 	}
 }
 
+/**
+ * Function for getting data from the store
+ * @function
+ * @param {*} state 
+ */
 const mapStateToProps = (state) => {
 	return {
 		authError: state.auth.authError,
@@ -100,6 +113,11 @@ const mapStateToProps = (state) => {
 	};
 };
 
+/**
+ * Function for dispatching actions
+ * @function
+ * @param {*} dispatch 
+ */
 const mapDispatchToProps = (dispatch) => {
 	return {
 		signIn: (creds) => dispatch(signIn(creds))

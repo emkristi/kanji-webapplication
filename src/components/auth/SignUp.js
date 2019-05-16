@@ -1,3 +1,8 @@
+/**
+ * File for the SignUp component. Some of this code is borrowed from this tutorial https://www.youtube.com/watch?v=f4Lg-nzE0u8&list=PL4cUxeGkcC9iWstfXntcj8f-dFZ4UtlN3&index=8
+ * @module SignUp
+ */
+
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -7,8 +12,6 @@ import { Link } from 'react-router-dom';
 
 
 /**
- * Some of this code is borrowed from this tutorial https://www.youtube.com/watch?v=f4Lg-nzE0u8&list=PL4cUxeGkcC9iWstfXntcj8f-dFZ4UtlN3&index=8
- * 
  * For signing up to the application
  * @class
  */
@@ -86,6 +89,11 @@ class SignUp extends Component {
   }
 }
 
+/**
+ * Function for getting data from the store
+ * @function
+ * @param {*} state 
+ */
 const mapStateToProps = (state) => {
     return {
         auth: state.firebase.auth,
@@ -93,6 +101,11 @@ const mapStateToProps = (state) => {
     }
 }
 
+/**
+ * Function for dispatching actions
+ * @function
+ * @param {*} dispatch 
+ */
 const mapDispatchToProps = (dispatch) => {
     return {
         signUp: (newUser) => dispatch(signUp(newUser))

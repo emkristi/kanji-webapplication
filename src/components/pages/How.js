@@ -1,9 +1,14 @@
+/**
+ * Contains the component for the How to use Memji page. Explains user how to use the application.
+ * @module How
+ */
 import React, { Component } from 'react';
 import '../../CSS/info.css';
 import { Link } from 'react-router-dom';
 
 /**
- * Component for the "How to play Memji" page in the application.
+ * Component for the "How to use Memji" page in the application.
+ * @class
  */
 class How extends Component {
 	render() {

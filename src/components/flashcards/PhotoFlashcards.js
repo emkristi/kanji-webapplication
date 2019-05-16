@@ -1,3 +1,7 @@
+/**
+ * File representing a photoflashcard
+ * @module PhotoFlashcard
+ */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase'; // used to connect to firestore
@@ -25,10 +29,17 @@ class PhotoFlashcards extends Component {
     };
   }
 
+
+  /**
+   * @function
+   */
   componentDidMount(){
     this.props.firestore.setListener({collection: 'users'})
   }
 
+  /**
+   * @function
+   */
   componentWillUnmount(){
     this.props.firestore.unsetListener({collection: 'users'})
   }
@@ -36,6 +47,7 @@ class PhotoFlashcards extends Component {
   /**
    * Function for when the Hard button is clicked. When clicked, the flashcard will appear again at a random time in the deck until
    * easy button has been clicked. 
+   * @function
    */
   handleHard = (e) => {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
@@ -64,6 +76,7 @@ class PhotoFlashcards extends Component {
   /**
    * Function for when the Easy button is clicked. Makes sure flashcard is added to user array so that it wont appear again in the deck
    * unless deck has been restarted. 
+   * @function
    */
   handleEasy = (e) => {
     const { auth, users, flashcards, match: { params: { id } } } = this.props;
@@ -93,9 +106,9 @@ class PhotoFlashcards extends Component {
     
   }
 
- 
   /**
    * Handles change in mnemonic inputfield
+   * @function
    */
   handleMnemonicChange = (e) => {
     e.preventDefault();
@@ -106,6 +119,7 @@ class PhotoFlashcards extends Component {
 
   /**
    * Function for submitting a new personal mnemonic.
+   * @function
    */
   handleMnemonicSubmit = (e) => {
     const { flashcards, match: { params: { id } } } = this.props;
@@ -137,7 +151,10 @@ class PhotoFlashcards extends Component {
 
   }
 
-
+  /**
+   * Finds index of flashcard id. Used in changeFc function
+   * @function
+   */
   findIndexOfFcId = (categoryfcs, fcid) => {
     let value = categoryfcs.find((val) => {
       return (val.id === fcid)
@@ -145,6 +162,10 @@ class PhotoFlashcards extends Component {
     return categoryfcs.indexOf(value);
   }
 
+  /**
+   * Finds flashcard by flashcardid. Used in changeFc function
+   * @function
+   */
   findFlashcardById = (id) => {
     const { flashcards } = this.props;
     return flashcards.find(f => f.id === id);
@@ -153,6 +174,7 @@ class PhotoFlashcards extends Component {
   /**
    * Function for changing to a random flashcard. Makes sure to only show a new Kanji if all radicals
    * in said Kanji has been shown in previous flashcards. 
+   * @function
    */
   changeFc = (e) => {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
@@ -219,6 +241,7 @@ class PhotoFlashcards extends Component {
   /**
    * Method for handeling the buttons on the front of the photoflashcard. If correct button is clicked it will
    * turn green then the card will flip over. If wrong button is clicked the button will turn red. 
+   * @function
    */
   handleFButton = (e) => {
     const { flashcards, match: { params: { id } } } = this.props;
@@ -238,6 +261,7 @@ class PhotoFlashcards extends Component {
   /**
    * Method for getting an array of random kanji for the buttons on the photoflashcards
    * where one of them is the correct kanji. 
+   * @function
    */
   randomKanjiArray = () => {
     const { flashcards, match: { params: { id } } } = this.props;
@@ -270,7 +294,6 @@ class PhotoFlashcards extends Component {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
     const { currentCard } = this.state;
     const { mnemonics } = this.props;
-
 
     var randomArray = this.randomKanjiArray();
     
@@ -382,6 +405,7 @@ class PhotoFlashcards extends Component {
 
 /**
  * Function for dispatching actions 
+ * @function
  * @param {*} dispatch 
  */
 const mapDispatchToProps = (dispatch) => {
@@ -396,6 +420,7 @@ const mapDispatchToProps = (dispatch) => {
 
 /**
  * Function for getting data from the store
+ * @function
  * @param {*} state 
  */
 const mapStateToProps = (state) => {

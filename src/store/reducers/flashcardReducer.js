@@ -1,3 +1,7 @@
+/**
+ * Handles flashcard actions
+ * @module flashcardReducer
+ */
 const initState = {
 	flashcards: [],
 	mnemonics: []
@@ -5,6 +9,7 @@ const initState = {
 
 /**
  * Handles the actions from flashcardActions.js
+ * @function
  * @param {*} state 
  * @param {*} action 
  */

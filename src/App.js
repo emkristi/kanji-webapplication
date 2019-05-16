@@ -1,3 +1,7 @@
+/**
+ * Root component. Contains routes to the different components in the application.
+ * @module App
+ */
 import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Navbar from './components/layout/Navbar'
@@ -11,7 +15,7 @@ import About from './components/pages/About'
 import How from './components/pages/How'
 
 /**
- * App component. 
+ * App component
  */
 class App extends Component {
   render() {

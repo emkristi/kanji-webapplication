@@ -1,6 +1,12 @@
-// Code is borrowed from the tutorial https://www.youtube.com/watch?v=CkePdocytWM&list=PL4cUxeGkcC9iWstfXntcj8f-dFZ4UtlN3&index=23
+/**
+ * File contains actions for authorisation in the application.
+ * Code is borrowed from the tutorial https://www.youtube.com/watch?v=CkePdocytWM&list=PL4cUxeGkcC9iWstfXntcj8f-dFZ4UtlN3&index=23
+ * @module authActions
+ */ 
+
 /**
  * Signs user in to application
+ * @function
  * @param {*} credentials 
  */
 export const signIn = (credentials) => {
@@ -21,6 +27,7 @@ export const signIn = (credentials) => {
 
 /**
  * Signs user out of application
+ * @function
  */
 export const signOut = () => {
 	return (dispatch, getState, { getFirebase }) => {
@@ -35,6 +42,7 @@ export const signOut = () => {
 
 /**
  * Signs user up, adds user to database
+ * @function
  * @param {*} newUser 
  */
 export const signUp = (newUser) => {

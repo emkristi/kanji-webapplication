@@ -1,5 +1,11 @@
 /**
+ * File contains user related actions
+ * @module userActions
+ */
+
+/**
  * Updates a users flashcardArray
+ * @function
  * @param {string} flashcardId 
  */
 export const updateUser = (flashcardId) => {
@@ -25,6 +31,7 @@ export const updateUser = (flashcardId) => {
 
 /**
  * Loads user
+ * @function
  */
 export const loaduser = () => {
 	return (dispatch, getState, { getFirestore }) => {

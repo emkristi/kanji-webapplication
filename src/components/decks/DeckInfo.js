@@ -1,3 +1,7 @@
+/**
+ * Contains info about a deck. 
+ * @module DeckInfo
+ */
 import React from 'react'
 import '../../CSS/frontpage.css';
 

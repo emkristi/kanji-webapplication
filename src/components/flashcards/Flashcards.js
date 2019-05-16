@@ -1,3 +1,7 @@
+/**
+ * Represents a flashcard
+ * @module Flashcard
+ */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -26,16 +30,23 @@ class Flashcards extends Component {
     };
   }
 
+  /**
+   * @method
+   */
   componentDidMount(){
     this.props.firestore.setListener({collection: 'users'})
   }
 
+  /**
+   * @method
+   */
   componentWillUnmount(){
     this.props.firestore.unsetListener({collection: 'users'})
   }
 
   /**
    * Shows mnemonic inputfield if edit icon is clicked
+   * @function
    */
   handleEditMnemClick = (e) => {
     this.setState({showMnemField: true});
@@ -43,6 +54,7 @@ class Flashcards extends Component {
 
   /**
    * Handles change in mnemonic inputfield
+   * @function
    */
   handleMnemonicChange = (e) => {
     e.preventDefault();
@@ -53,6 +65,7 @@ class Flashcards extends Component {
 
   /**
    * Function for submitting a new personal mnemonic.
+   * @function
    */
   handleMnemonicSubmit = (e) => {
     const { mnemonics, users, auth, flashcards, match: { params: { id } } } = this.props;
@@ -85,6 +98,7 @@ class Flashcards extends Component {
   /**
    * Function for when the Hard button is clicked. When clicked, the flashcard will appear again at a random time in the deck until
    * easy button has been clicked. 
+   * @function
    */
   handleHard = (e) => {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
@@ -102,6 +116,7 @@ class Flashcards extends Component {
   /**
    * Function for when the Easy button is clicked. Makes sure flashcard is added to user array so that it wont appear again in the deck
    * unless deck has been restarted. 
+   * @function
    */
   handleEasy = (e) => {
     const { flashcards, match: { params: { id } } } = this.props;
@@ -128,6 +143,10 @@ class Flashcards extends Component {
     }
   }
   
+  /**
+   * Finds index of flashcard id. Used in changeFc function
+   * @function
+   */
   findIndexOfFcId = (categoryfcs, fcid) => {
     let value = categoryfcs.find((val) => {
       return (val.id === fcid)
@@ -135,6 +154,10 @@ class Flashcards extends Component {
     return categoryfcs.indexOf(value);
   }
 
+  /**
+   * Finds flashcard by flashcardid. Used in changeFc function
+   * @function
+   */
   findFlashcardById = (id) => {
     const { flashcards } = this.props;
     return flashcards.find(f => f.id === id);
@@ -143,6 +166,7 @@ class Flashcards extends Component {
   /**
    * Function for changing to a random flashcard. Makes sure to only show a new Kanji if all radicals
    * in said Kanji has been shown in previous flashcards. 
+   * @function
    */
   changeFc = (e) => {
     const { flashcards, match: { params: { id } }, auth, users } = this.props;
@@ -384,7 +408,8 @@ class Flashcards extends Component {
 }
 
 /**
- * Function for dispatching actions 
+ * Function for dispatching actions
+ * @function
  * @param {*} dispatch 
  */
 const mapDispatchToProps = (dispatch) => {
@@ -399,6 +424,7 @@ const mapDispatchToProps = (dispatch) => {
 
 /**
  * Function for getting data from the store
+ * @function
  * @param {*} state 
  */
 const mapStateToProps = (state) => {

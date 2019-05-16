@@ -1,3 +1,7 @@
+/**
+ * Contains redux store for application.
+ * @module index
+ */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -12,7 +16,8 @@ import { reactReduxFirebase, getFirebase } from 'react-redux-firebase'
 import fbConfig from './config/fbConfig'
 
 /**
- * Redux store
+ * Redux store. Rootreducer is passed into the store.
+ * Code based on this tutorial https://www.youtube.com/watch?v=hOQ7x_X2gIg&list=PL4cUxeGkcC9iWstfXntcj8f-dFZ4UtlN3&index=11
  */
 const store = createStore(rootReducer,
     compose(

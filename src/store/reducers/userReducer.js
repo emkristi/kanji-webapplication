@@ -1,3 +1,6 @@
+/**
+ * @module userReducer
+ */
 const initState = {
    
     users: [
@@ -7,6 +10,7 @@ const initState = {
 
 /**
  * User reducer
+ * @function
  * @param {*} state 
  * @param {*} action 
  */

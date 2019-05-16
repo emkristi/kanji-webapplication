@@ -1,3 +1,7 @@
+/**
+ * Combines all reducers to one.
+ * @module rootReducer
+ */
 import authReducer from './authReducer'
 import { combineReducers } from 'redux'
 import { firestoreReducer } from 'redux-firestore'

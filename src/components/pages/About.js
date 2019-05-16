@@ -1,8 +1,14 @@
+/**
+ * Contains component for About page. The about page contains information credits and sources for images used in the applciation.
+ * @module About
+ */
 import React, { Component } from 'react';
 import '../../CSS/info.css';
 
+
 /**
  * Component for the About page in the application.
+ * @class
  */
 class About extends Component {
 	render() {

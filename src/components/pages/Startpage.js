@@ -1,9 +1,14 @@
+/**
+ * Contains the Startpage component. The startpage is the first page when you arrive the appliaction (unless already logged in). 
+ * @module Startpage
+ */
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 /**
  * Compontent for the startpage in the application
+ * @class
  */
 class Startpage extends Component {
 	render() {
@@ -50,6 +55,11 @@ class Startpage extends Component {
 	}
 }
 
+/**
+ * Function for dispatching actions
+ * @function
+ * @param {*} dispatch 
+ */
 const mapStateToProps = (state) => {
 	return {
 		auth: state.firebase.auth

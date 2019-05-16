@@ -1,7 +1,13 @@
 /**
+ * File contains flashcard related actions
+ * @module flashcardActions
+ */
+
+/**
  * Adds completed flashcards in an array in User. This is used to know which flashcards
  * the user has seen (clicked easy on). 
- * @param {string} flashcardId 
+ * @function
+ * @param {string} flashcardId
  */
 export const addCompletedFlashcards = (flashcardId) => {
 	return (dispatch, getState, { getFirestore }) => {
@@ -23,6 +29,7 @@ export const addCompletedFlashcards = (flashcardId) => {
 /**
  * Removes completed flashcards from the flashcardArray for logged in user. 
  * Used to restart a deck that has been completed if the restart button is clicked. 
+ * @function
  * @param {string} flashcardid 
  */
 export const removeCompletedFlashcards = (flashcardid) => {
@@ -48,6 +55,7 @@ export const removeCompletedFlashcards = (flashcardid) => {
 
 /**
  * Method for adding a personal mnemonic to a flashcard. 
+ * @function
  * @param {string} newMnemonic 
  * @param {string} fcId 
  */
@@ -88,6 +96,7 @@ export const addMnemonic = (newMnemonic, fcId) => {
 
 /**
  * Method for replacing a personal mnemonic. 
+ * @function
  * @param {string} newMnemonic 	new mnemonic 
  * @param {array} oldMnemonic 	mnemonic that is getting replaced
  * @param {string} fcId 		id of flashcard
@@ -118,7 +127,8 @@ export const replaceMnemonic = (newMnemonic, oldMnemonic, fcId) => {
 /**
  * Updates the mnemonic array for the user.
  * Used to only show mnemonics that the logged in user has made.
- * @param {array} mnemonic
+ * @function
+ * @param {array} mnemonic Array of mnemonics that the user has clicked easy on
  */
 export const updateMnemonicArray = (mnemonic) => {
 	return (dispatch, getState, { getFirestore }) => {

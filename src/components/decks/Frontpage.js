@@ -1,3 +1,7 @@
+/**
+ * Frontpage when user is logged in to application. Displays all the decks.
+ * @module Frontpage
+ */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase'; // used to connect to firestore
@@ -9,10 +13,8 @@ import { removeCompletedFlashcards } from '../../store/actions/flashcardActions'
 import '../../CSS/frontpage.css';
 import { Dropdown, Divider } from 'react-materialize'
 
-
 /**
  * Frontpage component. Contains decks of flashcards.
- * 
  * @class
  */
 class Frontpage extends Component {
@@ -21,6 +23,7 @@ class Frontpage extends Component {
 	/**
 	 * Function for when the restart button is clicked. Removes flashcards in the deck
 	 * that is clicked from userarray. 
+	 * @function
 	 */
 	restartDeck = (cardsInDeck) => (e) => {
 		e.preventDefault();
@@ -158,12 +161,23 @@ class Frontpage extends Component {
 	}
 }
 
+
+ /**
+ * Function for dispatching actions
+ * @function
+ * @param {*} dispatch 
+ */
 const mapDispatchToProps = (dispatch) => {
 	return {
 		removeCompletedFlashcards: (flashcard) => dispatch(removeCompletedFlashcards(flashcard))
 	};
 };
 
+/**
+ * Function for getting data from the store
+ * @function
+ * @param {*} state 
+ */
 const mapStateToProps = (state) => {
 	return {
 		decks: state.firestore.ordered.decks, // gives an array of the decks.. flashcard property, we are accessing the decks from the state in the flashcardReducer. We are grabbing this and attatching it to the flashcard property inside the props of this component (flashcard: )
