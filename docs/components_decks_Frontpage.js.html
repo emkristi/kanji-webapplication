@@ -30,10 +30,9 @@
  * Frontpage when user is logged in to application. Displays all the decks.
  * @module Frontpage
  */
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { firestoreConnect } from 'react-redux-firebase'; 
+import { firestoreConnect } from 'react-redux-firebase'; // used to connect to firestore
 import { compose } from 'redux';
 import DeckInfo from './DeckInfo';
 import { Link } from 'react-router-dom';
@@ -42,13 +41,13 @@ import { removeCompletedFlashcards } from '../../store/actions/flashcardActions'
 import '../../CSS/frontpage.css';
 import { Dropdown, Divider } from 'react-materialize'
 
-
 /**
  * Frontpage component. Contains decks of flashcards.
  * @class
  */
 class Frontpage extends Component {
 	
+
 	/**
 	 * Function for when the restart button is clicked. Removes flashcards in the deck
 	 * that is clicked from userarray. 
@@ -60,6 +59,8 @@ class Frontpage extends Component {
 				this.props.removeCompletedFlashcards(cardsInDeck[i].id);
 		} 
 	}
+
+	
 
 	render() {
 		const { decks, flashcards, auth, users } = this.props;
@@ -73,6 +74,7 @@ class Frontpage extends Component {
 		
 		return (
 			&lt;div className="frontpage-content center-align">
+			
 				&lt;div className="row">
 					{flashcards &amp;&amp;
 						user &amp;&amp;
@@ -96,24 +98,30 @@ class Frontpage extends Component {
 										&lt;Link to={deck.type === 'Images' ? '/img/' + deck.id : '/' + deck.id} key={deck.id} id="link">
 											&lt;div className="deck not-completed">
 												&lt;div className="info-dropdown">
-													&lt;Dropdown className="dropdown-content dropdown-content-deck" options={{belowOrigin: true, hover: true, closeOnClick: true}}
-													trigger={&lt;i className="material-icons right">info_outline&lt;/i>}>					
-													&lt;span className="word-list-title">KANJI IN DECK&lt;/span>											
-														{radInDeck.map(card => {
+											&lt;Dropdown className="dropdown-content dropdown-content-deck" options={{belowOrigin: true, hover: true, closeOnClick: true}}
+												trigger={&lt;i className="material-icons right">info_outline&lt;/i>}>
+													
+													&lt;span className="word-list-title">KANJI IN DECK&lt;/span>
+													
+													{
+														radInDeck.map(card => {
 																return (
 																	&lt;span key={card}>{card.kanji}{" - "}{card.eng}&lt;/span>
-																)}
-															)
-														}
+																)
+															}
+														)
+													}
 				
 												&lt;/Dropdown>
 												&lt;/div>
-												&lt;div className="deck-content">		
+												&lt;div className="deck-content">
+												
 													&lt;DeckInfo deck={deck} />
-													&lt;p className="completionstat">{cardsInDeck.length}{" cards"}&lt;/p>	
+													&lt;p className="completionstat">{cardsInDeck.length}{" cards"}&lt;/p>
 												&lt;/div>
 											&lt;/div>
 										&lt;/Link>
+										
 									&lt;/div>
 								);
 							} else if(unfinisheddecks.length > 0){
@@ -150,13 +158,9 @@ class Frontpage extends Component {
 												&lt;/Dropdown>
 												&lt;/div>
 												&lt;div className="deck-content">
-												
 													&lt;DeckInfo deck={deck} />
 													&lt;p className="completionstat">{cardsInDeck.length}{" cards"}&lt;/p>
-														
 												&lt;/div>
-												
-												
 											&lt;/div>
 										&lt;/Link>
 										
@@ -170,8 +174,6 @@ class Frontpage extends Component {
 										&lt;div className="deck completed">
 											&lt;div className="deck-content-comp">
 												&lt;DeckInfo className="col s12" deck={deck} />
-												&lt;p className="decktypetxt">{deck.type}&lt;/p>
-
 												&lt;div onClick={this.restartDeck(cardsInDeck)}className="btn-floating btn-large waves-effect deck-btn">
 													&lt;i className="material-icons">replay&lt;/i>
 												&lt;/div>
@@ -186,6 +188,7 @@ class Frontpage extends Component {
 		);
 	}
 }
+
 
  /**
  * Function for dispatching actions
@@ -205,7 +208,7 @@ const mapDispatchToProps = (dispatch) => {
  */
 const mapStateToProps = (state) => {
 	return {
-		decks: state.firestore.ordered.decks, 
+		decks: state.firestore.ordered.decks, // gives an array of the decks.. flashcard property, we are accessing the decks from the state in the flashcardReducer. We are grabbing this and attatching it to the flashcard property inside the props of this component (flashcard: )
 		flashcards: state.firestore.ordered.flashcards,
 		auth: state.firebase.auth,
 		users: state.firestore.ordered.users
@@ -215,6 +218,7 @@ const mapStateToProps = (state) => {
 export default compose(
 	connect(mapStateToProps, mapDispatchToProps),
 	firestoreConnect([
+		// we use firestoreConnect to tell which collection we want to connect to. takes in an array that contains a series of objects
 		{
 			collection: 'decks'
 		}
@@ -246,7 +250,7 @@ export default compose(
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.2</a> on Thu May 16 2019 08:30:02 GMT+0200 (GMT+02:00)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.2</a> on Thu May 16 2019 10:51:34 GMT+0200 (GMT+02:00)
 </footer>
 
 <script> prettyPrint(); </script>
