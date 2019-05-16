@@ -10,6 +10,8 @@ import { Link } from 'react-router-dom'
  */
 const Navbar = (props) => {
     const { auth } = props;
+    const logosrc = "https://firebasestorage.googleapis.com/v0/b/kanjiapp-8f121.appspot.com/o/LOGOLITENNY.jpg?alt=media&token=64293fe7-f33f-485b-8177-f7a4e8ffe6ab"
+
 
     return (
         <div>
@@ -19,7 +21,7 @@ const Navbar = (props) => {
                     <div className="nav-wrapper">
                         {(auth.uid) &&
 
-                        <Link to={'/'}><img className="navlogo" src="img/LOGOLITENNY.jpg" width="60rem" alt="logo" /></Link>
+                        <Link to={'/'}><img className="navlogo" src={logosrc} width="60rem" alt="logo" /></Link>
                         }
                         {!(auth.uid) &&
 

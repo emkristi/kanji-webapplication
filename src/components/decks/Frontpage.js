@@ -87,12 +87,7 @@ class Frontpage extends Component {
 												
 													<DeckInfo deck={deck} />
 													<p className="completionstat">{cardsInDeck.length}{" cards"}</p>
-
-													
-														
 												</div>
-												
-												
 											</div>
 										</Link>
 										
@@ -132,13 +127,9 @@ class Frontpage extends Component {
 												</Dropdown>
 												</div>
 												<div className="deck-content">
-												
 													<DeckInfo deck={deck} />
 													<p className="completionstat">{cardsInDeck.length}{" cards"}</p>
-														
 												</div>
-												
-												
 											</div>
 										</Link>
 										
@@ -152,8 +143,6 @@ class Frontpage extends Component {
 										<div className="deck completed">
 											<div className="deck-content-comp">
 												<DeckInfo className="col s12" deck={deck} />
-												<p className="decktypetxt">{deck.type}</p>
-
 												<div onClick={this.restartDeck(cardsInDeck)}className="btn-floating btn-large waves-effect deck-btn">
 													<i className="material-icons">replay</i>
 												</div>
