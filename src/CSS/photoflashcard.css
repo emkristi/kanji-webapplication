@@ -9,6 +9,10 @@
   font-size: 4rem;
 }
 
+.pf-content{
+  margin-top: 2rem;
+}
+
 .pfc-btn:hover{
   background-color: #ededed;
   cursor: pointer;
