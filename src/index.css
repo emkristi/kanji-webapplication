@@ -118,3 +118,8 @@ nav ul a:hover {
     transform: translate(-50%, -50%);
   }
 }
+
+.nav-wrapper-start{
+  display: none !important;
+
+}

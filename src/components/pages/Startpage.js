@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 class Startpage extends Component {
 	render() {
 		const { auth } = this.props; 
-		if (auth.uid) return <Redirect to="/" />;
+		if (auth.uid) return <Redirect to="/home" />;
 
 		return (
 			<div className="startpage center">

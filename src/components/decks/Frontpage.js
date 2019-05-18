@@ -42,8 +42,8 @@ class Frontpage extends Component {
 			user = users.find((u) => u.id === auth.uid);
 		}
 
-		if (!auth.uid) return <Redirect to="/signin" />;
-		
+		if (!auth.uid) return <Redirect to="/signin"/>;
+	
 		return (
 			<div className="frontpage-content center-align">
 			

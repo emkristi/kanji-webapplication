@@ -230,7 +230,7 @@ class Flashcards extends Component {
     const { currentCard } = this.state;
     const { mnemonics } = this.props;
 
-    if (!auth.uid) return <Redirect to='/signin' />;
+    if (!auth.uid) return <Redirect to='/' />;
 
     // Only show flashcards in current category
     let categoryfcs = [];

@@ -75,6 +75,17 @@
     box-shadow: none;
   }
 
+  .hard-btn:focus, .easy-btn:focus{
+    background-color: white;
+  }
+
+  .hard-btn:hover, .easy-btn:hover{
+    background-color: rgb(100,	106	,246	);
+    color: white;
+  }
+
+
+
   .hard-btn{
     margin-right: 3%;
   }
