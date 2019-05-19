@@ -46,7 +46,9 @@ class SignUp extends Component {
 
     return (
     <div>
-        <div className="row" margin="30px">
+    <div className="info-content">
+        <div className="row">
+        <div className="col s12">
 
       <div className="auth-container center">
       <div className="auth-title">Sign Up</div>
@@ -85,6 +87,9 @@ class SignUp extends Component {
       </div>
       </div>
       </div>
+      </div>
+      </div>
+      
     )
   }
 }
