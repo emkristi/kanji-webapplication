@@ -131,7 +131,7 @@ class Flashcards extends Component {
     // if only one card left -> added to user in database then returns to deck page when button is clicked
     if((seenFc.length === categoryfcs.length - 1) && (remainingFc[0].id === categoryfcs[currentCard].id)){
       this.props.updateUser(categoryfcs[currentCard].id);
-      window.location.href = '/';
+      window.location.href = '/home';
       return;
     }
 
@@ -261,7 +261,11 @@ class Flashcards extends Component {
 			radarray = rad.map((r) => flashcards.find((f) => f.id === r.id).kanji);
 		}
 
-		if (!categoryfcs[currentCard]) return <div></div>;
+		if (!categoryfcs[currentCard]){
+      return(
+        <div></div>
+      )
+    } 
 
 		return (
 			<div className="flashcard-content">

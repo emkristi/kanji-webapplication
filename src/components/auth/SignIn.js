@@ -68,7 +68,7 @@ class SignIn extends Component {
 		return (
 			<div className="auth-container">
 				<div className="row center">
-					<div className="auth-title">Log in</div>
+					<div className="auth-title">Log In</div>
 					<form className="auth-content center" onSubmit={this.handleSubmit}>
 						<br></br>
 						<br></br>
@@ -87,7 +87,6 @@ class SignIn extends Component {
 							<button className="btn">Log in</button>
 							<div className="red-text center">{authError ? <p>{authError}</p> : null}</div>
 						</div>
-					
 						
 						<div className="auth-link">
 							<p>

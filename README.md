@@ -1,1 +1,1 @@
-## Memji webapplication. 
+## Memji webapplication

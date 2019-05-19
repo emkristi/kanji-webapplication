@@ -91,7 +91,7 @@ class PhotoFlashcards extends Component {
 
     if((seenFc.length === categoryfcs.length - 1) && (remainingFc[0].id === categoryfcs[currentCard].id)){
       this.props.updateUser(categoryfcs[currentCard].id);
-      window.location.href = '/';
+      window.location.href = '/home';
       return;
     }
 
@@ -297,7 +297,7 @@ class PhotoFlashcards extends Component {
 
     var randomArray = this.randomKanjiArray();
     
-    if (!auth.uid) return <Redirect to='/signin' />;
+    if (!auth.uid) return <Redirect to='/' />;
 
     // Only show flashcards in current category
     let categoryfcs = [];

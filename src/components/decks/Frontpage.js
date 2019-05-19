@@ -19,7 +19,6 @@ import { Dropdown, Divider } from 'react-materialize'
  */
 class Frontpage extends Component {
 	
-
 	/**
 	 * Function for when the restart button is clicked. Removes flashcards in the deck
 	 * that is clicked from userarray. 
@@ -32,8 +31,6 @@ class Frontpage extends Component {
 		} 
 	}
 
-	
-
 	render() {
 		const { decks, flashcards, auth, users } = this.props;
 
@@ -42,7 +39,7 @@ class Frontpage extends Component {
 			user = users.find((u) => u.id === auth.uid);
 		}
 
-		if (!auth.uid) return <Redirect to="/signin"/>;
+		if (!auth.uid) return <Redirect to="/"/>;
 	
 		return (
 			<div className="frontpage-content center-align">
