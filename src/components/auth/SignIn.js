@@ -66,9 +66,13 @@ class SignIn extends Component {
 		if (auth.uid) return <Redirect to="/home" />;
 
 		return (
-			<div className="auth-container">
-				<div className="row center">
-					<div className="auth-title">Log in</div>
+			<div className="info-content">
+				<div className="row">
+                	<div className="col s12">
+						<div className="auth-container">
+			
+				<div className="row">
+					<div className="auth-title center">Log in</div>
 					<form className="auth-content center" onSubmit={this.handleSubmit}>
 						<br></br>
 						<br></br>
@@ -88,14 +92,14 @@ class SignIn extends Component {
 							<div className="red-text center">{authError ? <p>{authError}</p> : null}</div>
 						</div>
 					
-						
 						<div className="auth-link">
-							<p>
-								Dont have a user? Create one <Link to="/signup">here</Link>{' '}
-							</p>
+							<p>Dont have a user? Create one <Link to="/signup">here</Link>{' '}</p>
 						</div>
 					</form>
 				</div>
+				</div>
+				</div>
+			</div>
 			</div>
 		);
 	}
