@@ -19,13 +19,18 @@ import fbConfig from './config/fbConfig'
  * Redux store. Rootreducer is passed into the store.
  * Code based on this tutorial https://www.youtube.com/watch?v=hOQ7x_X2gIg&list=PL4cUxeGkcC9iWstfXntcj8f-dFZ4UtlN3&index=11
  */
-const store = createStore(rootReducer,
-    compose(
-        applyMiddleware(thunk.withExtraArgument({ getFirebase, getFirestore })), 
-        reduxFirestore(fbConfig),
-        reactReduxFirebase(fbConfig, {useFirestoreForProfile: true, userProfile: 'users', attachAuthIsReady: true }),
-        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-    )
+
+const middleware = applyMiddleware(
+    thunk.withExtraArgument({ getFirebase, getFirestore })
+);
+
+const composeEnhancers =
+	window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(
+	rootReducer,
+	composeEnhancers(middleware,  reduxFirestore(fbConfig),
+    reactReduxFirebase(fbConfig, {useFirestoreForProfile: true, userProfile: 'users', attachAuthIsReady: true }))
 );
 
 store.firebaseAuthIsReady.then(() => {
